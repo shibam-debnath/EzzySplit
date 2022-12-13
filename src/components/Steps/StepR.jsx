@@ -1,6 +1,6 @@
 import React from "react";
 
-const StepL = (props) => {
+const StepR = (props) => {
     return <>
         
                     {/* long */}
@@ -75,4 +75,4 @@ const StepL = (props) => {
     </>
 }
 
-export default StepL;
+export default StepR;
