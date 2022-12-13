@@ -11,7 +11,7 @@ const Contact = () => {
     const onSubmit = data => alert(JSON.stringify(data));
 
     return (
-        <div className="w-full bg-gray-900 p-4 text-white">
+        <div className="w-full bg-gray-900 p-6 text-white">
             <h1 className="font-bold text-center text-2xl sm:text-3xl"><span className="text-primary">Contact</span> Us</h1>
 
             <form onSubmit={handleSubmit(onSubmit)}>

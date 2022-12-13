@@ -43,7 +43,7 @@ const Feature = () => {
         </div>
 
         <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 hover:bg-slate-800 w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
-          <img src="./images/notification.svg" alt="" className="h-10 sm:h-20 m-6" />
+          <img src="./images/language.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs text-slate-300 sm:text-sm">Many Languages</h1>
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
@@ -51,6 +51,12 @@ const Feature = () => {
         <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 hover:bg-slate-800 w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img src="./images/chat.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs text-slate-300 sm:text-sm">Live chat</h1>
+          <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
+        </div>
+
+        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none group-hover:scale-[0.85] hover:!scale-100 hover:bg-slate-800 w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+          <img src="./images/payment.svg" alt="" className="h-10 sm:h-20 m-6" />
+          <h1 className="font-bold text-xs text-slate-300 sm:text-sm">Direct Payment</h1>
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
