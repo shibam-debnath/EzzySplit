@@ -21,7 +21,7 @@ const Contact = () => {
                             <input
                                 type="text"
                                 placeholder="Name"
-                                className={`w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
+                                className={` w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
                                            "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("fullName",
                                  { required:{
@@ -52,7 +52,7 @@ const Contact = () => {
                             <input
                                 type="email"
                                 placeholder="myid@gmail.com"
-                                className={`w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
+                                className={`w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
                                     "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("email",
                                  { required:{
@@ -72,7 +72,7 @@ const Contact = () => {
                         <div>
                             <textarea
                                 placeholder="Message"
-                                className={`w-96 h-9 text-sm rounded-lg text-black ${errors.messages &&
+                                className={` w-3/4 sm:w-96 h-10 text-sm rounded-lg text-black ${errors.messages &&
                                     "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("messages",
                                 { required:{
