@@ -1,5 +1,5 @@
 import React from "react";
-
+import ReactDOM from "react-dom";
 const Feature = () => {
   return (
     <div className="w-full  bg-gray-900 p-6 text-white">
