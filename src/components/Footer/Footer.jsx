@@ -70,38 +70,34 @@ const Footer = () => {
 </ul>
 </div>
 </div>
-<div className="text-center  mt-10">
-<a href="#" className="flex items-center justify-center mb-5 text-2xl font-semibold  text-gray-500">
-<img src="./images/logo.jpg" className="h-6 mr-3 sm:h-9" alt="EzzySplit Logo"/>
-EzzySplit
-</a>
-<span className="block text-sm text-center text-gray-500 dark:text-gray-400">© 2022 EzzySplit™. All Rights Reserved.
-</span>
-
-</div>
 <div className ="mt-4">
    <ul className="flex justify-center space-x-5">
    <li className="hover:scale-[1.5]">
       <a href="#" >
-         <img src="./images/fb_logo.png" alt=" " className="h-8 "></img>
+         <img src="./images/facebook.svg" alt=" " className="h-8 "></img>
       </a>
       </li>
       <li className="hover:scale-[1.5]">
       <a href="#" >
-         <img src="./images/twitt_logo.png" alt=" " className="h-8"></img>
+         <img src="./images/twitter.svg" alt=" " className="h-8"></img>
       </a>
       </li>
       <li className="hover:scale-[1.5]">
       <a href="#" >
-         <img src="./images/insta_logo.png" alt=" " className="h-8 "></img>
+         <img src="./images/instagram.svg" alt=" " className="h-8 "></img>
       </a>
       </li>
-      <li className="hover:scale-[1.5]">
-      <a href="#" >
-         <img src="./images/git_logo.png" alt=" " className="h-8 "></img>
-      </a>
-      </li>
+     
    </ul>
+</div>
+<div className="text-center  mt-6">
+<a href="#" className="flex items-center justify-center mb-5 text-2xl font-semibold  text-gray-500">
+<img src="./images/logo.jpg" className="h-6 mr-3 sm:h-9" alt="EzzySplit Logo"/>
+EzzySplit
+</a>
+<span className="block pb-6 text-sm text-center text-gray-500 dark:text-gray-400">© 2022 EzzySplit™. All Rights Reserved.
+</span>
+
 </div>
 </div>
 </footer>
