@@ -1,34 +1,35 @@
 import React from "react";
-import Button from "../../../../components/Button/Button";
-import { earningData } from "../../data";
-const Mid = () => {
+import { BsCurrencyDollar } from "react-icons/bs";
+import { earningData } from "../../data/DashBoardData";
+
+const DashBoardContent = () => {
+  const currentColor = "var(--primary-font)";
   return (
-    <div className="mt-0">
-      <div className="flex flex-wrap justify-center ">
-        <div className="bg-white w-full dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl   p-8 pt-9 m-3 bg-hero-pattern bg-no-repeat bg-cover bg-center">
+    <div className="mt-6">
+      <div className="flex w-full flex-wrap justify-left ">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
           <div className="flex justify-between items-center">
             <div>
-              <p className="font-bold text-gray-400 align-left">Hi</p>
-              <p className="text-2xl">shibam</p>
+              <p className="font-bold text-gray-400 flex">Hi,</p>
+              <p className="text-gray-400 text-2xl font-bold">Shibam !</p>
             </div>
-            {/* <button
+            <button
               type="button"
-              style={{ backgroundColor: currentColor }}
               className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full  p-4"
             >
               <BsCurrencyDollar />
-            </button> */}
+            </button>
           </div>
-          <div className="mt-6">
-            <Button
-              color="white"
-              bgColor="white"
+          <div className="mt-0">
+            <button
+              color={currentColor}
+              bgColor="black"
               text="Download"
               borderRadius="10px"
             />
           </div>
         </div>
-        <div className="flex m-3 flex-wrap justify-center gap-1 items-center">
+        <div className="width-full flex m-6 flex-wrap justify-left gap-10  items-center">
           {earningData.map((item) => (
             <div
               key={item.title}
@@ -43,9 +44,6 @@ const Mid = () => {
               </button>
               <p className="mt-3">
                 <span className="text-lg font-semibold">{item.amount}</span>
-                <span className={`text-sm text-${item.pcColor} ml-2`}>
-                  {item.percentage}
-                </span>
               </p>
               <p className="text-sm text-gray-400  mt-1">{item.title}</p>
             </div>
@@ -56,4 +54,4 @@ const Mid = () => {
   );
 };
 
-export default Mid;
+export default DashBoardContent;
