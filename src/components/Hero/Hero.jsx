@@ -1,5 +1,5 @@
 import React from "react";
-// import Typical from 'react-typical'
+import Typewriter from "typewriter-effect";
 
 const Hero = () => {
   return (
@@ -11,7 +11,21 @@ const Hero = () => {
               <div className="my-10">
                 <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight text-white mb-16">
                   Split bills <br />
-                  <span className="text-primary">the easy way</span>
+                  <span>easily among</span>
+                  {/* <span className="text-primary">among</span> */}
+                  <span className="text-primary">
+                    <Typewriter
+                      options={{
+                        autoStart:true,
+                        loop:true,
+                        delay:100,
+                        strings:[
+                          "friends",
+                          "roommates",
+                          "neighbours"
+                        ],
+                      }} />
+                    </span>
                 </h1>
                 <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-lg dark:text-gray-400">
                   Make sharing expenses simple for travel, activities and daily
