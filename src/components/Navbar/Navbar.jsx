@@ -2,6 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { useState } from "react";
 
+
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
@@ -41,13 +42,13 @@ const Navbar = () => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 mb-3 md:flex md:space-x-6 md:space-y-0">
-              <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-blue-600 hover:font-bold">
+              <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-primary hover:font-bold">
                 <a href="/">Home</a>
               </li>
-              <li className="p-2  text-gray-300 h-10 hover:text-blue-600 hover:font-bold">
+              <li className="p-2  text-gray-300 h-10 hover:text-primary hover:font-bold">
                 <a href="/">Features</a>
               </li>
-              <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-blue-600 hover:font-bold">
+              <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-primary hover:font-bold">
                 <a href="/">Contact Us</a>
               </li>
               <li>
