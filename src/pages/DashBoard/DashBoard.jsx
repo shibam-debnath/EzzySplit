@@ -1,5 +1,6 @@
 import React from "react";
-import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
+import { Outlet } from "react-router-dom";
+// import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
 import SideNav from "../../components/Sidenav/SideNav";
 
 const DashBoard = () => {
@@ -10,7 +11,8 @@ const DashBoard = () => {
           <SideNav />
         </div>
         <div className="bg-gray-300 min-h-screen w-full  ">
-          <DashBoardContent />
+          {/* <DashBoardContent /> */}
+          <Outlet/>
         </div>
         <div className=" w-1/3 bg-primary text-left">
           <div className="p-10">Sorry guys yaha kuch daal denge :( </div>
