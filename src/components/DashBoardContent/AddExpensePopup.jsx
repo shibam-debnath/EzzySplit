@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
-    TbLogout,
-    TbCurrency
+    TbLogout
   } from "react-icons/tb";
 
 import AddDatePopup from './AddDatePopup';
@@ -48,8 +47,8 @@ const AddExpensePopup = (props) => {
         <>
             <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '>
 
-                <div className=' h-3/5 flex justify-center'>
-                    <div className='border-2 border-emerald-600 rounded-xl w-1/3 my-auto bg-white'>
+                <div className=' h-3/5 flex justify-center mt-16'>
+                    <div className='border-2 border-emerald-600 rounded-xl w-[425px] my-auto bg-white'>
                         <form >
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
                                 <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>
@@ -75,11 +74,11 @@ const AddExpensePopup = (props) => {
                                     </div>
                                 </div>
                                 <div className='w-3/5  '>
-                                    <div className='p-1  '>
-                                        <input type="text" placeholder='Enter description' className='rounded-lg h-7 w-56 border-b-2 border-dotted border-blue-300 focus:ring-0' />
+                                    <div className='border-b-[1px] border-dotted border-emerald-500'>
+                                        <input type="text" placeholder='Enter description' className='rounded-lg h-7 w-full border-none focus:ring-0' />
                                     </div>
-                                    <div className='p-1 flex items-center '>
-                                        <button className='mr-2' onClick={addCurrency}><TbCurrency /></button>
+                                    <div className='mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500'>
+                                        <button className='font-medium hover:text-slate-500' onClick={addCurrency}>INR</button>
                                         <input type="text" placeholder='Amount' className='rounded-lg h-7 w-52 border-none focus:ring-0' />
                                     </div>
                                 </div>
@@ -126,6 +125,22 @@ const AddExpensePopup = (props) => {
                                     </button>
                                 </div>
                             </div>
+                            <hr  />
+
+
+                            <div className='flex justify-end py-3'>
+                                <div className='py-1 px-4 mr-3 text-base font-normal bg-slate-500 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-600  '>
+                                    <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' >
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
+                                    <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' >
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
 
@@ -137,8 +152,8 @@ const AddExpensePopup = (props) => {
                 {addon===2 && <SplitPopup/> }
                 {addon===3 && <AddDatePopup/> }
                 {addon===4 && <AddNotePopup/> }
-                {addon===5 && <AddGroupPopup/> }
-                {addon===6 && <AddCurrencyPopup/> }
+                {addon===5 && <AddGroupPopup closeAdd={closeAdd} /> }
+                {addon===6 && <AddCurrencyPopup closeAdd={closeAdd}/> }
                     {/* </div> */}
                 </div>
 
