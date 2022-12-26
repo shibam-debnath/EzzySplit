@@ -151,7 +151,7 @@ const AddExpensePopup = (props) => {
                 {addon===1 && <PaidByPopup closeAdd={closeAdd}/> }
                 {addon===2 && <SplitPopup/> }
                 {addon===3 && <AddDatePopup/> }
-                {addon===4 && <AddNotePopup/> }
+                {addon===4 && <AddNotePopup closeAdd={closeAdd} /> }
                 {addon===5 && <AddGroupPopup closeAdd={closeAdd} /> }
                 {addon===6 && <AddCurrencyPopup closeAdd={closeAdd}/> }
                     {/* </div> */}
