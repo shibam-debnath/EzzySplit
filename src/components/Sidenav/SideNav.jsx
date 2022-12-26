@@ -9,7 +9,7 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 
 const SideNav = () => {
   return (
-    <div class="flex md:w-64 md:ml-5 flex-col">
+    <div class="flex md:w-64 md:ml-5 flex-col ">
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white">
         Ezzy<span className="text-blue-900">Split</span>
       </h1>

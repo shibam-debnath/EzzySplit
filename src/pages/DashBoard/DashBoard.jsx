@@ -13,7 +13,7 @@ const DashBoard = () => {
           <DashBoardContent />
         </div>
         <div className=" w-1/3 bg-primary text-left">
-          <div className="p-10">Sorry guys yaha kuch daal denge :( </div>
+          <div className="p-10"></div>
         </div>
       </div>
     </>
