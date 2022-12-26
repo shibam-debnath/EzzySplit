@@ -32,7 +32,7 @@ const Hero = () => {
                   life.
                 </p>
                 <a
-                  href="/"
+                  href="/login"
                   className="items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center bg-primary text-white hover:bg-transparent hover:outline rounded-lg"
                 >
                   Get started
