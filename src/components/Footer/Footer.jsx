@@ -10,22 +10,22 @@ const Footer = () => {
             </h3>
             <ul className="text-gray-500 dark:text-gray-400">
               <li className="mb-2">
-                <a href="/" className=" hover:underline">
+                <a href="/" className=" hover:text-gray-300">
                   About
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Careers
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Brand Center
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Blog
                 </a>
               </li>
@@ -37,22 +37,22 @@ const Footer = () => {
             </h3>
             <ul className="text-gray-500 dark:text-gray-400">
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Discord Server
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Twitter
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Facebook
                 </a>
               </li>
               <li className="mb-3">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Contact Us
                 </a>
               </li>
@@ -62,13 +62,13 @@ const Footer = () => {
             <h3 className="mb-6  font-semibold text-white uppercase ">Legal</h3>
             <ul className="text-gray-500 dark:text-gray-400">
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Privacy Policy
                 </a>
               </li>
 
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Terms
                 </a>
               </li>
@@ -80,22 +80,22 @@ const Footer = () => {
             </h3>
             <ul className="text-gray-500 dark:text-gray-400">
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Holidays & weekends
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Shared house
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   Bachelor party
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/" className="hover:underline">
+                <a href="/" className="hover:text-gray-300">
                   other
                 </a>
               </li>

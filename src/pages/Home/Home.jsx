@@ -8,7 +8,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 const Home = () => {
   return (
-    <div className=" h-screen scrollbar hover:scrollbar-thumb-white scrollbar-thumb-rounded-xl scrollbar-thumb-primary">
+    <div className="h-screen scrollbar hover:scrollbar-thumb-neutral-200 scrollbar-thumb-rounded-xl scrollbar-thumb-primary ">
       <Navbar />
       <Hero />
       <Steps />
