@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
   return (
-    <div class="flex md:w-64 md:ml-5 flex-col">
+    <div class="flex md:w-64 md:ml-5 flex-col ">
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white">
         Ezzy<span className="text-blue-900">Split</span>
       </h1>
@@ -29,7 +29,7 @@ const SideNav = () => {
           </li>
           <li>
             <NavLink
-              to={"/dashboard/groups"}
+              to={"/dashboard/LastGroup"}
               className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
