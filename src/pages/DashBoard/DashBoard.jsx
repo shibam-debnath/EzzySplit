@@ -6,7 +6,7 @@ import SideNav from "../../components/Sidenav/SideNav";
 const DashBoard = () => {
   return (
     <>
-      <div className="flex space-between">
+      <div className="flex justify-between">
         <div className=" bg-primary text-left">
           <SideNav />
         </div>

@@ -1,10 +1,15 @@
 import React from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { earningData } from "../../data/DashBoardData";
+// import AddExpenses from "./AddExpenses";
 
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
   return (
+    <>
+      {/* <div className="fixed bottom-0 right-0 border-2 border-r-emerald-500 w-fit">
+      <AddExpenses/>
+      </div> */}
     <div className="mt-6">
       <div className="flex w-full flex-wrap justify-left ">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
@@ -51,6 +56,7 @@ const DashBoardContent = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
