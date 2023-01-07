@@ -8,9 +8,6 @@ const LastGroup = () =>{
     return(
         <>
       <div className="flex space-between ">
-        <div className=" bg-primary text-left">
-          <SideNav />
-        </div>
         <div className=" min-h-screen w-full  ">
           <div className="pt-5 pb-2 font-sans text-3xl">
             Your last Groups
@@ -34,10 +31,7 @@ const LastGroup = () =>{
           </div>
           
         </div>
-        <div className="w-1/3"></div>
-        {/* <div className=" w-1/3 bg-primary text-left">
-          <div className="p-10">Sorry guys yaha kuch daal denge : </div>
-        </div> */}
+        
       </div>
     </>
     );

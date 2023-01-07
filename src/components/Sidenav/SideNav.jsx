@@ -6,6 +6,7 @@ import {
   TbLogout,
 } from "react-icons/tb";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
   return (
@@ -16,62 +17,62 @@ const SideNav = () => {
       <div class="mt-12  py-4 px-3 bg-primary rounded">
         <ul class="space-y-2">
           <li>
-            <a
-              href="/dashboard"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+            <NavLink
+              to={"/dashboard/"}
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
               </button>
-              <span class="ml-3">Dashboard</span>
-            </a>
+              <span className="ml-3">Dashboard</span>
+            </NavLink>
           </li>
           <li>
-            <a
-              href="/dashboard"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+            <NavLink
+              to={"/dashboard/LastGroup"}
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <HiOutlineUserGroup />
               </button>
-              <span class="flex-1 ml-3 whitespace-nowrap">Last Groups</span>
-            </a>
+              <span className="flex-1 ml-3 whitespace-nowrap">Last Groups</span>
+            </NavLink>
           </li>
           <li>
-            <a
-              href="/dashboard"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+            <NavLink
+              to="/dashboard/activity"
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbBrandHipchat />
               </button>
-              <span class="flex-1 ml-3 whitespace-nowrap">Inbox</span>
-              <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
+              <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
+              <span className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
                 3
               </span>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a
-              href="/dashboard"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+            <NavLink
+              to={"/dashboard/friends"}
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbFriends />
               </button>
               <span class="flex-1 ml-3 whitespace-nowrap">Friends</span>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a
-              href="/"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+            <NavLink
+              to={"/"}
+              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
             >
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbLogout />
               </button>
               <span class="flex-1 ml-3 whitespace-nowrap">Log Out</span>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
