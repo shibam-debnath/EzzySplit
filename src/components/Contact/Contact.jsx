@@ -11,7 +11,7 @@ const Contact = () => {
     const onSubmit = data => alert(JSON.stringify(data));
 
     return (
-        <div className="w-full bg-gray-900 p-6 text-white">
+        <div className="w-full bg-transparent p-6 text-white">
             <h1 className="font-bold text-center text-2xl sm:text-3xl"><span className="text-primary">Contact</span> Us</h1>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,7 +21,7 @@ const Contact = () => {
                             <input
                                 type="text"
                                 placeholder="Name"
-                                className={` w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
+                                className={` w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black bg-gray-200 ${errors.fullName &&
                                            "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("fullName",
                                  { required:{
@@ -52,7 +52,7 @@ const Contact = () => {
                             <input
                                 type="email"
                                 placeholder="myid@gmail.com"
-                                className={`w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black ${errors.fullName &&
+                                className={`w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black bg-gray-200 ${errors.fullName &&
                                     "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("email",
                                  { required:{
@@ -72,7 +72,7 @@ const Contact = () => {
                         <div>
                             <textarea
                                 placeholder="Message"
-                                className={` w-3/4 sm:w-96 h-10 text-sm rounded-lg text-black ${errors.messages &&
+                                className={` w-3/4 sm:w-96 h-10 text-sm rounded-lg text-black bg-gray-200 ${errors.messages &&
                                     "focus:border-red-500 focus:ring-red-500 border-red-500 "}`}
                                 {...register("messages",
                                 { required:{

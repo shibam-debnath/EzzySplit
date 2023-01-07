@@ -6,7 +6,7 @@ import ArrSteps from "./ArrSteps";
 const Steps = () => {
   return (
     <>
-      <div className="w-full bg-gray-900">
+      <div className="w-full bg-transparent">
         <div className="w-5/6 m-auto my-0 py-0 ">
           <div>
             <p className="text-2xl md:text-3xl xl:text-4xl font-semibold tracking-wide text-white mt-0 pt-14 pb-10 px-3">
