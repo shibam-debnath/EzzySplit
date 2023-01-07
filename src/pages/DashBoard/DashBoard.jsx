@@ -1,19 +1,18 @@
 import React from "react";
 import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
+import RightSideNav from "../../components/RightSideNav/RightSideNav";
 import SideNav from "../../components/Sidenav/SideNav";
 
 const DashBoard = () => {
   return (
     <>
-      <div className="flex space-between">
-        <div className=" bg-primary text-left">
-          <SideNav />
-        </div>
+      <SideNav />
+      <div className="ml-64 flex space-between">
         <div className="bg-gray-300 min-h-screen w-full  ">
           <DashBoardContent />
         </div>
         <div className=" w-1/3 bg-primary text-left">
-          <div className="p-10">Sorry guys yaha kuch daal denge :( </div>
+          <RightSideNav />
         </div>
       </div>
     </>
