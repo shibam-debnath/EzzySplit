@@ -1,11 +1,42 @@
-import React from 'react'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import React, { useState } from 'react';
+import {
+  useNavigate
+} from "react-router-dom";
+import firebaseConfig from "../../firebase/firebase.config";
+import initializeAuthentication from "../../firebase/firebase.init";
 
-export default function Login2(props) {
+
+
+export default function Login2() {
+   initializeAuthentication();
+  const provider = new GoogleAuthProvider();
+  let Navigate = useNavigate();
+  const handleGooglesignIn = () => {
+    const auth = getAuth();
+
+    signInWithPopup(auth, provider).then((result) => {
+      const user = result.user;
+      console.log(user);
+      if (isUserSignedIn === true) {
+        Navigate("/Dashboard");
+      } else {
+        Navigate("/Login");
+      }
+    });
+  };
+
+  const [isUserSignedIn, setisUserSignedIn] = useState(true);
+  // firebaseConfig.auth().onAuthStateChanged((user) => {
+  //   if (user) {
+  //     return setisUserSignedIn(true);
+  //   }
+
+  //   setisUserSignedIn(false);
+  // });
   return (
   
-    //  const signin = () => {
-    //     auth.signInWithPopup(provider).catch(alert);
-    // }
+    
        <section class="bg-gray-50 min-h-screen flex items-center justify-center">
       <div
         class="bg-gray-200 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center"
@@ -20,7 +51,7 @@ export default function Login2(props) {
             <img src="./images/hero-img.svg" class="w-48 h-48 m-auto" alt="" />
           </div>
 
-          <button onClick={props.handleGooglesignIn}
+          <button onClick={handleGooglesignIn}
             class="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
           >
             <svg
