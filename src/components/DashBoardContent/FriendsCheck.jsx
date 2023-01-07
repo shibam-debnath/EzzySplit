@@ -1,10 +1,9 @@
-import React from 'react'
-import AddExpenses from './AddExpenses'
+import React from 'react';
 const FriendsCheck = () => {
   return (
     
     <>
-    <AddExpenses/>
+    I am activity
     </>
   )
 }
