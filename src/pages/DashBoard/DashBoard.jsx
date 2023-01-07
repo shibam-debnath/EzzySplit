@@ -1,15 +1,19 @@
 import React from "react";
-import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
-import RightSideNav from "../../components/RightSideNav/RightSideNav";
+import { Outlet } from "react-router-dom";
+// import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
 import SideNav from "../../components/Sidenav/SideNav";
+import RightSideNav from "../../components/RightSideNav/RightSideNav";
 
 const DashBoard = () => {
   return (
     <>
-      <SideNav />
-      <div className="ml-64 flex space-between">
+      <div className="flex justify-between">
+        <div className=" bg-primary text-left">
+          <SideNav />
+        </div>
         <div className="bg-gray-300 min-h-screen w-full  ">
-          <DashBoardContent />
+          {/* <DashBoardContent /> */}
+          <Outlet />
         </div>
         <div className=" w-1/3 bg-primary text-left">
           <RightSideNav />
