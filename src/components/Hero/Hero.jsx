@@ -4,7 +4,7 @@ import Typewriter from "typewriter-effect";
 const Hero = () => {
   return (
     <div>
-      <section className=" bg-gray-900">
+      <section className="">
         <div className="px-6 py-12 lg:my-0 md:px-12 text-gray-800 text-center lg:text-left">
           <div className="container mx-auto xl:px-32">
             <div className="lg:flex justify-between items-center  sm:flex-row">
@@ -32,7 +32,7 @@ const Hero = () => {
                   life.
                 </p>
                 <a
-                  href="/"
+                  href="/login"
                   className="items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center bg-primary text-white hover:bg-transparent hover:outline rounded-lg"
                 >
                   Get started
