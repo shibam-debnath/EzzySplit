@@ -10,7 +10,7 @@ const Contact = () => {
     watch,
     formState: { errors },
   } = useForm({
-    mode: "onTouched",
+    mode: "onTouched"
   });
 
   //handle submit
@@ -21,9 +21,7 @@ const Contact = () => {
     let config = {
       method: "post",
       url: "http://localhost:8000/sendmail/contactUs",
-      // headers:{
-      //     'Content-type':'applcation/json'
-      // },
+      
       data: {
         name: values.name,
         emailId: values.email,
@@ -32,14 +30,7 @@ const Contact = () => {
     };
     try {
       const response = await axios(config);
-      // const response=axios({
-      //     method: 'post',
-      //     url: url,
-      //     data: {
-      //       name: values.name,
-      //       emailId:values.email,
-      //       message:values.message
-      //     }});
+      
       console.log(response);
       if (response.data === "Failed to receive mail") {
         alert("Failed to receive message");
