@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -7,14 +7,12 @@ const Contact = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     mode: "onTouched"
   });
 
   //handle submit
-  const url = "http://localhost:8000/sendmail/contactUs";
   async function onSubmitForm(values) {
     console.log(values);
 
@@ -28,6 +26,7 @@ const Contact = () => {
         message: values.message,
       },
     };
+
     try {
       const response = await axios(config);
       

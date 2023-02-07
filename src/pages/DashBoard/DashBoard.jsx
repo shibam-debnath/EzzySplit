@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 // import DashBoardContent from "../../components/DashBoardContent/DashBoardContent";
 import SideNav from "../../components/Sidenav/SideNav";
+import RightSideNav from "../../components/RightSideNav/RightSideNav";
 
 const DashBoard = () => {
   return (
@@ -12,10 +13,10 @@ const DashBoard = () => {
         </div>
         <div className="bg-gray-300 min-h-screen w-full  ">
           {/* <DashBoardContent /> */}
-          <Outlet/>
+          <Outlet />
         </div>
         <div className=" w-1/3 bg-primary text-left">
-          <div className="p-10"></div>
+          <RightSideNav />
         </div>
       </div>
     </>
