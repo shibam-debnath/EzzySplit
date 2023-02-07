@@ -29,7 +29,6 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/dashBoard" element={<DashBoard />}>
-          {/* <Route path="/lastgroup" element={<LastGroup />} /> */}
           <Route exact path="LastGroup" element={<LastGroup />} />
           <Route exact path="friends" element={<FriendsCheck />} />
           <Route exact path="" element={<DashBoardContent />} />
