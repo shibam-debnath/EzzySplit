@@ -7,7 +7,7 @@ const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
   return (
     <>
-      <div className="fixed bottom-0 right-0 border-2 border-r-emerald-500 w-fit">
+      <div >
       <AddExpenses/>
       </div>
     <div className="mt-6">
