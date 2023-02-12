@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import {
-    TbLogout
-  } from "react-icons/tb";
-
+import { VscClose } from "react-icons/vsc";
 import AddDatePopup from './AddDatePopup';
 import AddNotePopup from './AddNotePopup';
 import AddGroupPopup from './AddGroupPopup';
@@ -53,7 +50,7 @@ const AddExpensePopup = (props) => {
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
                                 <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>
                                 <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>
-                                    <TbLogout />
+                                    <VscClose />
                                 </button>
                             </div>
                             <div className='flex justify-start items-center px-3 py-1'>
@@ -149,7 +146,7 @@ const AddExpensePopup = (props) => {
                     {/* <div className='border-2 border-emerald-600 w-[28%] my-auto rounded-xl mx-2'> */}
 
                 {addon===1 && <PaidByPopup closeAdd={closeAdd}/> }
-                {addon===2 && <SplitPopup/> }
+                {addon===2 && <SplitPopup closeAdd={closeAdd}/> }
                 {addon===3 && <AddDatePopup/> }
                 {addon===4 && <AddNotePopup closeAdd={closeAdd} /> }
                 {addon===5 && <AddGroupPopup closeAdd={closeAdd} /> }
