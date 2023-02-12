@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  TbLogout
-} from "react-icons/tb";
+import { VscClose } from "react-icons/vsc";
 
 
 const AddGroupPopup = (props) => {
@@ -12,7 +10,7 @@ const AddGroupPopup = (props) => {
           <div className='bg-primary rounded-lg p-2 px-3 flex justify-between mb-1'>
             <h5 className=' text-white font-semibold text-lg'>Choose Group</h5>
             <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>
-              <TbLogout />
+              <VscClose />
             </button>
           </div>
 

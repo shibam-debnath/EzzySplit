@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Contact = () => {
   //handle events
@@ -12,7 +13,30 @@ const Contact = () => {
   });
 
   //handle submit
-  const onSubmit = (data) => alert(JSON.stringify(data));
+  async function onSubmitForm(values) {
+    console.log(values);
+
+    let config = {
+      method: "post",
+      url: "http://localhost:8000/sendmail/contactUs",
+      data: {
+        name: values.name,
+        emailId: values.email,
+        message: values.message,
+      },
+    };
+
+    try {
+      const response = await axios(config);
+      if (response.data === "Failed to receive mail") {
+        alert("Failed to receive message");
+      } else {
+        alert("Message receieved");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="w-full bg-transparent p-6 text-white">
@@ -20,18 +44,19 @@ const Contact = () => {
         <span className="text-primary">Contact</span> Us
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
         <div className="p-4">
           <div className="mx-5 space-y-4">
             <div>
               <input
+                name="name"
                 type="text"
                 placeholder="Name"
                 className={` w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black bg-gray-200 ${
                   errors.fullName &&
                   "focus:border-red-500 focus:ring-red-500 border-red-500 "
                 }`}
-                {...register("fullName", {
+                {...register("name", {
                   required: {
                     value: true,
                     message: "Full name is required",
@@ -54,15 +79,16 @@ const Contact = () => {
                 })}
               />
               <div>
-                {errors.fullName && (
+                {errors.name && (
                   <span className="text-red-500 text-xs">
-                    {errors.fullName.message}
+                    {errors.name.message}
                   </span>
                 )}
               </div>
             </div>
             <div>
               <input
+                name="emailId"
                 type="email"
                 placeholder="myid@gmail.com"
                 className={`w-3/4 sm:w-96 h-9 text-sm rounded-lg text-black bg-gray-200 ${
@@ -91,12 +117,13 @@ const Contact = () => {
             </div>
             <div>
               <textarea
+                // name="message"
                 placeholder="Message"
                 className={` w-3/4 sm:w-96 h-10 text-sm rounded-lg text-black bg-gray-200 ${
                   errors.messages &&
                   "focus:border-red-500 focus:ring-red-500 border-red-500 "
                 }`}
-                {...register("messages", {
+                {...register("message", {
                   required: {
                     value: true,
                     message: "Message is required",
@@ -114,9 +141,9 @@ const Contact = () => {
                 })}
               />
               <div>
-                {errors.messages && (
+                {errors.message && (
                   <span className="text-red-500 text-xs">
-                    {errors.messages.message}
+                    {errors.message.message}
                   </span>
                 )}
               </div>
