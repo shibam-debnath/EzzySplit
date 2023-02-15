@@ -4,7 +4,7 @@ const StepL = (props) => {
     return <>
         
                     {/* long */}
-                    <div className="hidden lg:flex lg:justify-between lg:mt-10 lg:pb-14">
+                    <div className="hidden  lg:flex lg:justify-between lg:mt-10 lg:pb-14">
                         <div className="img ">
                             <div className=" ">
                                 <img src={props.img} alt="Loading steps Images"
