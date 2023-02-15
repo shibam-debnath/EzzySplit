@@ -1,6 +1,7 @@
 import React from "react";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+import axios from "axios";
 
 export const data = [
   {

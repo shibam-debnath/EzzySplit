@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { ClipLoader, BarLoader } from "react-spinners";
+
+var value = "Sent";
 
 const Contact = () => {
+  const [beforeSubmit, fbeforeSubmit] = useState(0);
+  const set = () => {
+    setTimeout(() => {
+      fbeforeSubmit(0);
+    }, 10000);
+  };
   //handle events
   const {
     register,
@@ -12,13 +21,16 @@ const Contact = () => {
     mode: "onTouched",
   });
 
+  var response;
   //handle submit
   async function onSubmitForm(values) {
+    fbeforeSubmit(1);
     console.log(values);
 
     let config = {
       method: "post",
       url: "http://localhost:8000/sendmail/contactUs",
+
       data: {
         name: values.name,
         emailId: values.email,
@@ -27,13 +39,22 @@ const Contact = () => {
     };
 
     try {
-      const response = await axios(config);
+      response = await axios(config);
+
+      console.log(response);
       if (response.data === "Failed to receive mail") {
-        alert("Failed to receive message");
+        // alert("Failed to receive message");
+        value = "Failed to receive message";
+        fbeforeSubmit(2);
       } else {
-        alert("Message receieved");
+        value = "Message sent";
+        fbeforeSubmit(2);
+        // alert("Message receieved");
       }
+      set();
     } catch (err) {
+      value = "Something went wrong";
+      fbeforeSubmit(2);
       console.log(err);
     }
   }
@@ -119,7 +140,7 @@ const Contact = () => {
               <textarea
                 // name="message"
                 placeholder="Message"
-                className={` w-3/4 sm:w-96 h-10 text-sm rounded-lg text-black bg-gray-200 ${
+                className={` w-3/4 sm:w-96 h-20 text-sm rounded-lg text-black bg-gray-200 ${
                   errors.messages &&
                   "focus:border-red-500 focus:ring-red-500 border-red-500 "
                 }`}
@@ -148,12 +169,31 @@ const Contact = () => {
                 )}
               </div>
             </div>
-            <div>
-              <input
-                type="submit"
-                value="Submit"
-                className="bg-primary rounded-lg p-2 cursor-pointer hover:outline hover:bg-transparent"
-              />
+            <div className="flex justify-center"> 
+              {beforeSubmit === 0 && (
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="bg-primary rounded-lg p-2 cursor-pointer hover:outline hover:bg-transparent"
+                />
+              )}
+              {beforeSubmit === 1 && (
+                <div className="flex justify-center rounded-lg">
+                  <BarLoader
+                    className="rounded-lg"
+                    color="#6B60F1"
+                    speedMultiplier={1}
+                    height={38}
+                  />
+                </div>
+              )}
+              {beforeSubmit === 2 && (
+                <div className="bg-primary rounded-lg p-2 text-center w-fit flex justify-center ">
+                  {/* <div className="bg-primary rounded-lg p-2 text-center w-64 " > */}
+                    {value}
+                  {/* </div> */}
+                </div>
+              )}
             </div>
           </div>
         </div>
