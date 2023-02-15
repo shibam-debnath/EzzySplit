@@ -1,9 +1,32 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { userProfileData } from "../../data/UserData";
 import Button from "../Button/Button";
 import { MdOutlineCancel } from "react-icons/md";
+import axios from "axios";
 
 const UserProfile = () => {
+  const [getUsersDet, FgetUsersDet] = useState({});
+
+  const getData = async () => {
+    try {
+      let config = {
+        method: "get",
+        url: "http://localhost:8000/user/profile/63d3700f59aa96fcdb661477",
+      };
+      var response;
+      response = await axios(config);
+      console.log(response.data.users);
+      FgetUsersDet(response.data.users);
+      console.log(`Dtat: ${getUsersDet}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div>
       <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -27,8 +50,7 @@ const UserProfile = () => {
           />
           <div>
             <p className="font-semibold text-xl dark:text-gray-200">
-              {" "}
-              Shibam Debnath{" "}
+              {getUsersDet.name}
             </p>
             <p className="text-gray-500 text-sm dark:text-gray-400">
               {" "}
@@ -36,7 +58,7 @@ const UserProfile = () => {
             </p>
             <p className="text-gray-500 text-sm font-semibold dark:text-gray-400">
               {" "}
-              shibamdebnath07@gmail.com{" "}
+              {getUsersDet.emailId}{" "}
             </p>
           </div>
         </div>
