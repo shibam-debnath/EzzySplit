@@ -3,11 +3,19 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { earningData } from "../../data/DashBoardData";
 import AddExpenses from "./AddExpenses";
 import axios from "axios";
+import {BarLoader} from "react-spinners";
 
+var name="Suraj Kumar";
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
   const [getUsersDet, FgetUsersDet] = useState({});
-
+  const [beforeFetch, fbeforeFetch] = useState(0);
+  const set = () => {
+    setTimeout(() => {
+      fbeforeFetch(1);
+    }, 500);
+  };
+  
   const getData = async () => {
     try {
       let config = {
@@ -18,6 +26,7 @@ const DashBoardContent = () => {
       response = await axios(config);
       console.log(response.data.users);
       FgetUsersDet(response.data.users);
+      set();
       console.log(`Dtat: ${getUsersDet}`);
     } catch (err) {
       console.log(err);
@@ -39,9 +48,10 @@ const DashBoardContent = () => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="font-bold text-gray-400 flex">Hi,</p>
-                <p className="text-gray-400 text-2xl font-bold">
-                  {getUsersDet.name}
-                </p>
+                {/* <p className="text-gray-400 text-2xl font-bold"> */}
+                  {beforeFetch===1 && (<p className="text-gray-400 text-2xl font-bold">{name}</p>)}
+                  {beforeFetch===0 && (<BarLoader color="#f5f5f5"  height={25}/>)}
+                {/* </p> */}
               </div>
               <button
                 type="button"
