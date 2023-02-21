@@ -6,7 +6,7 @@ import axios from "axios";
 
 const UserProfile = () => {
   const [getUsersDet, FgetUsersDet] = useState({});
-
+  
   const getData = async () => {
     try {
       let config = {

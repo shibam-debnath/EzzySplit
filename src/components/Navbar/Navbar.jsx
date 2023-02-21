@@ -46,7 +46,7 @@ const Navbar = () => {
                 <a href="/">Home</a>
               </li>
               <li className="p-2  text-gray-300 h-10 hover:text-primary hover:font-bold">
-                <a href="/">Features</a>
+                <a href="">Features</a>
               </li>
               <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-primary hover:font-bold">
                 <a href="/">Contact Us</a>

@@ -3,6 +3,21 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 import axios from "axios";
 
+// const fetch = async()=>{
+//   try {
+//     let config = {
+//       method: "get",
+//       url: "http://localhost:8000/user/profile/63d3700f59aa96fcdb661477",
+//     };
+//     var response;
+//     response = await axios(config);
+//     console.log(response.data.users);
+    
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 export const data = [
   {
     id: "1",
