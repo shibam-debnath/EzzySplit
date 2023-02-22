@@ -3,9 +3,9 @@ import Typewriter from "typewriter-effect";
 
 const Hero = () => {
   return (
-    <div>
-      <section className="">
-        <div className="px-6 py-12 lg:my-0 md:px-12 text-gray-800 text-center lg:text-left">
+    <div id="Hero">
+      <section >
+        <div className=" px-6 py-12 lg:my-0 md:px-12 text-gray-800 text-center lg:text-left">
           <div className="container mx-auto xl:px-32">
             <div className="lg:flex justify-between items-center  sm:flex-row">
               <div className="my-10">
@@ -38,7 +38,7 @@ const Hero = () => {
                   Get started
                 </a>
               </div>
-              <div className="grid place-items-center max-sm:hidden">
+              <div className="grid place-items-center max-sm:hidden mt-10">
                 <img
                   className=""
                   src="./images/hero-img.svg"
