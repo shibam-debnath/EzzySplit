@@ -1,21 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Navbar.css";
 import { useState } from "react";
+import { Link, animateScroll as scroll } from "react-scroll";
+// import {Link} from 'react-router-dom';
+import { Contact } from "../Contact/Contact.jsx";
 
+// const scrollDown = (ref) => {
+//   window.scrollTo({
+//     top: ref.current.offsetTop,
+//     behavior: 'smooth',
+//   });
+// };
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   return (
-    <nav className="w-full bg-transparent ">
+    <nav className="w-full bg-transparent fixed top-0 glass">
       <div className="justify-between px-4 mx-auto lg:max-w-8xl md:items-center md:flex md:px-8">
         <div>
-          <div className="flex items-center justify-between py-3 md:py-5 md:block">
+          <div className="flex items-center justify-between py-3 md:py-5 md:block ">
             <a href="/">
-              <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white">
+              <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white ">
                 Ezzy<span className="text-primary">Split</span>
               </h1>
             </a>
-            <div className="md:hidden">
+            <div className="md:hidden glass">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
                 onClick={() => setNavbar(!navbar)}
@@ -34,7 +43,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div >
           <div
             // className={navbar ? "hidden" : "block"}
             className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
@@ -42,14 +51,41 @@ const Navbar = () => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 mb-3 md:flex md:space-x-6 md:space-y-0">
-              <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-primary hover:font-bold">
-                <a href="/">Home</a>
+              <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-primary hover:font-bold cursor-pointer">
+              <Link
+                  activeClass="active"
+                  to="Hero"
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                Home
+                </Link>
               </li>
-              <li className="p-2  text-gray-300 h-10 hover:text-primary hover:font-bold">
-                <a href="/">Features</a>
+              <li className="p-2  text-gray-300 h-10 hover:text-primary hover:font-bold cursor-pointer">
+                <Link
+                  activeClass="active"
+                  to="Feature"
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                Features
+                </Link>
               </li>
-              <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-primary hover:font-bold">
-                <a href="/">Contact Us</a>
+              <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-primary hover:font-bold cursor-pointer">
+                <Link
+                  activeClass="active"
+                  to="Contact"
+                  spy={true}
+                  smooth={true}
+                  offset={-50}
+                  duration={500}
+                >
+                  Contact Us
+                </Link>
               </li>
               <li>
                 <a
