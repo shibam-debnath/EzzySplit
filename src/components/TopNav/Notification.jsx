@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { NotificationData } from "../../data/NotificationData";
 import Button from "../Button/Button";
 
-const Notification = () => {
+const Notification = (props) => {
   return (
-    <div className="nav-item absolute right-5 md:right-40 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
+    <div className="nav-item absolute right-5 md:right-40 top-16 bg-slate-200  p-8 rounded-lg w-96">
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
-          <p className="font-semibold text-lg dark:text-gray-200">
-            Notifications
-          </p>
+          <p className="font-semibold text-lg text-primary">Notifications</p>
           <button
             type="button"
+            // onClick=
             className="text-white text-xs rounded p-1 px-2 bg-orange-theme "
           >
-            {" "}
-            5 New
+            {""}5 New
           </button>
         </div>
         <Button
@@ -39,18 +37,15 @@ const Notification = () => {
               alt={item.message}
             />
             <div>
-              <p className="font-semibold dark:text-gray-200">{item.message}</p>
-              <p className="text-gray-500 text-sm dark:text-gray-400">
-                {" "}
-                {item.desc}{" "}
-              </p>
+              <p className="font-semibold text-gray-700">{item.message}</p>
+              <p className="text-sm text-gray-400"> {item.desc} </p>
             </div>
           </div>
         ))}
         <div className="mt-5">
           <Button
             color="white"
-            bgColor="blue"
+            bgColor="rgb(107 96 241 / var(--tw-bg-opacity)"
             text="See all notifications"
             borderRadius="10px"
             width="full"
