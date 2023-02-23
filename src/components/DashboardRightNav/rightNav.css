@@ -1,0 +1,22 @@
+.nav{
+    justify-content: space-around;
+}
+.CreateNewGroup>img{
+    margin: auto;
+}
+.items{
+    align-content: space-between;
+    justify-content: space-between;
+    /* font-size: large; */
+}
+.color{
+    background-color: #6B60F1;
+}
+.custom{
+    justify-content: space-around;
+}
+.section{
+    border: 5px solid #5f54dc;
+    border-radius: 10px;
+    background-color: #6B60F1;
+}

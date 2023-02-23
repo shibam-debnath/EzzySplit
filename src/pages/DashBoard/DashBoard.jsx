@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import SideNav from "../../components/Sidenav/SideNav";
 import RightSideNav from "../../components/RightSideNav/RightSideNav";
 import TopNav from "../../components/TopNav/TopNav";
+import RightNav from "../../components/DashboardRightNav/RightNav";
 
 const DashBoard = () => {
   return (
@@ -20,7 +21,8 @@ const DashBoard = () => {
           <Outlet />
         </div>
         <div className=" w-1/3 bg-primary text-left">
-          <RightSideNav />
+          {/* <RightSideNav /> */}
+          <RightNav/>
         </div>
       </div>
     </>
