@@ -10,6 +10,7 @@ import FriendsCheck from "./components/DashBoardContent/FriendsCheck";
 import Login from "./pages/Login/Login";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from "./firebase/firebase.init";
+import Error404 from "./pages/Error404/Error404";
 
 initializeAuthentication();
 const provider = new GoogleAuthProvider();
@@ -38,6 +39,7 @@ function App() {
           path="/Login"
           element={<Login handleGooglesignIn={handleGooglesignIn} />}
         />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );
