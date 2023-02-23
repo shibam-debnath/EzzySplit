@@ -9,20 +9,23 @@ import RightNav from "../../components/DashboardRightNav/RightNav";
 const DashBoard = () => {
   return (
     <>
-      <div className="">
-        <TopNav />
-      </div>
-      <div className="flex justify-between">
+      <div className="flex flex-row">
         <div className=" bg-primary text-left">
           <SideNav />
         </div>
-        <div className="bg-gray-300 min-h-screen w-full  ">
-          {/* <DashBoardContent /> */}
-          <Outlet />
-        </div>
-        <div className=" w-1/3 bg-primary text-left">
-          {/* <RightSideNav /> */}
-          <RightNav/>
+        <div className="w-full">
+          <div>
+            <TopNav />
+          </div>
+          <div className="flex flex-row">
+            <div className="bg-gray-300 min-h-screen w-full  ">
+              {/* <DashBoardContent /> */}
+              <Outlet />
+            </div>
+            <div className=" w-1/3 bg-primary text-left">
+              <RightSideNav />
+            </div>
+          </div>
         </div>
       </div>
     </>
