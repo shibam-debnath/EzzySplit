@@ -1,33 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { BsCurrencyDollar } from "react-icons/bs";
-import { earningData } from "../../data/DashBoardData";
-import AddExpenses from "./AddExpenses";
 import axios from "axios";
-import {BarLoader} from "react-spinners";
 
-var name="Suraj Kumar";
+import AddExpenses from "./AddExpenses";
+import { BarLoader } from "react-spinners";
+
+// icons
+import { BsCurrencyDollar } from "react-icons/bs";
+import { IoPeopleSharp } from "react-icons/io5";
+import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
-  const [getUsersDet, FgetUsersDet] = useState({});
   const [beforeFetch, fbeforeFetch] = useState(0);
+
+  const [userData, setData] = useState([]);
+
   const set = () => {
     setTimeout(() => {
       fbeforeFetch(1);
     }, 500);
   };
-  
+
+  // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      let config = {
-        method: "get",
-        url: "http://localhost:8000/user/profile/63d3700f59aa96fcdb661477",
-      };
-      var response;
-      response = await axios(config);
-      console.log(response.data.users);
-      FgetUsersDet(response.data.users);
-      set();
-      console.log(`Dtat: ${getUsersDet}`);
+      axios
+        .get("http://localhost:8000/user/profile/63d3700f59aa96fcdb661477", {
+          responseType: "json",
+        })
+        .then(function (response) {
+          setData(response.data.users);
+          set();
+        });
     } catch (err) {
       console.log(err);
     }
@@ -37,6 +41,33 @@ const DashBoardContent = () => {
     getData();
   }, []);
 
+  console.log(userData);
+  // console.log(userData.users);
+
+  const earningData = [
+    {
+      icon: <GiReceiveMoney />,
+      title: "Total Spent",
+      amount: userData.totalAmountToPay,
+      // amount: userData.users.totalAmountpaid,
+      iconColor: "#03C9D7",
+      iconBg: "#E5FAFB",
+    },
+    {
+      icon: <GiPayMoney />,
+      title: "You Owe",
+      amount: userData.totalAmountpaid,
+      iconColor: "rgb(255 158 18)",
+      iconBg: "rgb(255 211 55 / 21%)",
+    },
+    {
+      icon: <IoPeopleSharp />,
+      title: "Amount Left to Pay",
+      amount: userData.totalAmountRecieved,
+      iconColor: "rgb(228, 106, 118)",
+      iconBg: "rgb(255, 244, 229)",
+    },
+  ];
   return (
     <>
       <div>
@@ -49,8 +80,16 @@ const DashBoardContent = () => {
               <div>
                 <p className="font-bold text-gray-400 flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
-                  {beforeFetch===1 && (<p className="text-gray-400 text-2xl font-bold">{name}</p>)}
-                  {beforeFetch===0 && (<BarLoader color="#f5f5f5"  height={25}/>)}
+                {beforeFetch === 1 && (
+                  <p className="text-gray-400 text-2xl font-bold">
+                    {userData.name}
+                  </p>
+                )}
+                {beforeFetch === 0 && (
+                  <p className="text-gray-400 text-2xl font-bold">
+                    <BarLoader color="#f5f5f5" height={25} />
+                  </p>
+                )}
                 {/* </p> */}
               </div>
               <button

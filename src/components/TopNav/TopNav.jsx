@@ -78,12 +78,12 @@ const TopNav = () => {
               src="./images/avatar.png"
               alt="user-profile"
             />
-            <p>
+            {/* <p>
               <span className="text-gray-400 text-14">Hi,</span>{" "}
               <span className="text-gray-400 font-bold ml-1 text-14">
-                Shibam
+                Suraj
               </span>
-            </p>
+            </p> */}
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
           {menu.userProfile && <UserProfile />}

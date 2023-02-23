@@ -1,7 +1,7 @@
 import React from "react";
 const Footer = () => {
   return (
-    <footer className="bg-transparent">
+    <footer className="bg-footerColor pt-20">
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-2 lg:grid-cols-4 text-center">
           <div>

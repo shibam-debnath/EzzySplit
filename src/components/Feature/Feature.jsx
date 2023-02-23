@@ -1,12 +1,12 @@
 import React from "react";
 const Feature = () => {
   return (
-    <div className="w-full  bg-transparent p-6 text-white">
+    <div id="Feature" className="w-full  bg-transparent p-6 text-white">
       <h1 className="font-bold text-2xl text-center sm:text-3xl  ">
         Key <span className=" text-bold text-primary">Features</span>{" "}
       </h1>
-      <div className="flex flex-wrap justify-center group">
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+      <div className="flex flex-wrap justify-center ">
+        <div className="flex flex-col cursor-pointer hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img
             src="./images/collaborative.svg"
             alt=""
@@ -18,7 +18,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089]  w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer  hover:!scale-110 hover:bg-indigo-300/[0.089]  w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img
             src="./images/notification.svg"
             alt=""
@@ -30,7 +30,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg m-2 overflow-hidden sm:w-52">
           <img
             src="./images/currencies.svg"
             alt=""
@@ -42,7 +42,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img
             src="./images/add-images.svg"
             alt=""
@@ -54,7 +54,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img src="./images/uneven.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs text-slate-300 sm:text-sm">
             Split expenses unevenly
@@ -62,7 +62,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img src="./images/income.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs  text-slate-300 sm:text-sm">
             Expense, income, transfer
@@ -70,7 +70,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img
             src="./images/language.svg"
             alt=""
@@ -82,7 +82,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img src="./images/chat.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs text-slate-300 sm:text-sm">
             Live chat
@@ -90,7 +90,7 @@ const Feature = () => {
           <div className="pb-3 px-3 mt-3 text-slate-400 text-sm"></div>
         </div>
 
-        <div className="flex flex-col cursor-pointer group-hover:blur-0 hover:!blur-none  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
+        <div className="flex flex-col cursor-pointer  hover:!scale-110 hover:bg-indigo-300/[0.089] w-1/4 rounded-lg  m-2 overflow-hidden sm:w-52">
           <img src="./images/payment.svg" alt="" className="h-10 sm:h-20 m-6" />
           <h1 className="font-bold text-xs text-slate-300 sm:text-sm">
             Direct Payment
