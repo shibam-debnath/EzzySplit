@@ -1,15 +1,12 @@
-import React from 'react'
+import React from "react";
 
 export default function Login2(props) {
   return (
-  
     //  const signin = () => {
     //     auth.signInWithPopup(provider).catch(alert);
     // }
-       <section class="bg-gray-50 min-h-screen flex items-center justify-center">
-      <div
-        class="bg-gray-200 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center"
-      >
+    <section class="bg-gray-50 min-h-screen flex items-center justify-center ">
+      <div class="bg-gray-200 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
         <div class="">
           <h2 class="font-bold text-2xl text-[#002D74] text-center">Login</h2>
           <p class="text-xs mt-4 text-[#002D74] text-center">
@@ -20,7 +17,8 @@ export default function Login2(props) {
             <img src="./images/hero-img.svg" class="w-48 h-48 m-auto" alt="" />
           </div>
 
-          <button onClick={props.handleGooglesignIn}
+          <button
+            onClick={props.handleGooglesignIn}
             class="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
           >
             <svg
@@ -51,6 +49,5 @@ export default function Login2(props) {
         </div>
       </div>
     </section>
-    
-  )
+  );
 }

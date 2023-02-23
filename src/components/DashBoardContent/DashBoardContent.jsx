@@ -68,6 +68,24 @@ const DashBoardContent = () => {
       iconBg: "rgb(255, 244, 229)",
     },
   ];
+
+  let valueDisplays = document.querySelectorAll(".num");
+  let interval = 1;
+
+  valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
+    let endValue = valueDisplay.getAttribute("data-val");
+
+    let duration = Math.floor(interval / endValue);
+    let counter = setInterval(function () {
+      startValue += 1;
+      valueDisplay.textContent = startValue;
+      if (startValue >= endValue) {
+        clearInterval(counter);
+      }
+    }, duration);
+  });
+
   return (
     <>
       <div>
@@ -108,7 +126,7 @@ const DashBoardContent = () => {
               />
             </div>
           </div>
-          <div className="width-full flex m-6 flex-wrap justify-left gap-10  items-center">
+          <div className="width-full flex m-6 justify-left gap-10  items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
@@ -125,13 +143,21 @@ const DashBoardContent = () => {
                   {item.icon}
                 </button>
                 <p className="mt-3">
-                  <span className="text-lg font-semibold">{item.amount}</span>
+                  <span
+                    className="text-lg font-semibold num"
+                    data-val={item.amount}
+                  >
+                    0
+                  </span>
                 </p>
                 <p className="text-sm text-gray-400  mt-1">{item.title}</p>
               </div>
             ))}
           </div>
         </div>
+      </div>
+      <div className="mt-6 flex flex-wrap">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center"></div>
       </div>
     </>
   );
