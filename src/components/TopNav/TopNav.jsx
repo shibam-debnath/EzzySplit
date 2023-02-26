@@ -47,13 +47,7 @@ const TopNav = () => {
 
   return (
     <div>
-      <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
-        <NavButton
-          title="Menu"
-          // customFunc={handleActiveMenu}
-          color={currentColor}
-          icon={<AiOutlineMenu />}
-        />
+      <div className="flex flex-row-reverse p-2 md:ml-6 md:mr-6 relative">
         <div className="flex">
           <NavButton
             title="Chat"
@@ -75,15 +69,9 @@ const TopNav = () => {
           >
             <img
               className="rounded-full w-8 h-8"
-              src="./images/avatar.png"
+              src="../images/avatar.png"
               alt="user-profile"
             />
-            <p>
-              <span className="text-gray-400 text-14">Hi,</span>{" "}
-              <span className="text-gray-400 font-bold ml-1 text-14">
-                Shibam
-              </span>
-            </p>
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
           {menu.userProfile && <UserProfile />}

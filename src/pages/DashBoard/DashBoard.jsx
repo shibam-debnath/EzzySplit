@@ -4,23 +4,28 @@ import { Outlet } from "react-router-dom";
 import SideNav from "../../components/Sidenav/SideNav";
 import RightSideNav from "../../components/RightSideNav/RightSideNav";
 import TopNav from "../../components/TopNav/TopNav";
+import RightNav from "../../components/DashboardRightNav/RightNav";
 
 const DashBoard = () => {
   return (
     <>
-      <div className="">
-        <TopNav />
-      </div>
-      <div className="flex justify-between">
+      <div className="flex flex-row">
         <div className=" bg-primary text-left">
           <SideNav />
         </div>
-        <div className="bg-gray-300 min-h-screen w-full  ">
-          {/* <DashBoardContent /> */}
-          <Outlet />
-        </div>
-        <div className=" w-1/3 bg-primary text-left">
-          <RightSideNav />
+        <div className="w-full">
+          <div>
+            <TopNav />
+          </div>
+          <div className="flex flex-row">
+            <div className="bg-gray-300 min-h-screen w-full  ">
+              {/* <DashBoardContent /> */}
+              <Outlet />
+            </div>
+            <div className=" w-1/3 bg-primary text-left">
+              <RightSideNav />
+            </div>
+          </div>
         </div>
       </div>
     </>

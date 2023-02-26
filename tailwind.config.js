@@ -7,11 +7,12 @@ module.exports = {
       colors: {
         primary: "#6B60F1",
         aliceblue: "#f0f7fc",
+        footerColor: "#00000033",
       },
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('tailwind-scrollbar')({ nocompatible: true })
+    require("@tailwindcss/forms"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
   ],
 };

@@ -1,3 +1,22 @@
+body::-webkit-scrollbar {
+    display: block;
+    width: 5px; 
+    height: 5px;         /* width of the entire scrollbar */
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: transparent;        /* color of the tracking area */
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background-color:#25233a ;    /* color of the scroll thumb */
+    border-radius: 0px;
+    width: 5px;       /* roundness of the scroll thumb */
+    /* border: 3px solid orange;  creates padding around scroll thumb */
+  }
+body{
+    overflow: overlay;
+}
 .back1{
     background: #111827;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #111827, #1c1848, #111827);  /* Chrome 10-25, Safari 5.1-6 */
