@@ -54,6 +54,7 @@ const Contact = () => {
       set();
     } catch (err) {
       value = "Something went wrong";
+      set();
       fbeforeSubmit(2);
       console.log(err);
     }
