@@ -11,19 +11,6 @@ export default function LastGroupModify(props) {
     FtoggleDesc(!toggleDesc);
   };
 
-  // const displayFirstGroup =()=>{
-  //     console.log(`Displau: ${props.id}`);
-  //     console.log(`toggle1 : ${toggleDesc}`);
-  //     if(props.id === 1){
-  //         console.log(`toggle2 : ${toggleDesc}`);
-  //         FtoggleDesc(true);
-  //     }
-  //     console.log(`toggle3 : ${toggleDesc}`);
-  // }
-
-  // useEffect(()=>{
-  //     displayFirstGroup();
-  // },[])
   return (
     <>
       <div className="bg-gray-200 h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
@@ -44,8 +31,8 @@ export default function LastGroupModify(props) {
         </div>
       </div>
       {toggleDesc && (
-        <div className="flex justify-between">
-          <div className="max-w-md bg-white dark:text-gray-200  h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
+        <div className="flex justify-between ">
+          <div className="max-w-md bg-white   h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
             <div className="px-6 py-4 ">
               <div className="font-semibold text-sm mb-2 justify-between flex">
                 <div>Group Member </div>
@@ -62,7 +49,7 @@ export default function LastGroupModify(props) {
               ))}
             </div>
           </div>
-          <div className="max-w-sm bg-white dark:text-gray-200  h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
+          <div className="max-w-sm bg-white   h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
             <div className="px-6 py-2 mt-10">
               <div className="font-semibold flex justify-between  mb-2">
                 <div className="">Group Created on :</div>

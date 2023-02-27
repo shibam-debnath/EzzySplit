@@ -28,15 +28,12 @@ const DashBoardContent = () => {
         .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
-        .then(function (resp){
+        .then(function (resp) {
           setgroupData(resp.data.group);
           console.log(resp);
           // console.log(response.data.group.expenseId);
           // console.log(response.data.group.expenseId[0].amount);
-          console.log(grData);
-
-          // console.log(grData.expenseId);
-          // console.log(grData.expenseId[0].amount);
+          // console.log(grData);
         });
     } catch (err) {
       console.log(err);
@@ -47,7 +44,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/user/profile/63d3700f59aa96fcdb661477", {
+        .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
           responseType: "json",
         })
         .then(function (response) {
@@ -65,7 +62,7 @@ const DashBoardContent = () => {
 
   useEffect(() => {
     groupData();
-  },[]);
+  }, []);
 
   // console.log(userData);
   // console.log(grData.expenseId);
@@ -113,7 +110,7 @@ const DashBoardContent = () => {
     }, duration);
   });
 
-  const data=grData.expenseId? 1:0;
+  const data = grData.expenseId ? 1 : 0;
   return (
     <>
       <div>
@@ -127,9 +124,9 @@ const DashBoardContent = () => {
                 <p className="font-bold text-gray-400 flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
-                  <div>
+                  <div className="flex-col">
                     <p className="text-gray-400 text-2xl font-bold">
-                      {userData.name} and the group name is 
+                      {userData.name} and the group name is {grData.groupName}
                     </p>
                   </div>
                 )}
@@ -188,18 +185,24 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6 flex flex-wrap">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
-          {
-                grData.expenseId ? grData.expenseId.map((expenses)=>(
-                  <div key={expenses._id}>
-                    <p className="text-black">
-                      {expenses._id}
-                    </p>
-                  </div>
-                )): <p>empty</p>
-              }
-              
-             <p>{data}</p> 
-          
+          {grData.expenseId ? (
+            grData.expenseId.map((expenses) => (
+              <div className="m-1 flex justify-center">
+                <div
+                  key={expenses._id}
+                  className="bg-blue-100 w-1/2 text-black"
+                >
+                  <p key={expenses.notes}>{expenses.notes}</p>
+                  <p key={expenses.amount}>{expenses.amount}</p>
+                  <p key={expenses.date}>{expenses.date}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>empty</p>
+          )}
+
+          <p>{data}</p>
         </div>
       </div>
     </>
