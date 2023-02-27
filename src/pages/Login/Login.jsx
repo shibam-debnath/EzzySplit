@@ -5,24 +5,24 @@ export default function Login2(props) {
     //  const signin = () => {
     //     auth.signInWithPopup(provider).catch(alert);
     // }
-    <section class="bg-gray-50 min-h-screen flex items-center justify-center ">
-      <div class="bg-gray-200 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
-        <div class="">
-          <h2 class="font-bold text-2xl text-[#002D74] text-center">Login</h2>
-          <p class="text-xs mt-4 text-[#002D74] text-center">
+    <section className="bg-gray-50 min-h-screen flex items-center justify-center ">
+      <div className="bg-gray-200 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+        <div className="">
+          <h2 className="font-bold text-2xl text-[#002D74] text-center">Login</h2>
+          <p className="text-xs mt-4 text-[#002D74] text-center">
             If you are already a member, easily log in
           </p>
 
-          <div class="flex items-center content-center">
-            <img src="./images/hero-img.svg" class="w-48 h-48 m-auto" alt="" />
+          <div className="flex items-center content-center">
+            <img src="./images/hero-img.svg" className="w-48 h-48 m-auto" alt="" />
           </div>
 
           <button
             onClick={props.handleGooglesignIn}
-            class="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
+            className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
           >
             <svg
-              class="mr-3"
+              className="mr-3"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 48 48"
               width="25px"

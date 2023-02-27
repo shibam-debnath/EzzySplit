@@ -9,7 +9,7 @@ const Hero = () => {
           <div className="container mx-auto xl:px-32">
             <div className="lg:flex justify-between items-center  sm:flex-row">
               <div className="my-10">
-                <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight text-white mb-16">
+                <h1 className="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight text-white mt-16 mb-16">
                   Split bills <br />
                   <span>easily among</span>
                   {/* <span className="text-primary">among</span> */}

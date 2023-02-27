@@ -14,6 +14,7 @@ const DashBoardContent = () => {
   const [beforeFetch, fbeforeFetch] = useState(0);
 
   const [userData, setData] = useState([]);
+  const [grData, setgroupData] = useState({});
 
   const set = () => {
     setTimeout(() => {
@@ -21,10 +22,31 @@ const DashBoardContent = () => {
     }, 500);
   };
 
+  const groupData = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+          responseType: "json",
+        })
+        .then(function (resp){
+          setgroupData(resp.data.group);
+          console.log(resp);
+          // console.log(response.data.group.expenseId);
+          // console.log(response.data.group.expenseId[0].amount);
+          console.log(grData);
+
+          // console.log(grData.expenseId);
+          // console.log(grData.expenseId[0].amount);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      axios
+      await axios
         .get("http://localhost:8000/user/profile/63d3700f59aa96fcdb661477", {
           responseType: "json",
         })
@@ -41,7 +63,12 @@ const DashBoardContent = () => {
     getData();
   }, []);
 
-  console.log(userData);
+  useEffect(() => {
+    groupData();
+  },[]);
+
+  // console.log(userData);
+  // console.log(grData.expenseId);
   // console.log(userData.users);
 
   const earningData = [
@@ -86,6 +113,7 @@ const DashBoardContent = () => {
     }, duration);
   });
 
+  const data=grData.expenseId? 1:0;
   return (
     <>
       <div>
@@ -99,9 +127,11 @@ const DashBoardContent = () => {
                 <p className="font-bold text-gray-400 flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
-                  <p className="text-gray-400 text-2xl font-bold">
-                    {userData.name}
-                  </p>
+                  <div>
+                    <p className="text-gray-400 text-2xl font-bold">
+                      {userData.name} and the group name is 
+                    </p>
+                  </div>
                 )}
                 {beforeFetch === 0 && (
                   <p className="text-gray-400 text-2xl font-bold">
@@ -120,9 +150,9 @@ const DashBoardContent = () => {
             <div className="mt-0">
               <button
                 color={currentColor}
-                bgColor="black"
+                bgcolor="black"
                 text="Download"
-                borderRadius="10px"
+                borderradius="10px"
               />
             </div>
           </div>
@@ -157,7 +187,20 @@ const DashBoardContent = () => {
         </div>
       </div>
       <div className="mt-6 flex flex-wrap">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center"></div>
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
+          {
+                grData.expenseId ? grData.expenseId.map((expenses)=>(
+                  <div key={expenses._id}>
+                    <p className="text-black">
+                      {expenses._id}
+                    </p>
+                  </div>
+                )): <p>empty</p>
+              }
+              
+             <p>{data}</p> 
+          
+        </div>
       </div>
     </>
   );

@@ -39,7 +39,7 @@ const UserProfile = () => {
             color="rgb(153, 171, 180)"
             bgHoverColor="light-gray"
             size="2xl"
-            borderRadius="50%"
+            borderradius="50%"
           />
         </div>
         <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
@@ -96,9 +96,9 @@ const UserProfile = () => {
         <div className="mt-5">
           <Button
             color="white"
-            bgColor="rgb(107 96 241 / var(--tw-bg-opacity)"
+            bgcolor="rgb(107 96 241 / var(--tw-bg-opacity)"
             text="Logout"
-            borderRadius="10px"
+            borderradius="10px"
             width="full"
           />
         </div>
