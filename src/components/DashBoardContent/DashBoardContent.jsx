@@ -21,11 +21,10 @@ const DashBoardContent = () => {
     }, 500);
   };
 
-  // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
       axios
-        .get("http://localhost:8000/user/profile/63d3700f59aa96fcdb661477", {
+        .get("http://localhost:8000/user/profile/63f7a37883b9e985364c5a68", {
           responseType: "json",
         })
         .then(function (response) {
@@ -41,8 +40,8 @@ const DashBoardContent = () => {
     getData();
   }, []);
 
-  console.log(userData);
-  // console.log(userData.users);
+  // console.log(userData);
+  // console.log(userData.name);
 
   const earningData = [
     {
