@@ -7,7 +7,7 @@ const Error404 = () => {
       <div className=" w-full xl:w-1/2 relative ">
         <div className="flex flex-col">
           <div className="flex items-center justify-center">
-            <img className="w-1/2" src="./images/error.jpg" alt="404" />
+            <img className="w-1/2" src="/images/error.jpg" alt="404" />
           </div>
           <div className="">
             <div className="">

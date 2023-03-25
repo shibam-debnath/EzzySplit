@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddExpensePopup from './AddExpensePopup';
+import { BiPlusMedical } from "react-icons/bi";
 
 const AddExpenses = () => {
   const [popup, Fpopup] = useState(false);
@@ -15,17 +16,15 @@ const AddExpenses = () => {
   }
 
   return (
-    <>
-      <div className='fixed top-[90%] left-[62%]'>
+    <>     
+      <div className='fixed bottom-10 right-10 h-18 w-48'>
         <div className='flex justify-end'>
-          <div className='p-2 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-gray-700 hover:border-2 hover:border-white'>
-            <button className=' text-xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full' onClick={addExp}>
-              Add an expense
+          <div>
+            <button className='p-5 text-base bg-lgPrimary text-white rounded-full hover:bg-[#554CBF]' onClick={addExp}>
+              <BiPlusMedical /> 
             </button>
           </div>
         </div>
-
-        {/* Add pop up section */}
         {popup && <AddExpensePopup closeAdd={closeAdd} />}
       </div>
     </>

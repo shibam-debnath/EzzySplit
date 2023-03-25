@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 
 // icons
-import { BsCurrencyDollar } from "react-icons/bs";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 
@@ -25,7 +23,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -43,8 +41,8 @@ const DashBoardContent = () => {
   // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      await axios
-        .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
+      axios
+        .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
           responseType: "json",
         })
         .then(function (response) {
@@ -119,14 +117,14 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
+          <div className="bg-lgPrimary dark:text-gray-200  h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-bold text-gray-400 flex">Hi,</p>
+                <p className="font-bold text-white flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
                   <div className="flex-col">
-                    <p className="text-gray-400 text-2xl font-bold">
+                    <p className="text-white text-2xl font-bold">
                       {userData.name} 
                     </p>
                   </div>
@@ -136,14 +134,10 @@ const DashBoardContent = () => {
                     <BarLoader color="#f5f5f5" height={25} />
                   </p>
                 )}
-                {/* </p> */}
               </div>
-              <button
-                type="button"
-                className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full  p-4"
-              >
-                <BsCurrencyDollar />
-              </button>
+              <div className="">
+                <img className="h-48" src="../images/coin_banner.png" alt="" />
+              </div>
             </div>
             <div className="mt-0">
               <button
@@ -154,11 +148,11 @@ const DashBoardContent = () => {
               />
             </div>
           </div>
-          <div className="width-full flex m-6 justify-left gap-10  items-center">
+          <div className="width-full flex mx-10 my-6 justify-left gap-10  items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
-                className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl "
+                className="bg-white h-44 md:w-56  p-4 pt-9 rounded-2xl "
               >
                 <button
                   type="button"
