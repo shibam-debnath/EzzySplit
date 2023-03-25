@@ -25,7 +25,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63f7a37883b9e985364c5a68", {
+        .get("http://localhost:8000/group/details/63e28d86e007610a77e259da", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -34,6 +34,12 @@ const DashBoardContent = () => {
           // console.log(response.data.group.expenseId);
           // console.log(response.data.group.expenseId[0].amount);
           // console.log(grData);
+          console.log("Working on groups");
+          console.log(`resp: ${resp}`);
+          console.log(`resp.data: ${resp.data}`);
+          console.log(`resp.data.group: ${resp.data.group}`);
+          console.log(`resp.data.group.groupName: ${resp.data.group.groupName}`);
+          console.log("End group");
         });
     } catch (err) {
       console.log(err);
@@ -115,7 +121,7 @@ const DashBoardContent = () => {
   return (
     <>
       <div>
-        <AddExpenses />
+        <AddExpenses groupDetails = {grData} />
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from './AddDatePopup';
 import AddNotePopup from './AddNotePopup';
-import AddGroupPopup from './AddGroupPopup';
 import SplitPopup from './SplitPopup';
 import PaidByPopup from './PaidByPopup';
 import AddCurrencyPopup from './AddCurrencyPopup';
@@ -28,10 +27,6 @@ const AddExpensePopup = (props) => {
         e.preventDefault();
         Caddon(4);
     }
-    const addGroup = (e) => {
-        e.preventDefault();
-        Caddon(5);
-    }
     const addCurrency = (e) => {
         e.preventDefault();
         Caddon(6);
@@ -46,7 +41,7 @@ const AddExpensePopup = (props) => {
             <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '>
 
                 <div className=' h-3/5 flex justify-center mt-16'>
-                    <div className='border-2 border-emerald-600 rounded-xl w-[425px] my-auto bg-white'>
+                    <div className='border-2 border-primary rounded-xl w-[425px] my-auto bg-white'>
                         <form >
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
                                 <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>
@@ -56,14 +51,7 @@ const AddExpensePopup = (props) => {
                             </div>
                             <div className='flex justify-start items-center px-3 py-1'>
                                 <div>
-                                    <h5>With <span className='font-semibold'>you</span>  and <span className='font-semibold'>Group 1</span></h5>
-                                </div>
-                                <div className=''>
-                                    <input 
-                                    type="search" 
-                                    placeholder='Group' 
-                                    className='border-none rounded-full ml-2 h-7 mt-1'
-                                    />
+                                    <h5>With <span className='font-semibold'>you</span>  and <span className='font-semibold'>{props.groupDetails.groupName}</span></h5>
                                 </div>
                             </div>
 
@@ -106,7 +94,7 @@ const AddExpensePopup = (props) => {
                                 </div>
 
                                 {/* Buttond */}
-                                <div className='flex justify-evenly mt-6'>
+                                <div className='flex justify-evenly mt-6 mb-10'>
                                     <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700  '>
                                         <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' onClick={addDate}>
                                             25 Dec 2022
@@ -118,15 +106,7 @@ const AddExpensePopup = (props) => {
                                         </button>
                                     </div>
                                 </div>
-
-
-                                <div className='w-44 m-auto mt-4 mb-6'>
-                                    <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 '>
-                                        <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' onClick={addGroup} >
-                                            Group 1
-                                        </button>
-                                    </div>
-                                </div>
+                                
                                 <hr />
 
 
@@ -151,11 +131,10 @@ const AddExpensePopup = (props) => {
                     {/* Add seconaadry popup */}
                     {/* <div className='border-2 border-emerald-600 w-[28%] my-auto rounded-xl mx-2'> */}
 
-                    {addon === 1 && <PaidByPopup closeAdd={closeAdd} />}
-                    {addon === 2 && <SplitPopup closeAdd={closeAdd} />}
+                    {addon === 1 && <PaidByPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
+                    {addon === 2 && <SplitPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
                     {addon === 3 && <AddDatePopup />}
                     {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}
-                    {addon === 5 && <AddGroupPopup closeAdd={closeAdd} />}
                     {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
                     {/* </div> */}
                 </div>

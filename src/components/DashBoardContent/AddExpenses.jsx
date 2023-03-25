@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AddExpensePopup from './AddExpensePopup';
 
-const AddExpenses = () => {
+const AddExpenses = (props) => {
   const [popup, Fpopup] = useState(false);
 
   const addExp = (e) => {
@@ -26,7 +26,7 @@ const AddExpenses = () => {
         </div>
 
         {/* Add pop up section */}
-        {popup && <AddExpensePopup closeAdd={closeAdd} />}
+        {popup && <AddExpensePopup closeAdd={closeAdd} groupDetails = {props.groupDetails} />}
       </div>
     </>
   )
