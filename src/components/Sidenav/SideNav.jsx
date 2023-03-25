@@ -10,29 +10,29 @@ import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
   return (
-    <div className="flex md:w-64 md:ml-5 flex-col ">
-      <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white">
-        Ezzy<span className="text-blue-900">Split</span>
+    <div class="flex md:w-64 md:ml-5 flex-col ">
+      <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
+        Ezzy<span className="text-primary">Split</span>
       </h1>
-      <div className="mt-12  py-4 px-3 bg-primary rounded">
-        <ul className="space-y-2">
+      <div class="mt-12  py-4 px-3 rounded">
+        <ul class="space-y-2">
           <li>
             <NavLink
               to={"/dashboard/"}
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
               </button>
-              <span className="ml-3">Dashboard</span>
+              <span className="ml-3" >Dashboard</span>
             </NavLink>
           </li>
           <li>
             <NavLink
               to={"/dashboard/LastGroup"}
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <HiOutlineUserGroup />
               </button>
               <span className="flex-1 ml-3 whitespace-nowrap">Last Groups</span>
@@ -41,9 +41,9 @@ const SideNav = () => {
           <li>
             <NavLink
               to="/dashboard/activity"
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbBrandHipchat />
               </button>
               <span className="flex-1 ml-3 whitespace-nowrap">Inbox</span>
@@ -55,9 +55,9 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/dashboard/friends"}
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbFriends />
               </button>
               <span className="flex-1 ml-3 whitespace-nowrap">Friends</span>
@@ -66,9 +66,9 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/"}
-              className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLogout />
               </button>
               <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>

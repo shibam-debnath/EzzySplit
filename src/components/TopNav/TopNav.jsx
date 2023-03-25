@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
 import { BsChatLeft } from "react-icons/bs";
 import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -46,7 +45,18 @@ const TopNav = () => {
   };
 
   return (
-    <div>
+    <div className="flex bg-white border-l-2 justify-between">
+      <div className="flex gap-2 items-center p-2 md:ml-2 md:mr-6">
+        <img
+          className="rounded-full w-9 h-9"
+          src="../images/avatar.png"
+          alt="user-profile"
+        />
+        <div className="text-left">
+          <p className="font-semibold text-lg ">Shibam</p>
+          <p className="text-gray-500 text-xs">Joined 8 months ago</p>
+        </div>
+      </div>
       <div className="flex flex-row-reverse p-2 md:ml-6 md:mr-6 relative">
         <div className="flex">
           <NavButton

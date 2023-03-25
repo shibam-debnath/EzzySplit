@@ -25,7 +25,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -43,8 +43,8 @@ const DashBoardContent = () => {
   // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      await axios
-        .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
+      axios
+        .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
           responseType: "json",
         })
         .then(function (response) {
