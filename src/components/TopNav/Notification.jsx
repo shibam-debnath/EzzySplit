@@ -22,7 +22,7 @@ const Notification = (props) => {
           color="rgb(153, 171, 180)"
           bgHoverColor="light-gray"
           size="2xl"
-          borderRadius="50%"
+          borderradius="50%"
         />
       </div>
       <div className="mt-5 ">
@@ -45,9 +45,9 @@ const Notification = (props) => {
         <div className="mt-5">
           <Button
             color="white"
-            bgColor="rgb(107 96 241 / var(--tw-bg-opacity)"
+            bgcolor="rgb(107 96 241 / var(--tw-bg-opacity)"
             text="See all notifications"
-            borderRadius="10px"
+            borderradius="10px"
             width="full"
           />
         </div>

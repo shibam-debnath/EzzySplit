@@ -10,12 +10,12 @@ import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
   return (
-    <div class="flex md:w-64 md:ml-5 flex-col ">
+    <div className="flex md:w-64 md:ml-5 flex-col ">
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight text-white">
         Ezzy<span className="text-blue-900">Split</span>
       </h1>
-      <div class="mt-12  py-4 px-3 bg-primary rounded">
-        <ul class="space-y-2">
+      <div className="mt-12  py-4 px-3 bg-primary rounded">
+        <ul className="space-y-2">
           <li>
             <NavLink
               to={"/dashboard/"}
@@ -60,7 +60,7 @@ const SideNav = () => {
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbFriends />
               </button>
-              <span class="flex-1 ml-3 whitespace-nowrap">Friends</span>
+              <span className="flex-1 ml-3 whitespace-nowrap">Friends</span>
             </NavLink>
           </li>
           <li>
@@ -71,7 +71,7 @@ const SideNav = () => {
               <button className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full">
                 <TbLogout />
               </button>
-              <span class="flex-1 ml-3 whitespace-nowrap">Log Out</span>
+              <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
             </NavLink>
           </li>
         </ul>

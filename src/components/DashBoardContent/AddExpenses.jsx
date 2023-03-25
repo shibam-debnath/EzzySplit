@@ -20,7 +20,7 @@ const AddExpenses = () => {
         <div className='flex justify-end'>
           <div className='p-2 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-gray-700 hover:border-2 hover:border-white'>
             <button className=' text-xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full' onClick={addExp}>
-              Add an expenses
+              Add an expense
             </button>
           </div>
         </div>
