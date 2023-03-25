@@ -6,6 +6,7 @@ import {
   TbLogout,
 } from "react-icons/tb";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { MdOutlineLiveHelp } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
@@ -19,7 +20,7 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/dashboard/"}
-              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
@@ -30,7 +31,7 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/dashboard/LastGroup"}
-              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <HiOutlineUserGroup />
@@ -41,7 +42,7 @@ const SideNav = () => {
           <li>
             <NavLink
               to="/dashboard/activity"
-              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3  text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbBrandHipchat />
@@ -55,7 +56,7 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/dashboard/friends"}
-              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbFriends />
@@ -66,12 +67,23 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/"}
-              className="flex items-center p-2 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLogout />
               </button>
               <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/dashboard/"}
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+            >
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
+                <MdOutlineLiveHelp />
+              </button>
+              <span className="flex-1 ml-3 whitespace-nowrap">Help</span>
             </NavLink>
           </li>
         </ul>

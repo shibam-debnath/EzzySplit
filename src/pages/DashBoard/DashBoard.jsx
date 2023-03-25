@@ -7,10 +7,10 @@ const DashBoard = () => {
   return (
     <>
       <div className="flex flex-row">
-        <div className=" bg-white text-left">
+        <div className="fixed bg-white text-left">
           <SideNav />
         </div>
-        <div className="bg-gray-200 w-full">
+        <div className="ml-[18rem] bg-gray-200 w-full">
           <div>
             <TopNav />
           </div>
