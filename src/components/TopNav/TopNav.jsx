@@ -1,48 +1,38 @@
 import React, { useState } from "react";
-import { BsChatLeft } from "react-icons/bs";
 import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import UserProfile from "./UserProfile";
 import Notification from "./Notification";
-// import avatar from "../../../public/images/avatar";
 
-const NavButton = ({ customFunc, icon, color, dotColor }) => (
-  <button
-    type="button"
-    onClick={() => customFunc()}
-    style={{ color }}
-    className="relative text-xl rounded-full p-3 hover:bg-light-gray"
-  >
-    <span
-      style={{ background: dotColor }}
-      className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
-    />
-    {icon}
-  </button>
-);
-
-// const handleActiveMenu = () => setActiveMenu(!activeMenu);
-
-// handle all conditional rendering
-const initialMenu = {
-  userProfile: false,
-  notification: false,
-};
 
 const TopNav = () => {
-  // temporary color
-  const currentColor = "primary";
-
   // handles all menu and sets true eg - set UserProfile as true
-  const [menu, setMenu] = useState(initialMenu);
+  const [notification, setNotification] = useState(false);
+  const [profile, setProfile] = useState(false);
 
-  // this function sets the var as true
-  const handleClick = (param) => {
-    setMenu({
-      ...initialMenu,
-      [param]: true,
-    });
-  };
+  // Notification
+  const openNotification = (e) => {
+    e.preventDefault();
+    setNotification(!notification);
+    setProfile(false);
+  }
+
+  const closeNotification = (e) => {
+    e.preventDefault();
+    setNotification(false);
+  }
+
+  // Profile
+  const openProfile = (e) => {
+    e.preventDefault();
+    setProfile(!profile);
+    setNotification(false);
+  }
+
+  const closeProfile = (e) => {
+    e.preventDefault();
+    setProfile(false);
+  }
 
   return (
     <div className="flex bg-white border-l-2 justify-between">
@@ -59,23 +49,20 @@ const TopNav = () => {
       </div>
       <div className="flex flex-row-reverse p-2 md:ml-6 md:mr-6 relative">
         <div className="flex">
-          <NavButton
-            title="Chat"
-            dotColor="#03C9D7"
-            customFunc={() => handleClick("chat")}
-            color="blue"
-            icon={<BsChatLeft />}
-          />
-          <NavButton
-            title="Notification"
-            dotColor="rgb(254, 201, 15)"
-            customFunc={() => handleClick("notification")}
-            color={currentColor}
-            icon={<RiNotification3Line />}
-          />
+          <button
+            type="button"
+            onClick={openNotification}
+            className="relative text-xl text-blue-600 rounded-full p-3 hover:bg-light-gray"
+          >
+            <span
+              className="absolute bg-[#03C9D7] inline-flex rounded-full h-2 w-2 right-2 top-2"
+            />
+            <RiNotification3Line />
+          </button>
+
           <div
             className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg"
-            onClick={() => handleClick("userProfile")}
+            onClick={openProfile}
           >
             <img
               className="rounded-full w-8 h-8"
@@ -84,8 +71,11 @@ const TopNav = () => {
             />
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
-          {menu.userProfile && <UserProfile />}
-          {menu.notification && <Notification />}
+
+           {/* conditional rendering */}
+          {profile && <UserProfile closeProfile={closeProfile} />}
+          {notification && <Notification closeNotification={closeNotification} />}
+        
         </div>
       </div>
     </div>

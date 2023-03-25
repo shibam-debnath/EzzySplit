@@ -16,15 +16,15 @@ const AddExpenses = () => {
   }
 
   return (
-    <>
+    <>     
       <div className='fixed bottom-10 right-10 h-18 w-48'>
         <div className='flex justify-end'>
-          <div className='p-5 text-base bg-lgPrimary text-white rounded-full hover:bg-[#554CBF] hover:cursor-pointer'>
-            <BiPlusMedical/>
+          <div>
+            <button className='p-5 text-base bg-lgPrimary text-white rounded-full hover:bg-[#554CBF]' onClick={addExp}>
+              <BiPlusMedical /> 
+            </button>
           </div>
         </div>
-
-        {/* Add pop up section */}
         {popup && <AddExpensePopup closeAdd={closeAdd} />}
       </div>
     </>
