@@ -14,6 +14,7 @@ const DashBoardContent = () => {
   const [beforeFetch, fbeforeFetch] = useState(0);
 
   const [userData, setData] = useState([]);
+  const [grData, setgroupData] = useState({});
 
   const set = () => {
     setTimeout(() => {
@@ -21,9 +22,28 @@ const DashBoardContent = () => {
     }, 500);
   };
 
+  const groupData = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/group/details/63f7a37883b9e985364c5a68", {
+          responseType: "json",
+        })
+        .then(function (resp) {
+          setgroupData(resp.data.group);
+          console.log(resp);
+          // console.log(response.data.group.expenseId);
+          // console.log(response.data.group.expenseId[0].amount);
+          // console.log(grData);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      axios
+      await axios
         .get("http://localhost:8000/user/profile/63f7a37883b9e985364c5a68", {
           responseType: "json",
         })
@@ -40,8 +60,13 @@ const DashBoardContent = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    groupData();
+  }, []);
+
   // console.log(userData);
-  // console.log(userData.name);
+  // console.log(grData.expenseId);
+  // console.log(userData.users);
 
   const earningData = [
     {
@@ -67,6 +92,26 @@ const DashBoardContent = () => {
       iconBg: "rgb(255, 244, 229)",
     },
   ];
+
+  let valueDisplays = document.querySelectorAll(".num");
+  let interval = 1;
+
+  valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
+    let endValue = valueDisplay.getAttribute("data-val");
+
+    let duration = Math.floor(interval / endValue);
+    let counter = setInterval(function () {
+      startValue += 1;
+      valueDisplay.textContent = startValue;
+      if (startValue >= endValue) {
+        clearInterval(counter);
+      }
+    }, duration);
+  });
+
+  let count = 0;
+
   return (
     <>
       <div>
@@ -80,9 +125,11 @@ const DashBoardContent = () => {
                 <p className="font-bold text-gray-400 flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
-                  <p className="text-gray-400 text-2xl font-bold">
-                    {userData.name}
-                  </p>
+                  <div className="flex-col">
+                    <p className="text-gray-400 text-2xl font-bold">
+                      {userData.name} 
+                    </p>
+                  </div>
                 )}
                 {beforeFetch === 0 && (
                   <p className="text-gray-400 text-2xl font-bold">
@@ -101,13 +148,13 @@ const DashBoardContent = () => {
             <div className="mt-0">
               <button
                 color={currentColor}
-                bgColor="black"
+                bgcolor="black"
                 text="Download"
-                borderRadius="10px"
+                borderradius="10px"
               />
             </div>
           </div>
-          <div className="width-full flex m-6 flex-wrap justify-left gap-10  items-center">
+          <div className="width-full flex m-6 justify-left gap-10  items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
@@ -124,11 +171,54 @@ const DashBoardContent = () => {
                   {item.icon}
                 </button>
                 <p className="mt-3">
-                  <span className="text-lg font-semibold">{item.amount}</span>
+                  <span
+                    className="text-lg font-semibold num"
+                    data-val={item.amount}
+                  >
+                    0
+                  </span>
                 </p>
                 <p className="text-sm text-gray-400  mt-1">{item.title}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* expenses history content starting...*/}
+      <div className="mt-6 flex flex-wrap">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-6 m-6 bg-no-repeat bg-cover bg-center">
+          <div className="text-gray-700 text-2xl font-bold pb-2 border-b-2 border-spacing-y-12  border-gray-200">
+            {" "}
+            Expenses History{" "}
+          </div>
+          <div className="text-gray-400 m-2 flex border-b-2 ">
+            <div className="p-2 w-[4rem]">S.No.</div>
+            <div className="p-2 w-1/4">Name</div>
+            <div className="p-2 w-1/4">Amount</div>
+            <div className="p-2 w-1/4">Paid by</div>
+            <div className="p-2 w-1/4">Date</div>
+          </div>
+          <div className="overflow-hidden scrollbar-none scroll-smooth">
+            {grData.expenseId ? (
+              grData.expenseId.map((expenses) => (
+                <div className="">
+                  <div
+                    key={expenses._id}
+                    className="text-black m-2 flex border-b-2"
+                  >
+                    <div className="px-2 w-[4rem]">{count++}</div>
+                    <div className="px-2 w-1/4">{expenses.notes}</div>
+                    <div className="px-2 w-1/4">{expenses.amount}</div>
+                    <div className="px-2 w-1/4">Paid by</div>
+                    <div className="px-2 w-1/4">{expenses.date}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Add expenses and leave up to Us</p>
+            )}
+
           </div>
         </div>
       </div>
