@@ -1,18 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
 import axios from "axios";
-
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Legend,
+  plugins,
+} from "chart.js";
+
+import { Doughnut, Bar, Line } from "react-chartjs-2";
 
 // icons
-import { BsCurrencyDollar } from "react-icons/bs";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+);
 
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
@@ -20,6 +37,7 @@ const DashBoardContent = () => {
 
   const [userData, setData] = useState([]);
   const [grData, setgroupData] = useState({});
+  let userid = "63d38658cd073fceefefe135";
 
   const set = () => {
     setTimeout(() => {
@@ -48,7 +66,7 @@ const DashBoardContent = () => {
   // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
-      await axios
+      axios
         .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
           responseType: "json",
         })
@@ -122,8 +140,29 @@ const DashBoardContent = () => {
     datasets: [
       {
         backgroundColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
-        label: "abcd",
+        borderColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
+        label: "Total expended",
         data: [5, 6, 7, 3, 2],
+      },
+    ],
+  };
+
+  const dailydata = {
+    labels: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22, 23, 24, 25, 26, 27, 28, 29, 30,
+    ],
+    datasets: [
+      {
+        backgroundColor: ["#6B60F1"],
+        borderColor: ["#6B60F1"],
+        label: "No of expenses added",
+        fill: true,
+        tension: 0.5,
+        data: [
+          2, 0, 1, 5, 3, 0, 8, 4, 4, 5, 5, 6, 7, 3, 2, 3, 4, 5, 6, 2, 1, 3, 2,
+          4, 2, 5, 7, 6, 3, 1,
+        ],
       },
     ],
   };
@@ -137,14 +176,14 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
+          <div className="bg-lgPrimary dark:text-gray-200  h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-bold text-gray-400 flex">Hi,</p>
+                <p className="font-bold text-white flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
                   <div className="flex-col">
-                    <p className="text-gray-400 text-2xl font-bold">
+                    <p className="text-white text-2xl font-bold">
                       {userData.name}
                     </p>
                   </div>
@@ -154,14 +193,10 @@ const DashBoardContent = () => {
                     <BarLoader color="#f5f5f5" height={25} />
                   </p>
                 )}
-                {/* </p> */}
               </div>
-              <button
-                type="button"
-                className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full  p-4"
-              >
-                <BsCurrencyDollar />
-              </button>
+              <div className="">
+                <img className="h-48" src="../images/coin_banner.png" alt="" />
+              </div>
             </div>
             <div className="mt-0">
               <button
@@ -172,11 +207,11 @@ const DashBoardContent = () => {
               />
             </div>
           </div>
-          <div className="width-full flex m-6 justify-left gap-10  items-center">
+          <div className="width-full flex mx-10 my-6 justify-left gap-10  items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
-                className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl "
+                className="bg-white h-44 md:w-56  p-4 pt-9 rounded-2xl "
               >
                 <button
                   type="button"
@@ -242,15 +277,21 @@ const DashBoardContent = () => {
 
       {/*  strating of the different charts section... */}
       <div className="flex justify-start ">
-        <div className="h-96 w-1/2 bg-white m-6 rounded-xl">
-          <div className="border-b-2 m-2">Hi</div>
-          <div className=" ">
-            {/* <Bar data={chartdata} />   */}
-             </div>
+        <div className="h-82 w-3/4 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2 text-left  pb-2 pl-4">
+            Frequency of expenses
+          </div>
+          <div className=" p-4">
+            <Line data={dailydata} />
+          </div>
         </div>
-        <div className="h-96 w-1/2 bg-white m-6 rounded-xl">
-          <div className="border-b-2 m-2">Hi</div>
-          <div className=" "><Doughnut data={chartdata} />  </div>
+        <div className="h-82 w-1/2 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2 pl-4 text-left">
+            Individual Expenditure
+          </div>
+          <div className=" p-4 w-3/4 ">
+            <Doughnut data={chartdata} />{" "}
+          </div>
         </div>
       </div>
     </>
