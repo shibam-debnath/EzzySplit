@@ -28,15 +28,17 @@ const LastGroup = () => {
     lastGroupData();
   }, []);
 
+  let count=1;
+
   return (
     <>
       <div className="flex space-between ">
         <div className=" min-h-screen w-full  ">
           <div className="pt-5 pb-2 font-sans text-3xl">Your last Groups</div>
-          <div>
+          <div >
             {groupData.groupid? groupData.groupid.map((group) => (
               <LastGroupModify
-                id={group._id}
+                id={count++}
                 name={group.groupName}
                 created={group.created}
               />
