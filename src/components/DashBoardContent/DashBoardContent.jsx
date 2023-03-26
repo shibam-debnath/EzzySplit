@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Doughnut, Bar } from "react-chartjs-2";
 import axios from "axios";
 
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
 // icons
 import { BsCurrencyDollar } from "react-icons/bs";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
@@ -58,11 +63,13 @@ const DashBoardContent = () => {
 
   useEffect(() => {
     getData();
+    groupData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    groupData();
-  }, []);
+  // useEffect(() => {
+
+  // }, []);
 
   // console.log(userData);
   // console.log(grData.expenseId);
@@ -110,6 +117,17 @@ const DashBoardContent = () => {
     }, duration);
   });
 
+  const chartdata = {
+    labels: ["Suraj", "Shibam", "Mohit", "Nikhil", "Rituraj"],
+    datasets: [
+      {
+        backgroundColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
+        label: "abcd",
+        data: [5, 6, 7, 3, 2],
+      },
+    ],
+  };
+
   let count = 0;
 
   return (
@@ -127,7 +145,7 @@ const DashBoardContent = () => {
                 {beforeFetch === 1 && (
                   <div className="flex-col">
                     <p className="text-gray-400 text-2xl font-bold">
-                      {userData.name} 
+                      {userData.name}
                     </p>
                   </div>
                 )}
@@ -218,8 +236,21 @@ const DashBoardContent = () => {
             ) : (
               <p>Add expenses and leave up to Us</p>
             )}
-
           </div>
+        </div>
+      </div>
+
+      {/*  strating of the different charts section... */}
+      <div className="flex justify-start ">
+        <div className="h-96 w-1/2 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2">Hi</div>
+          <div className=" ">
+            {/* <Bar data={chartdata} />   */}
+             </div>
+        </div>
+        <div className="h-96 w-1/2 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2">Hi</div>
+          <div className=" "><Doughnut data={chartdata} />  </div>
         </div>
       </div>
     </>
