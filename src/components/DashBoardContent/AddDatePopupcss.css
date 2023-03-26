@@ -1,0 +1,33 @@
+
+  .css-1eurbeq-MuiPickersToolbar-root-MuiDatePickerToolbar-root {
+    padding: 0px 67px;
+  }
+  .css-jhsfre-MuiGrid-root-MuiPickersToolbar-content{
+    justify-content: center;
+  
+   
+  }
+  
+  .css-3jvy96-MuiTypography-root-MuiDatePickerToolbar-title  {
+    justify-content: center !important;
+    font-size: 1.5rem;
+   
+  }
+  
+  .css-hlj6pa-MuiDialogActions-root {
+    display: none !important;
+  }
+  
+  .css-1hbyad5-MuiTypography-root {
+    display: none !important;
+  }
+  
+  .css-1lkpf4l-MuiYearCalendar-root{
+    max-height: 278px;
+  }
+  .css-1cafy48-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition{
+    min-height: 222px;
+  }
+  .css-1cafy48-MuiPickersSlideTransition-root-MuiDayCalendar-slideTransition{
+    margin: 1px;
+  }

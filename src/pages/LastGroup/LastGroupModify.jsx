@@ -40,10 +40,10 @@ export default function LastGroupModify(props) {
                 </div>
             </div>
             {toggleDesc && <div className="flex justify-between">
-                <div class="max-w-md bg-white dark:text-gray-200  h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
+                <div class="max-w-md bg-white   h-52 rounded-xl w-full  m-3 bg-no-repeat bg-cover bg-center ">
 
                     <div class="px-6 py-4 ">
-                        <div class="font-semibold text-sm mb-2 justify-between flex">
+                        <div class="font-semibold text-blue-900 text-sm mb-2 justify-between flex">
                             <div>Group Member </div>
                             <div> Amount Paid</div>
                             <div>Join Date</div>
