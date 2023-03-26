@@ -79,10 +79,11 @@ const AddExpensePopup = (props) => {
 
     return (
         <>
-            <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '>
+            {/* <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '> */}
+            <div className='fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed'>
 
                 <form method='POST' >
-                    <div className=' h-3/5 flex justify-center mt-16'>
+                    <div className='h-3/5 flex justify-center mt-16'>
                         <div className='border-2 border-primary rounded-xl w-[425px] my-auto bg-white'>
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
                                 <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>

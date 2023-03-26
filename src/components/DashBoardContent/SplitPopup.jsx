@@ -23,8 +23,9 @@ const SplitPopup = (props) => {
 
             {/* split exp div */}
 
+          <div className='overflow-y-auto max-h-[350px] scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-slate-800'>
 
-            <div className=' m-3 overflow-hidden'>
+            <div className=' m-3 overflow-hidden '>
               <div className="flex"> <a className="bg-blue-500 block cursor-pointer text-center hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-full m-auto w-2/3">
                 split the expences
               </a></div>
@@ -76,6 +77,7 @@ const SplitPopup = (props) => {
             </div>
 
 
+            </div>
           {/* </div>
         </div> */}
       </div>

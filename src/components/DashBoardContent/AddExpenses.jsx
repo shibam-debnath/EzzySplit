@@ -13,6 +13,8 @@ const AddExpenses = (props) => {
     e.preventDefault();
     Fpopup(false);
   }
+  // To stop page scrolling while using popup 
+  popup?document.body.style.overflow="hidden":document.body.style.overflow="auto";
 
   return (
     <>

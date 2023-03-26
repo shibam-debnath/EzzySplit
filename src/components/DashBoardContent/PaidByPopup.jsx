@@ -10,7 +10,7 @@ const PaidByPopup = (props) => {
     Fmultiple(!multiple);
   }
   return (
-        <div  className='border-2 border-emerald-600 w-[350px] my-auto rounded-xl mx-2'>
+        <div  className='border-2 border-emerald-600 w-[370px] my-auto rounded-xl mx-2 '>
         <div className='bg-white rounded-2xl pb-3 '>
           <div className='bg-primary rounded-lg p-2 px-3 flex justify-between mb-1'>
             <h5 className=' text-white font-semibold text-lg'>Choose Payer</h5>
@@ -19,6 +19,7 @@ const PaidByPopup = (props) => {
             </button>
           </div>
 
+        <div className='overflow-y-auto max-h-80 scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-slate-800'>
           {/* people in group add by fetching */}
           {
             props.groupDetails.userId.map((val)=>{
@@ -74,6 +75,7 @@ const PaidByPopup = (props) => {
             })}
             
           </div>}
+        </div>
         </div>
         </div>
 
