@@ -37,7 +37,7 @@ const DashBoardContent = () => {
 
   const [userData, setData] = useState([]);
   const [grData, setgroupData] = useState({});
-  let userid = "63d38658cd073fceefefe135";
+  // let userid = "63d38658cd073fceefefe135";
 
   const set = () => {
     setTimeout(() => {
@@ -48,7 +48,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -67,7 +67,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       axios
-        .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
+        .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
           responseType: "json",
         })
         .then(function (response) {
@@ -136,12 +136,12 @@ const DashBoardContent = () => {
   });
 
   const chartdata = {
-    labels: ["Suraj", "Shibam", "Mohit", "Nikhil", "Rituraj"],
+    labels: ["Food", "Travel", "Hotel", "Shopping", "Rituraj"],
     datasets: [
       {
-        backgroundColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
-        borderColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
-        label: "Total expended",
+        backgroundColor: [ "#F7EDE2", "#F5CAC3","#FFCD7C", "#F28482", "#C3F5D4"],
+        borderColor: [ "#F7EDE2", "#F5CAC3","#FFCD7C", "#F28482", "#C3F5D4"],
+        label: "Total Expenses",
         data: [5, 6, 7, 3, 2],
       },
     ],
@@ -287,9 +287,9 @@ const DashBoardContent = () => {
         </div>
         <div className="h-82 w-1/2 bg-white m-6 rounded-xl">
           <div className="border-b-2 m-2 pl-4 text-left">
-            Individual Expenditure
+            Category wise Expenditure
           </div>
-          <div className=" p-4 w-3/4 ">
+          <div className="flex justify-center m-auto  p-4 w-3/4 ">
             <Doughnut data={chartdata} />{" "}
           </div>
         </div>
