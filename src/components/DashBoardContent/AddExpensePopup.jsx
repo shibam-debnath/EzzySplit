@@ -8,9 +8,21 @@ import AddCurrencyPopup from './AddCurrencyPopup';
 import axios from 'axios';
 
 const AddExpensePopup = (props) => {
-
-    const [addon, Caddon] = useState(0);
     
+    const [addon, Caddon] = useState(0);
+    const [inputData, FinputData] = useState({
+        amount: "",
+        description: "",
+        groupId: "63e28d86e007610a77e259da"
+    });
+
+    const InputEvent = (e)=>{
+        const name = e.target.name;
+        const value = e.target.value;
+        FinputData({...inputData,[name]:value});
+
+    }
+
     const paidBy = (e) => {
         e.preventDefault();
         Caddon(1);
@@ -36,13 +48,42 @@ const AddExpensePopup = (props) => {
         Caddon(0)
     }
 
+
+    const addExp = async (e) => {
+        e.preventDefault();
+        try {
+            
+            const { amount, description, groupId } = inputData;
+            const res = await fetch("http://localhost:8000/expense/addExpense", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    amount, description, groupId
+                })
+            })
+            const data =await res.json();
+            console.log(data);
+            alert("Expenses added successfullt");
+            FinputData({
+                amount: "",
+                description: "",
+                groupId: "63e28d86e007610a77e259da"
+            })
+
+        } catch (error) {
+            console.log("Error in Adding Expenses");
+        }
+    }
+
     return (
         <>
             <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '>
 
-                <div className=' h-3/5 flex justify-center mt-16'>
-                    <div className='border-2 border-primary rounded-xl w-[425px] my-auto bg-white'>
-                        <form >
+                <form method='POST' >
+                    <div className=' h-3/5 flex justify-center mt-16'>
+                        <div className='border-2 border-primary rounded-xl w-[425px] my-auto bg-white'>
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
                                 <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>
                                 <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>
@@ -65,11 +106,23 @@ const AddExpensePopup = (props) => {
                                     </div>
                                     <div className='w-3/5  '>
                                         <div className='border-b-[1px] border-dotted border-emerald-500'>
-                                            <input type="text" placeholder='Enter description' className='rounded-lg h-7 w-full border-none focus:ring-0' />
+                                            <input type="text" 
+                                            placeholder='Enter description'
+                                             className='rounded-lg h-7 w-full border-none focus:ring-0'
+                                             name='description'
+                                             value={inputData.description}
+                                             onChange={InputEvent}
+                                             />
                                         </div>
                                         <div className='mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500'>
                                             <button className='font-medium hover:text-slate-500' onClick={addCurrency}>INR</button>
-                                            <input type="text" placeholder='Amount' className='rounded-lg h-7 w-52 border-none focus:ring-0' />
+                                            <input type="text" 
+                                            placeholder='Amount'
+                                             className='rounded-lg h-7 w-52 border-none focus:ring-0'
+                                             name='amount'
+                                             value={inputData.amount}
+                                             onChange={InputEvent}
+                                             />
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +159,7 @@ const AddExpensePopup = (props) => {
                                         </button>
                                     </div>
                                 </div>
-                                
+
                                 <hr />
 
 
@@ -117,30 +170,31 @@ const AddExpensePopup = (props) => {
                                         </button>
                                     </div>
                                     <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
-                                        <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' >
+                                        <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
+                                        onClick={addExp}  >
                                             Save
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                        </form>
+                        </div>
+
+
+                        {/* Add seconaadry popup */}
+                        {/* <div className='border-2 border-emerald-600 w-[28%] my-auto rounded-xl mx-2'> */}
+
+                        {addon === 1 && <PaidByPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
+                        {addon === 2 && <SplitPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
+                        {addon === 3 && <AddDatePopup />}
+                        {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}
+                        {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
+                        {/* </div> */}
                     </div>
 
 
-                    {/* Add seconaadry popup */}
-                    {/* <div className='border-2 border-emerald-600 w-[28%] my-auto rounded-xl mx-2'> */}
 
-                    {addon === 1 && <PaidByPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
-                    {addon === 2 && <SplitPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
-                    {addon === 3 && <AddDatePopup />}
-                    {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}
-                    {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
-                    {/* </div> */}
-                </div>
-
-
-
+                </form>
             </div>
         </>
     )
