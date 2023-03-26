@@ -1,19 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Legend,
+  plugins,
+} from "chart.js";
+
+import { Doughnut, Bar, Line } from "react-chartjs-2";
+
 // icons
-import { BsCurrencyDollar } from "react-icons/bs";
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement
+);
 
 const DashBoardContent = () => {
   const currentColor = "var(--primary-font)";
   const [beforeFetch, fbeforeFetch] = useState(0);
 
   const [userData, setData] = useState([]);
+  const [grData, setgroupData] = useState({});
+  let userid = "63d38658cd073fceefefe135";
 
   const set = () => {
     setTimeout(() => {
@@ -21,11 +45,29 @@ const DashBoardContent = () => {
     }, 500);
   };
 
+  const groupData = async () => {
+    try {
+      await axios
+        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+          responseType: "json",
+        })
+        .then(function (resp) {
+          setgroupData(resp.data.group);
+          console.log(resp);
+          // console.log(response.data.group.expenseId);
+          // console.log(response.data.group.expenseId[0].amount);
+          // console.log(grData);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
       axios
-        .get("http://localhost:8000/user/profile/63d3700f59aa96fcdb661477", {
+        .get("http://localhost:8000/user/profile/63d38658cd073fceefefe135", {
           responseType: "json",
         })
         .then(function (response) {
@@ -39,9 +81,16 @@ const DashBoardContent = () => {
 
   useEffect(() => {
     getData();
+    groupData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(userData);
+  // useEffect(() => {
+
+  // }, []);
+
+  // console.log(userData);
+  // console.log(grData.expenseId);
   // console.log(userData.users);
 
   const earningData = [
@@ -68,6 +117,58 @@ const DashBoardContent = () => {
       iconBg: "rgb(255, 244, 229)",
     },
   ];
+
+  let valueDisplays = document.querySelectorAll(".num");
+  let interval = 1;
+
+  valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
+    let endValue = valueDisplay.getAttribute("data-val");
+
+    let duration = Math.floor(interval / endValue);
+    let counter = setInterval(function () {
+      startValue += 1;
+      valueDisplay.textContent = startValue;
+      if (startValue >= endValue) {
+        clearInterval(counter);
+      }
+    }, duration);
+  });
+
+  const chartdata = {
+    labels: ["Suraj", "Shibam", "Mohit", "Nikhil", "Rituraj"],
+    datasets: [
+      {
+        backgroundColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
+        borderColor: ["blue", "#e11d48", "#84cc16", "#8b5cf6", "#fdba74"],
+        label: "Total expended",
+        data: [5, 6, 7, 3, 2],
+      },
+    ],
+  };
+
+  const dailydata = {
+    labels: [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22, 23, 24, 25, 26, 27, 28, 29, 30,
+    ],
+    datasets: [
+      {
+        backgroundColor: ["#6B60F1"],
+        borderColor: ["#6B60F1"],
+        label: "No of expenses added",
+        fill: true,
+        tension: 0.5,
+        data: [
+          2, 0, 1, 5, 3, 0, 8, 4, 4, 5, 5, 6, 7, 3, 2, 3, 4, 5, 6, 2, 1, 3, 2,
+          4, 2, 5, 7, 6, 3, 1,
+        ],
+      },
+    ],
+  };
+
+  let count = 0;
+
   return (
     <>
       <div>
@@ -75,44 +176,42 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full p-8 pt-9 m-6 bg-no-repeat bg-cover bg-center">
+          <div className="bg-lgPrimary dark:text-gray-200  h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-bold text-gray-400 flex">Hi,</p>
+                <p className="font-bold text-white flex">Hi,</p>
                 {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
-                  <p className="text-gray-400 text-2xl font-bold">
-                    {userData.name}
-                  </p>
+                  <div className="flex-col">
+                    <p className="text-white text-2xl font-bold">
+                      {userData.name}
+                    </p>
+                  </div>
                 )}
                 {beforeFetch === 0 && (
                   <p className="text-gray-400 text-2xl font-bold">
                     <BarLoader color="#f5f5f5" height={25} />
                   </p>
                 )}
-                {/* </p> */}
               </div>
-              <button
-                type="button"
-                className="text-2xl opacity-0.9 text-white hover:drop-shadow-xl rounded-full  p-4"
-              >
-                <BsCurrencyDollar />
-              </button>
+              <div className="">
+                <img className="h-48" src="../images/coin_banner.png" alt="" />
+              </div>
             </div>
             <div className="mt-0">
               <button
                 color={currentColor}
-                bgColor="black"
+                bgcolor="black"
                 text="Download"
-                borderRadius="10px"
+                borderradius="10px"
               />
             </div>
           </div>
-          <div className="width-full flex m-6 flex-wrap justify-left gap-10  items-center">
+          <div className="width-full flex mx-10 my-6 justify-left gap-10  items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
-                className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl "
+                className="bg-white h-44 md:w-56  p-4 pt-9 rounded-2xl "
               >
                 <button
                   type="button"
@@ -125,11 +224,73 @@ const DashBoardContent = () => {
                   {item.icon}
                 </button>
                 <p className="mt-3">
-                  <span className="text-lg font-semibold">{item.amount}</span>
+                  <span
+                    className="text-lg font-semibold num"
+                    data-val={item.amount}
+                  >
+                    0
+                  </span>
                 </p>
                 <p className="text-sm text-gray-400  mt-1">{item.title}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* expenses history content starting...*/}
+      <div className="mt-6 flex flex-wrap">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-6 m-6 bg-no-repeat bg-cover bg-center">
+          <div className="text-gray-700 text-2xl font-bold pb-2 border-b-2 border-spacing-y-12  border-gray-200">
+            {" "}
+            Expenses History{" "}
+          </div>
+          <div className="text-gray-400 m-2 flex border-b-2 ">
+            <div className="p-2 w-[4rem]">S.No.</div>
+            <div className="p-2 w-1/4">Name</div>
+            <div className="p-2 w-1/4">Amount</div>
+            <div className="p-2 w-1/4">Paid by</div>
+            <div className="p-2 w-1/4">Date</div>
+          </div>
+          <div className="overflow-hidden scrollbar-none scroll-smooth">
+            {grData.expenseId ? (
+              grData.expenseId.map((expenses) => (
+                <div className="">
+                  <div
+                    key={expenses._id}
+                    className="text-black m-2 flex border-b-2"
+                  >
+                    <div className="px-2 w-[4rem]">{count++}</div>
+                    <div className="px-2 w-1/4">{expenses.notes}</div>
+                    <div className="px-2 w-1/4">{expenses.amount}</div>
+                    <div className="px-2 w-1/4">Paid by</div>
+                    <div className="px-2 w-1/4">{expenses.date}</div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Add expenses and leave up to Us</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/*  strating of the different charts section... */}
+      <div className="flex justify-start ">
+        <div className="h-82 w-3/4 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2 text-left  pb-2 pl-4">
+            Frequency of expenses
+          </div>
+          <div className=" p-4">
+            <Line data={dailydata} />
+          </div>
+        </div>
+        <div className="h-82 w-1/2 bg-white m-6 rounded-xl">
+          <div className="border-b-2 m-2 pl-4 text-left">
+            Individual Expenditure
+          </div>
+          <div className=" p-4 w-3/4 ">
+            <Doughnut data={chartdata} />{" "}
           </div>
         </div>
       </div>

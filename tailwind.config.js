@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#6B60F1",
+        lgPrimary:"#8CA5FF",
         aliceblue: "#f0f7fc",
         footerColor: "#00000033",
       },
