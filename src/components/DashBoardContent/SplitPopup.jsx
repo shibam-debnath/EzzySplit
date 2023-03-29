@@ -57,8 +57,7 @@ const SplitPopup = (props) => {
             {/* 3rd div */}
             <div className='m-3 py-0.5 '>
               <div className="ml-3 inline-flex ">
-
-
+                
                 <button className='bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-3 '><VscChecklist /></button>
                 <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-3 ">1.23</button>
                 <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1  px-3 "><VscGrabber /></button>

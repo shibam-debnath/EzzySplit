@@ -48,7 +48,7 @@ const AddExpensePopup = (props) => {
                     <div className='border-2 border-emerald-600 rounded-xl w-[425px] my-auto bg-white'>
                         <form >
                             <div className='bg-primary rounded-lg p-2 px-3 flex justify-between'>
-                                <h5 className=' text-white font-semibold text-lg'>Add an expenses</h5>
+                                <h5 className=' text-white font-semibold text-lg'>Add an expense</h5>
                                 <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>
                                     <VscClose />
                                 </button>
