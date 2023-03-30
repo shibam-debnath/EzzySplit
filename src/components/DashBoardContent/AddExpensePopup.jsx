@@ -8,7 +8,7 @@ import AddCurrencyPopup from './AddCurrencyPopup';
 import axios from 'axios';
 
 const AddExpensePopup = (props) => {
-    
+
     const [addon, Caddon] = useState(0);
     const [inputData, FinputData] = useState({
         amount: "",
@@ -16,14 +16,85 @@ const AddExpensePopup = (props) => {
         groupId: "63e28d86e007610a77e259da"
     });
 
-    const InputEvent = (e)=>{
-        const name = e.target.name;
-        const value = e.target.value;
-        FinputData({...inputData,[name]:value});
+    const [paidByArr, FpaidByArr] = useState([
+        {
+            userId: "",
+            amount: "",
+            name: ""
+        }
+    ]);
+    const [paidBySingle, FpaidBySingle] = useState([
+        {
+            userId: "",
+            amount: "",
+            name: ""
+        }
+    ]);
+
+    const InitailizePaidByArr = () => {
+        const tempArr = props.groupDetails.userId.map((val) => ({
+            userId: val._id,
+            amount: "",
+            name: val.name
+        }));
+
+        FpaidByArr(() => [...tempArr]);
 
     }
 
-    const paidBy = (e) => {
+    useEffect(() => {
+        InitailizePaidByArr();
+    }, []);
+
+
+    // you or multiple
+    const [payer, Fpayer] = useState("You");
+    const setPayer = (text) => {
+        Fpayer(text);
+    }
+    // name => userId and value => amount
+    const inputAmountCng = (name, value) => {
+        const tempArr = paidByArr.map((val) => {
+            if (val.userId === name) {
+                return {
+                    userId: val.userId,
+                    amount: value,
+                    name: val.name
+                }
+            }
+            else {
+                return {
+                    userId: val.userId,
+                    amount: val.amount,
+                    name: val.name
+                }
+            }
+        });
+        FpaidByArr([...tempArr]);
+    }
+    const inputAmountCngSingle = (name, perName) => {
+        const tempArr = [{
+            userId: name,
+            amount: inputData.amount,
+            name: perName
+        }];
+        // Payer is user who loggined
+        if (name === '63d645f7e653329b6cab4ef8') {
+            Fpayer("You");
+        }
+        FpaidBySingle(() => [...tempArr]);
+    }
+
+    useEffect(() => {
+        console.log("paid by Single:", paidBySingle);
+    }, [paidBySingle]);
+    const InputEvent = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        FinputData({ ...inputData, [name]: value });
+    }
+
+    const paidBy1 = (e) => {
         e.preventDefault();
         Caddon(1);
     }
@@ -44,15 +115,30 @@ const AddExpensePopup = (props) => {
         Caddon(6);
     }
 
-    const closeAdd = () => {
+    const closeAdd = () => {    
         Caddon(0)
     }
 
-
-    const addExp = async (e) => {
-        e.preventDefault();
+    const postForm = async () => {
         try {
-            
+            var fnarr= [];
+            if (payer === "You") {
+                fnarr =[
+                    {
+                        userId: '63d645f7e653329b6cab4ef8',
+                        amount: inputData.amount,
+                        name: 'test1'
+                    }
+                ]
+            }
+            else if (payer === "Multiple P.") {
+                fnarr = paidByArr.filter(val => val.amount !== '');
+            }
+            else {
+                fnarr = paidBySingle;
+            }
+
+
             const { amount, description, groupId } = inputData;
             const res = await fetch("http://localhost:8000/expense/addExpense", {
                 method: "POST",
@@ -60,17 +146,18 @@ const AddExpensePopup = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    amount, description, groupId
+                    amount, description, groupId, paidBy:fnarr
                 })
             })
-            const data =await res.json();
-            console.log(data);
+            const data = await res.json();
+            // console.log(data);
             alert("Expenses added successfullt");
             FinputData({
                 amount: "",
                 description: "",
                 groupId: "63e28d86e007610a77e259da"
             })
+            console.log("end frm");
 
         } catch (error) {
             console.log("Error in Adding Expenses");
@@ -107,23 +194,23 @@ const AddExpensePopup = (props) => {
                                     </div>
                                     <div className='w-3/5  '>
                                         <div className='border-b-[1px] border-dotted border-emerald-500'>
-                                            <input type="text" 
-                                            placeholder='Enter description'
-                                             className='rounded-lg h-7 w-full border-none focus:ring-0'
-                                             name='description'
-                                             value={inputData.description}
-                                             onChange={InputEvent}
-                                             />
+                                            <input type="text"
+                                                placeholder='Enter description'
+                                                className='rounded-lg h-7 w-full border-none focus:ring-0'
+                                                name='description'
+                                                value={inputData.description}
+                                                onChange={InputEvent}
+                                            />
                                         </div>
                                         <div className='mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500'>
                                             <button className='font-medium hover:text-slate-500' onClick={addCurrency}>INR</button>
-                                            <input type="text" 
-                                            placeholder='Amount'
-                                             className='rounded-lg h-7 w-52 border-none focus:ring-0'
-                                             name='amount'
-                                             value={inputData.amount}
-                                             onChange={InputEvent}
-                                             />
+                                            <input type="text"
+                                                placeholder='Amount'
+                                                className='rounded-lg h-7 w-52 border-none focus:ring-0'
+                                                name='amount'
+                                                value={inputData.amount}
+                                                onChange={InputEvent}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -131,8 +218,9 @@ const AddExpensePopup = (props) => {
                                 <div className='mt-6'>
                                     <div>
                                         <span>Paid by </span>
-                                        <span><button className=' text-primary rounded-lg px-2 py-0 border-dotted border-emerald-300 border-2 hover:border-primary hover:border-solid' onClick={paidBy}>
-                                            You
+                                        <span><button className=' text-primary rounded-lg px-2 py-0 border-dotted border-emerald-300 border-2 hover:border-primary hover:border-solid'
+                                            onClick={paidBy1}>
+                                            {payer}
                                         </button></span>
                                         <span> and split </span>
                                         <span><button
@@ -172,12 +260,24 @@ const AddExpensePopup = (props) => {
                                     </div>
                                     <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
                                         <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
-                                        onClick={addExp}  >
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                    postForm();
+                                            }}  >
                                             Save
                                         </button>
                                     </div>
                                 </div>
                             </div>
+                            {/* {
+                                paidByArr.map((val)=>{
+                                    return(
+                                        <div>
+                                           { val.name}
+                                        </div>
+                                    )
+                                })
+                            } */}
 
                         </div>
 
@@ -185,7 +285,13 @@ const AddExpensePopup = (props) => {
                         {/* Add seconaadry popup */}
                         {/* <div className='border-2 border-emerald-600 w-[28%] my-auto rounded-xl mx-2'> */}
 
-                        {addon === 1 && <PaidByPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
+                        {addon === 1 && <PaidByPopup
+                            closeAdd={closeAdd}
+                            paidByArr={paidByArr}
+                            setPayer={setPayer}
+                            inputAmountCng={inputAmountCng}
+                            inputAmountCngSingle={inputAmountCngSingle}
+                        />}
                         {addon === 2 && <SplitPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
                         {addon === 3 && <AddDatePopup />}
                         {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}

@@ -5,10 +5,7 @@ const PaidByPopup = (props) => {
 
   const [multiple, Fmultiple] = useState(false);
 
-  const pmultiple = (e) => {
-    e.preventDefault();
-    Fmultiple(!multiple);
-  }
+  
   return (
         <div  className='border-2 border-emerald-600 w-[370px] my-auto rounded-xl mx-2 '>
         <div className='bg-white rounded-2xl pb-3 '>
@@ -22,12 +19,22 @@ const PaidByPopup = (props) => {
         <div className='overflow-y-auto max-h-80 scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-slate-800'>
           {/* people in group add by fetching */}
           {
-            props.groupDetails.userId.map((val)=>{
+            props.paidByArr.map((val)=>{
               return(
                 <div className='bg-white'>
             <div className=''>
               <div className='flex justify-start'>
-                <button className='rounded-lg hover:border-primary hover:border-[1px] w-full text-start px-3 py-2'>
+                <button
+                 className='rounded-lg hover:border-primary hover:border-[1px] w-full text-start px-3 py-2'
+                 onClick={
+                  (e)=>{
+                    e.preventDefault();
+                    props.setPayer(val.name);
+                    props.inputAmountCngSingle(val.userId,val.name);
+                    props.closeAdd();
+                  }
+                 }
+                 >
                   {val.name}
                 </button>
               </div>
@@ -42,7 +49,12 @@ const PaidByPopup = (props) => {
           {/* paid by multiple people */}
           <div className=''>
             <button className=' text-primary w-full text-start px-3 py-2 font-semibold hover:bg-slate-200'
-              onClick={pmultiple}
+              onClick={
+                (e)=>{
+                  e.preventDefault();
+                  Fmultiple(!multiple);
+                props.setPayer("Multiple P.");
+              }}
             >
               Multiple people
             </button>
@@ -58,7 +70,7 @@ const PaidByPopup = (props) => {
                  Each person paid their own shares 
               </div>
             </div>
-            {props.groupDetails.userId.map((val)=>{
+            {props.paidByArr.map((val)=>{
               return (
                 <div className='px-3'>
               <div className='text-start font-medium pt-2'>
@@ -68,7 +80,17 @@ const PaidByPopup = (props) => {
                 <div>
                   INR
                 </div>
-                <input type="text" placeholder='Amount' className='w-full border-none focus:ring-0' />
+                <input type="text"
+                 placeholder='Amount'
+                 name={val.userId}
+                 value={val.amount}
+                 onChange={(e)=>{
+                  const name = e.target.name;
+                  const value = e.target.value;
+                  props.inputAmountCng(name,value);
+                 }}
+                 
+                className='w-full border-none focus:ring-0' />
               </div>
             </div>
               )
