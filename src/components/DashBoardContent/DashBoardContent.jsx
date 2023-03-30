@@ -175,6 +175,9 @@ const DashBoardContent = () => {
 
   let count = 1;
 
+  const style = {
+    height:"-webkit-fill-available",
+  }
   return (
     <>
       <div>
@@ -314,7 +317,9 @@ const DashBoardContent = () => {
               <Line data={dailydata} />
             </div>
           </div>
-          <div className="bg-white rounded-xl m-6 w-5/12"></div>
+          <div className="bg-white rounded-xl h-80 m-6 p-4 w-5/12 flex justify-center">
+            <img style={style} src="../images/boy.jpg" alt="react" />
+          </div>
         </div>
       </div>
     </>
