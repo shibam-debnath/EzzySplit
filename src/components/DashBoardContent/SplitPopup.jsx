@@ -72,7 +72,7 @@ const SplitPopup = (props) => {
                     return <div key={item.id} className=" flex justify-between mb-4 mt-2">
 
                       <div className=" flex space-x-2 items-center">
-                        <input type="checkbox" checked />
+                        <input type="checkbox"  />
                         {item.icon}
                         <span><span className='font-semibold m-1'>{item.fname}</span> {item.lname}</span>
 
