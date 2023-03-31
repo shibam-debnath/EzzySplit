@@ -140,13 +140,21 @@ const DashBoardContent = () => {
     datasets: [
       {
         backgroundColor: [
-          "#F7EDE2",
-          "#F5CAC3",
-          "#FFCD7C",
-          "#F28482",
-          "#C3F5D4",
+          "#7b68ee",
+          "#6a5acd",
+          "#6050dc",
+          "#5218fa",
+          "#7f00ff",
         ],
-        borderColor: ["#F7EDE2", "#F5CAC3", "#FFCD7C", "#F28482", "#C3F5D4"],
+        borderColor:["#ffffff "],
+        // borderColor: [
+        //   "#7b68ee",
+        //   "#6a5acd",
+        //   "#6050dc",
+        //   "#5218fa",
+        //   "#7f00ff",
+        // ],
+        // borderColor: ["#F7EDE2", "#F5CAC3", "#FFCD7C", "#F28482", "#C3F5D4"],
         label: "Total Expenses",
         data: [5, 6, 7, 3, 2],
       },
@@ -185,7 +193,7 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-lgPrimary dark:text-gray-200  h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
+          <div className="bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
                 <p className="font-bold text-white flex">Hi,</p>
@@ -318,10 +326,10 @@ const DashBoardContent = () => {
             </div>
           </div>
           <div className="bg-white rounded-xl h-80 m-6 p-4 w-5/12 flex justify-center">
-            <img style={style} src="../images/boy.jpg" alt="react" />
+            <img style={style} src="../images/boy.jpg" alt="Click Me to settle expense" />
           </div>
         </div>
-      </div>
+      </div>  
     </>
   );
 };

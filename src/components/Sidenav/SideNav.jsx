@@ -77,7 +77,7 @@ const SideNav = () => {
           </li>
           <li>
             <NavLink
-              to={"/dashboard/"}
+              to={"/dashboard/help"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
