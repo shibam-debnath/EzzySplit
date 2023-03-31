@@ -38,7 +38,7 @@ const AddExpenses = () => {
             className="flex "
           >
             {hovering && (
-              <div className="flex m-2 p-2">
+              <div className="flex m-2 p-2 bg-gray-100">
                 <p>Add expense</p>
               </div>
             )}
