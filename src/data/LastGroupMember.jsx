@@ -1,4 +1,4 @@
-export const LastGroupMember = [
+ export const LastGroupMember = [
     {
         id:"1",
         name:"Suraj",
