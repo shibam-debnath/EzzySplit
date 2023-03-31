@@ -265,10 +265,10 @@ const DashBoardContent = () => {
             <div className="p-2 w-1/4">Date</div>
           </div>
 
-          <div className="overflow-hidden scrollbar-none scroll-smooth">
+          <div className=" max-h-[375px] overflow-y-auto scrollbar-none scroll-smooth">
             {grData.expenseId ? (
               grData.expenseId.map((expenses) => (
-                <div className="overflow-auto scrollbar-none hover:overflow-scroll">
+                <div className="">
                   <div
                     key={expenses._id}
                     className="text-black ml-8 mr-8 m-2 flex border-b-2"
