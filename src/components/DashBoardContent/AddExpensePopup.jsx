@@ -6,8 +6,40 @@ import SplitPopup from './SplitPopup';
 import PaidByPopup from './PaidByPopup';
 import AddCurrencyPopup from './AddCurrencyPopup';
 import axios from 'axios';
+import { ToastContainer, toast, Zoom, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Dna } from 'react-loader-spinner'
+
 
 const AddExpensePopup = (props) => {
+
+    const [tglSaveBtn, FtglSaveBtn] = useState(true);
+
+    const notify = () => {
+        toast.success("Expense added successfully..!!", {
+            autoClose: 1200,
+            pauseOnFocusLoss: false,
+            transition: Flip
+        }
+        );
+    };
+    const failed = () => {
+        toast.error("Error occured..!!", {
+            autoClose: 1200,
+            pauseOnFocusLoss: false,
+            transition: Flip
+        }
+        );
+    };
+   
+    const set =() => {
+        setTimeout(() => {
+          FtglSaveBtn(true);
+          notify();
+          Caddon(0);
+          
+        }, 2000);
+      };
 
     const [addon, Caddon] = useState(0);
     const [inputData, FinputData] = useState({
@@ -30,6 +62,8 @@ const AddExpensePopup = (props) => {
             name: ""
         }
     ]);
+
+
 
     const InitailizePaidByArr = () => {
         const tempArr = props.groupDetails.userId.map((val) => ({
@@ -115,15 +149,15 @@ const AddExpensePopup = (props) => {
         Caddon(6);
     }
 
-    const closeAdd = () => {    
+    const closeAdd = () => {
         Caddon(0)
     }
 
     const postForm = async () => {
         try {
-            var fnarr= [];
+            var fnarr = [];
             if (payer === "You") {
-                fnarr =[
+                fnarr = [
                     {
                         userId: '63d645f7e653329b6cab4ef8',
                         amount: inputData.amount,
@@ -146,20 +180,22 @@ const AddExpensePopup = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    amount, description, groupId, paidBy:fnarr
+                    amount, description, groupId, paidBy: fnarr
                 })
             })
             const data = await res.json();
-            // console.log(data);
-            alert("Expenses added successfullt");
+            
+            if (res.status === 200) {
+                set();
+            }
             FinputData({
                 amount: "",
                 description: "",
                 groupId: "63e28d86e007610a77e259da"
             })
-            console.log("end frm");
 
         } catch (error) {
+            failed();
             console.log("Error in Adding Expenses");
         }
     }
@@ -252,22 +288,37 @@ const AddExpensePopup = (props) => {
                                 <hr />
 
 
-                                <div className='flex justify-end py-3'>
-                                    <div className='py-1 px-4 mr-3 text-base font-normal bg-slate-500 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-600  '>
-                                        <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' >
-                                            Cancel
-                                        </button>
-                                    </div>
-                                    <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
-                                        <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
-                                            onClick={(e) => {
-                                                e.preventDefault();
+                                {
+                                    tglSaveBtn ? <div className='flex justify-end py-3'>
+                                        <div className=' mr-3 text-base font-normal bg-slate-500 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-600  '>
+                                            <button className='py-1 px-4 it text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
+                                            onClick={props.closeAdd} >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div className=' mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
+                                            <button className='py-1 px-4 text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    FtglSaveBtn(false);
                                                     postForm();
-                                            }}  >
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
+                                                }}  >
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div> :
+                                        <div className=' justify-end flex mr-10 py-2'>
+                                            <Dna
+                                                visible={true}
+                                                height="60"
+                                                width="80"
+                                                ariaLabel="dna-loading"
+                                                wrapperStyle={{}}
+                                                wrapperClass="dna-wrapper"
+                                            />
+                                        </div>
+                                }
+
                             </div>
                             {/* {
                                 paidByArr.map((val)=>{
@@ -302,6 +353,7 @@ const AddExpensePopup = (props) => {
 
 
                 </form>
+                <ToastContainer />
             </div>
         </>
     )

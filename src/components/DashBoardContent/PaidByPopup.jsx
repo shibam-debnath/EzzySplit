@@ -4,6 +4,7 @@ import { VscClose } from "react-icons/vsc";
 const PaidByPopup = (props) => {
 
   const [multiple, Fmultiple] = useState(false);
+  const [single, Fsingle] = useState(false);
 
   
   return (
@@ -17,34 +18,53 @@ const PaidByPopup = (props) => {
           </div>
 
         <div className='overflow-y-auto max-h-80 scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-slate-800'>
+
+        <div className=''>
+            <button className=' text-primary w-full text-start px-3 py-2 font-semibold hover:bg-slate-200'
+              onClick={
+                (e)=>{
+                  e.preventDefault();
+                  Fsingle(!single);
+                  Fmultiple(false);
+              }}
+            >
+              Single Payer
+            </button>
+          </div>
           {/* people in group add by fetching */}
           {
-            props.paidByArr.map((val)=>{
-              return(
-                <div className='bg-white'>
-            <div className=''>
-              <div className='flex justify-start'>
-                <button
-                 className='rounded-lg hover:border-primary hover:border-[1px] w-full text-start px-3 py-2'
-                 onClick={
-                  (e)=>{
-                    e.preventDefault();
-                    props.setPayer(val.name);
-                    props.inputAmountCngSingle(val.userId,val.name);
-                    props.closeAdd();
-                  }
-                 }
-                 >
-                  {val.name}
-                </button>
+            single && <div>
+              {
+                props.paidByArr.map((val)=>{
+                  return(
+                    <div className='bg-white'>
+                <div className=''>
+                  <div className='flex justify-start'>
+                    <button
+                     className='rounded-lg hover:border-primary hover:border-[1px] w-full text-start px-3 py-2'
+                     onClick={
+                      (e)=>{
+                        e.preventDefault();
+                        props.setPayer(val.name);
+                        props.inputAmountCngSingle(val.userId,val.name);
+                        props.closeAdd();
+                      }
+                     }
+                     >
+                      {val.name}
+                    </button>
+                  </div>
+                  <hr />
+                </div>
+                <hr />
               </div>
-              <hr />
+                  )
+                })
+              }
             </div>
-            <hr />
-          </div>
-              )
-            })
           }
+
+          
           
           {/* paid by multiple people */}
           <div className=''>
@@ -53,6 +73,7 @@ const PaidByPopup = (props) => {
                 (e)=>{
                   e.preventDefault();
                   Fmultiple(!multiple);
+                  Fsingle(false);
                 props.setPayer("Multiple P.");
               }}
             >
