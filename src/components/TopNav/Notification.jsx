@@ -1,29 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { NotificationData } from "../../data/NotificationData";
 import Button from "../Button/Button";
 
 const Notification = (props) => {
   return (
-    <div className="nav-item absolute right-5 md:right-40 top-16 bg-slate-200  p-8 rounded-lg w-96">
+    <div className="nav-item absolute right-5 md:right-40 top-16 bg-white  p-8 rounded-lg w-96">
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
           <p className="font-semibold text-lg text-primary">Notifications</p>
           <button
             type="button"
             // onClick=
-            className="text-white text-xs rounded p-1 px-2 bg-orange-theme "
+            className="text-primary text-xs rounded p-1 px-2 bg-orange-theme "
           >
             {""}5 New
           </button>
         </div>
-        <Button
-          icon={<MdOutlineCancel />}
-          color="rgb(153, 171, 180)"
-          bgHoverColor="light-gray"
-          size="2xl"
-          borderradius="50%"
-        />
+        <button className="bg-none text-2xl text-primary rounded-2xl" onClick={props.closeNotification}>
+           <MdOutlineCancel />
+        </button>
       </div>
       <div className="mt-5 ">
         {NotificationData?.map((item, index) => (
