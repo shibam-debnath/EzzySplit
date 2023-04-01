@@ -349,7 +349,7 @@ const AddExpensePopup = (props) => {
 
 
                                 <div className='m-2'>
-                                    <p>(20$/person)</p>
+                                    
                                 </div>
 
                                 {/* Buttond */}

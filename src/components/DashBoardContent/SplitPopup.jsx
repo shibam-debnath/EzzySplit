@@ -45,7 +45,7 @@ const SplitPopup = (props) => {
               Split Equilly
             </button>
           </div>
-          <div className=''>
+          <div className='mb-3'>
             <button className=' text-primary w-full text-start px-3 py-2 font-semibold hover:bg-slate-200'
               onClick={
                 (e) => {
@@ -91,24 +91,6 @@ const SplitPopup = (props) => {
 
                   })}
                   <hr />
-                  <div className='pt-4'>
-                    <div className='flex justify-between'>
-                      <div className='ml-6 font-semibold'>
-                        Total
-                      </div>
-                      <div className='font-semibold flex'>
-                        <div className='px-1'>INR</div>
-                        <div> 1009</div>
-                      </div>
-                    </div>
-                    <div className='flex justify-end'>
-                      <div className='font-light flex text-[13px]'>
-                        <div className='px-1'>INR</div>
-                        <div>700</div>
-                        <div className='pl-1'> left</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
