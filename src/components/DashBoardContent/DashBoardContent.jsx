@@ -13,6 +13,7 @@ import {
   PointElement,
   Legend,
   plugins,
+  elements,
 } from "chart.js";
 
 import { Doughnut, Bar, Line } from "react-chartjs-2";
@@ -90,7 +91,7 @@ const DashBoardContent = () => {
         .then(function (response) {
           // console.log(response.data);
           setsettleExpenseData(response.data);
-          fexpend();
+          // fexpend();
           // set();
         });
     } catch (err) {
@@ -105,9 +106,9 @@ const DashBoardContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-
-  // }, []);
+  useEffect(() => {
+    fexpend();
+  }, [settleExpenseData]);
 
   // console.log(userData);
   // console.log(grData.expenseId);
@@ -117,37 +118,48 @@ const DashBoardContent = () => {
     const temp = [];
     if (settleExpenseData && grData) {
       for (var i = 0; i < grData.userId.length; i++) {
-        temp.push([
-          grData.userId[i].name,
-          settleExpenseData[1][grData.userId[i]._id],
-        ]);
-        console.log("temp");
-        console.log(temp);
+        // temp.push([
+        //   grData.userId[i].name,
+        //   settleExpenseData[1][grData.userId[i]._id],
+        // ]);
+        const singleData = {
+          name: "",
+          expense: "",
+        };
+        singleData.name = grData.userId[i].name;
+        singleData.expense = settleExpenseData[1][grData.userId[i]._id];
+        temp.push(singleData);
+        // temp[grData.userId[i]._id] = {
+        //   name: grData.userId[i].name,
+        //   expense: settleExpenseData[1][grData.userId[i]._id],
+        // };
       }
+      // console.log("temp");
+      // console.log(temp);
     }
     if (temp) setexpend(temp);
   };
 
-  console.log("expend");
-  console.log(expend);
+  useEffect(() => {
+    console.log("expend");
+    // console.log(expend);
+    expend.forEach((element) => {
+      console.log(element.name);
+      console.log(element.expense);
+    });
+  }, [expend]);
 
   // useEffect(()=>{
   //   fexpend();
   // },[grData]);
-const settleExpenseCall =async()=>{
-  console.log("clicked");
-  if(!grData.expend)
-  {
-    return (
-      <div className="bg-white text-black">No expense exist</div>
-    );
-  }
-  else{
-    return(
-      <div classname="bg-white text-black">Expense settled</div>
-    )
-  }
-}
+  const settleExpenseCall = async () => {
+    console.log("clicked");
+    if (!grData.expend) {
+      return <div className="bg-white text-black">No expense exist</div>;
+    } else {
+      return <div classname="bg-white text-black">Expense settled</div>;
+    }
+  };
   const earningData = [
     {
       icon: <GiReceiveMoney />,
@@ -315,8 +327,15 @@ const settleExpenseCall =async()=>{
       <div className="mt-6 flex flex-wrap">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
           <div className=" flex justify-between pb-2 pl-6 pr-8 border-b-2 border-spacing-y-12  border-gray-200">
-            <div className="text-gray-700 text-2xl font-bold ">Expenses History</div>
-            <button className="flex justify-end text-white p-2 bg-lgPrimary rounded-2xl" onClick={settleExpenseCall}>Settle expense</button>
+            <div className="text-gray-700 text-2xl font-bold ">
+              Expenses History
+            </div>
+            <button
+              className="flex justify-end text-white p-2 bg-lgPrimary rounded-2xl"
+              onClick={settleExpenseCall}
+            >
+              Settle expense
+            </button>
           </div>
           <div className="text-gray-400 ml-8 mr-8 m-2 flex border-b-2  ">
             <div className="p-2 w-[4rem]">S.No.</div>
@@ -362,64 +381,22 @@ const settleExpenseCall =async()=>{
               <div className="px-2 w-1/3">Expended</div>
               <div className="px-2 w-1/3">Shared</div>
             </div>
+
             <div className=" m-auto h-48 overflow-y-auto scrollbar-none">
-              {expend.legth > 0 ? (
-                expend.map((item) => {
-                  <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                    <div className="px-2 w-1/3">item[0]</div>
-                    <div className="px-2 w-1/3">item[1]</div>
-                    <div className="px-2 w-1/3">Shared</div>
-                  </div>;
+              {expend.length > 0 ? (
+                expend.map((element) => {
+                  return (
+                    <div className="text-black ml-8 mr-8 pb-2 flex border-b-2">
+                      <div className="px-2 w-1/3">{element.name}</div>
+                      <div className="px-2 w-1/3">{element.expense}</div>
+                      <div className="px-2 w-1/3">Shared</div>
+                    </div>
+                  );
                 })
               ) : (
-                <p className="text-black">This is suraj</p>
+                <p className="text-black">Loading....</p>
               )}
-              {/* <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-              <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2">
-                <div className="px-2 w-1/3">Name </div>
-                <div className="px-2 w-1/3">Expended</div>
-                <div className="px-2 w-1/3">Shared</div>
-              </div>
-               */}
+              
             </div>
           </div>
 
