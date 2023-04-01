@@ -1,4 +1,8 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { logout, auth } from "../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+// icons import
 import {
   TbLayoutDashboard,
   TbBrandHipchat,
@@ -10,6 +14,26 @@ import { MdOutlineLiveHelp } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user == null) {
+      console.log(user);
+      return navigate("/login");
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
+  async function handleLogout(e) {
+    e.preventDefault();
+    try {
+      await logout();
+    } catch (e) {
+      alert("Logout unsuccessful");
+    }
+  }
+
   return (
     <div class="flex md:w-64 md:ml-5 flex-col ">
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
@@ -25,7 +49,7 @@ const SideNav = () => {
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
               </button>
-              <span className="ml-3" >Dashboard</span>
+              <span className="ml-3">Dashboard</span>
             </NavLink>
           </li>
           <li>
@@ -72,7 +96,12 @@ const SideNav = () => {
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLogout />
               </button>
-              <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
+              <span
+                onClick={handleLogout}
+                className="flex-1 ml-3 whitespace-nowrap"
+              >
+                Log Out
+              </span>
             </NavLink>
           </li>
           <li>

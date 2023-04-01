@@ -12,10 +12,9 @@ import {
   LinearScale,
   PointElement,
   Legend,
-  plugins,
 } from "chart.js";
 
-import { Doughnut, Bar, Line } from "react-chartjs-2";
+import { Doughnut, Line } from "react-chartjs-2";
 
 // icons
 import { IoPeopleSharp } from "react-icons/io5";
@@ -54,16 +53,12 @@ const DashBoardContent = () => {
         .then(function (resp) {
           setgroupData(resp.data.group);
           console.log(resp);
-          // console.log(response.data.group.expenseId);
-          // console.log(response.data.group.expenseId[0].amount);
-          // console.log(grData);
         });
     } catch (err) {
       console.log(err);
     }
   };
 
-  // console.log(`hello1 :${temp[1]}`);
   const getData = async () => {
     try {
       axios
@@ -84,14 +79,6 @@ const DashBoardContent = () => {
     groupData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // useEffect(() => {
-
-  // }, []);
-
-  // console.log(userData);
-  // console.log(grData.expenseId);
-  // console.log(userData.users);
 
   const earningData = [
     {
@@ -139,8 +126,14 @@ const DashBoardContent = () => {
     labels: ["Food", "Travel", "Hotel", "Shopping", "Rituraj"],
     datasets: [
       {
-        backgroundColor: [ "#F7EDE2", "#F5CAC3","#FFCD7C", "#F28482", "#C3F5D4"],
-        borderColor: [ "#F7EDE2", "#F5CAC3","#FFCD7C", "#F28482", "#C3F5D4"],
+        backgroundColor: [
+          "#F7EDE2",
+          "#F5CAC3",
+          "#FFCD7C",
+          "#F28482",
+          "#C3F5D4",
+        ],
+        borderColor: ["#F7EDE2", "#F5CAC3", "#FFCD7C", "#F28482", "#C3F5D4"],
         label: "Total Expenses",
         data: [5, 6, 7, 3, 2],
       },

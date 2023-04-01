@@ -1,46 +1,63 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+// css
+import "./App.css";
+
+// dependencies
+import Lottie from "react-lottie";
+
+// pages
 import Home from "./pages/Home/Home";
 import DashBoard from "./pages/DashBoard/DashBoard";
 import LastGroup from "./pages/LastGroup/LastGroup";
-// import Groups from "./components/DashBoardContent/Groups";
-import DashBoardContent from "./components/DashBoardContent/DashBoardContent";
-import Activity from "./components/DashBoardContent/Activity";
-import FriendsCheck from "./components/DashBoardContent/FriendsCheck";
 import Login from "./pages/Login/Login";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import initializeAuthentication from "./firebase/firebase.init";
+import SignUp from "./pages/Login/SignUp";
 import Error404 from "./pages/Error404/Error404";
 
-initializeAuthentication();
-const provider = new GoogleAuthProvider();
+// components
+import Activity from "./components/DashBoardContent/Activity";
+import DashBoardContent from "./components/DashBoardContent/DashBoardContent";
+import FriendsCheck from "./components/DashBoardContent/FriendsCheck";
 
-const handleGooglesignIn = () => {
-  const auth = getAuth();
+// imports
+import loader from "./preloader-3.json";
 
-  signInWithPopup(auth, provider).then((result) => {
-    const user = result.user;
-    console.log(user);
-  });
-};
+// function that handles google sign in
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 1500);
+  }, []);
+
   return (
     <div className="App">
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/dashBoard" element={<DashBoard />}>
-          <Route exact path="LastGroup" element={<LastGroup />} />
-          <Route exact path="friends" element={<FriendsCheck />} />
-          <Route exact path="" element={<DashBoardContent />} />
-          <Route exact path="activity" element={<Activity />} />
-        </Route>
-        <Route
-          path="/Login"
-          element={<Login handleGooglesignIn={handleGooglesignIn} />}
-        />
-        <Route path="*" element={<Error404 />} />
-      </Routes>
+      {isLoading ? (
+        <div className="preloader flex items-center m-auto w-screen h-screen">
+          <Lottie
+            options={{
+              loop: true,
+              autoplay: true,
+              animationData: loader,
+            }}
+          />
+        </div>
+      ) : (
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/dashBoard" element={<DashBoard />}>
+            <Route exact path="LastGroup" element={<LastGroup />} />
+            <Route exact path="friends" element={<FriendsCheck />} />
+            <Route exact path="" element={<DashBoardContent />} />
+            <Route exact path="activity" element={<Activity />} />
+          </Route>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="*" element={<Error404 />} />
+        </Routes>
+      )}
     </div>
   );
 }
