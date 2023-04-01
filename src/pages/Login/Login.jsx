@@ -20,7 +20,7 @@ const Login = () => {
       return;
     }
     if (user) {
-      console.log(user);
+      console.log(user.uid);
       navigate("/dashboard");
     }
     // eslint-disable-next-line

@@ -61,7 +61,7 @@ const DashBoardContent = () => {
 
   const getData = async () => {
     try {
-      axios
+      await axios
         .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
           responseType: "json",
         })
@@ -160,12 +160,12 @@ const DashBoardContent = () => {
     ],
   };
 
-  let count = 0;
+  let count = 1;
 
   return (
     <>
       <div>
-        <AddExpenses />
+        <AddExpenses groupDetails={grData} />
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
@@ -233,25 +233,26 @@ const DashBoardContent = () => {
 
       {/* expenses history content starting...*/}
       <div className="mt-6 flex flex-wrap">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-8 pt-6 m-6 bg-no-repeat bg-cover bg-center">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
           <div className="text-gray-700 text-2xl font-bold pb-2 border-b-2 border-spacing-y-12  border-gray-200">
             {" "}
             Expenses History{" "}
           </div>
-          <div className="text-gray-400 m-2 flex border-b-2 ">
+          <div className="text-gray-400 ml-8 mr-8 m-2 flex border-b-2  ">
             <div className="p-2 w-[4rem]">S.No.</div>
             <div className="p-2 w-1/4">Name</div>
             <div className="p-2 w-1/4">Amount</div>
             <div className="p-2 w-1/4">Paid by</div>
             <div className="p-2 w-1/4">Date</div>
           </div>
-          <div className="overflow-hidden scrollbar-none scroll-smooth">
+
+          <div className=" max-h-[375px] overflow-y-auto scrollbar-none scroll-smooth">
             {grData.expenseId ? (
               grData.expenseId.map((expenses) => (
                 <div className="">
                   <div
                     key={expenses._id}
-                    className="text-black m-2 flex border-b-2"
+                    className="text-black ml-8 mr-8 m-2 flex border-b-2"
                   >
                     <div className="px-2 w-[4rem]">{count++}</div>
                     <div className="px-2 w-1/4">{expenses.notes}</div>
@@ -269,22 +270,38 @@ const DashBoardContent = () => {
       </div>
 
       {/*  strating of the different charts section... */}
-      <div className="flex justify-start ">
-        <div className="h-82 w-3/4 bg-white m-6 rounded-xl">
-          <div className="border-b-2 m-2 text-left  pb-2 pl-4">
-            Frequency of expenses
+
+      <div className="flex flex-col ">
+        <div className="flex flex-row md:w-full">
+          <div className="bg-white h-72 rounded-xl m-6 w-7/12">
+            <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left text-black ">
+              Members' Expenditure
+            </div>
+            <div className="flex justify-center m-auto  p-4  ">
+              suraj $100000 shibam$100000
+            </div>
           </div>
-          <div className=" p-4">
-            <Line data={dailydata} />
+
+          <div className="bg-white h-72 rounded-xl m-6 w-5/12">
+            <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left">
+              Category wise Expenditure
+            </div>
+            <div className="flex justify-center m-auto h-60 p-4  ">
+              <Doughnut data={chartdata} />{" "}
+            </div>
           </div>
         </div>
-        <div className="h-82 w-1/2 bg-white m-6 rounded-xl">
-          <div className="border-b-2 m-2 pl-4 text-left">
-            Category wise Expenditure
+
+        <div className="flex flex-row md:w-full">
+          <div className="bg-white rounded-xl m-6 w-7/12">
+            <div className="border-b-2 mt-2 mb-2 text-left  pb-2 pl-4">
+              Frequency of expenses
+            </div>
+            <div className="flex justify-center h-80 w-auto p-2">
+              <Line data={dailydata} />
+            </div>
           </div>
-          <div className="flex justify-center m-auto  p-4 w-3/4 ">
-            <Doughnut data={chartdata} />{" "}
-          </div>
+          <div className="bg-white rounded-xl m-6 w-5/12"></div>
         </div>
       </div>
     </>

@@ -13,7 +13,7 @@ export default function LastGroupModify(props) {
 
   return (
     <>
-      <div className="bg-gray-200 h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
+      <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
         <button className="w-full" onClick={callToggle}>
         <div className="flex text-lg">
           <span className="pl-2 pr-2">{props.id}.</span>

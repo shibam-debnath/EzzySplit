@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AddExpensePopup from './AddExpensePopup';
 import { BiPlusMedical } from "react-icons/bi";
 
-const AddExpenses = () => {
+const AddExpenses = (props) => {
   const [popup, Fpopup] = useState(false);
 
   const addExp = (e) => {
@@ -14,6 +14,8 @@ const AddExpenses = () => {
     e.preventDefault();
     Fpopup(false);
   }
+  // To stop page scrolling while using popup 
+  popup?document.body.style.overflow="hidden":document.body.style.overflow="auto";
 
   return (
     <>     
@@ -25,7 +27,9 @@ const AddExpenses = () => {
             </button>
           </div>
         </div>
-        {popup && <AddExpensePopup closeAdd={closeAdd} />}
+
+        {/* Add pop up section */}
+        {popup && <AddExpensePopup closeAdd={closeAdd} groupDetails = {props.groupDetails} />}
       </div>
     </>
   )

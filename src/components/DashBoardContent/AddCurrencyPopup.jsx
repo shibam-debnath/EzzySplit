@@ -4,7 +4,6 @@ import { VscClose } from "react-icons/vsc";
 const AddCurrencyPopup = (props) => {
   return (
     <div className='border-2 border-emerald-600 w-[18%] my-auto rounded-xl mx-2'>
-        <form>
         <div className='bg-white rounded-2xl pb-3 '>
           <div className='bg-primary rounded-lg p-2 px-3 flex justify-between mb-1'>
             <h5 className=' text-white font-semibold text-ml'>Choose a Currency</h5>
@@ -22,7 +21,6 @@ const AddCurrencyPopup = (props) => {
             </ul>
           </div>
           </div>
-        </form>
     </div>
   )
 }
