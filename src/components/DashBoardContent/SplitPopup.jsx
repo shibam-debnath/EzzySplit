@@ -9,8 +9,6 @@ import { BsBarChartSteps } from "react-icons/bs";
 const SplitPopup = (props) => {
 
   const [unequillyExpend, FunequillyExpend] = useState(false);
-  const [textShareMethod, FtextShareMethod] = useState("Split by amount")
-  const [placeholderShareMethod, FplaceholderShareMethod] = useState(1);
 
   return (
     <>
@@ -39,6 +37,9 @@ const SplitPopup = (props) => {
                 (e) => {
                   e.preventDefault();
                   FunequillyExpend(false);
+                  props.Fsplit_method("equally");
+                  props.InputSplitEquilly();
+                  props.closeAdd()
                 }}
             >
               Split Equilly
@@ -50,6 +51,7 @@ const SplitPopup = (props) => {
                 (e) => {
                   e.preventDefault();
                   FunequillyExpend(!unequillyExpend);
+                  props.Fsplit_method("amounts");
                 }}
             >
               Split Unequilly
@@ -58,34 +60,10 @@ const SplitPopup = (props) => {
           {/* Expend the method of uneuilly paid */}
           {
             unequillyExpend && <div className='mr-3 mt-3 py-0.5'>
-              <div className="ml-4 flex justify-between mr-2 px-2 ">
-
-                <button className='border-2 border-primary rounded-full py-1 px-2 hover:bg-slate-100 text-primary text-2xl font-bold '
-                  onClick={(e) => {
-                    e.preventDefault();
-                    FtextShareMethod("Split by amount");
-                    FplaceholderShareMethod(1);
-                  }}
-                ><BiDollar /></button>
-                <button className='border-2 border-primary rounded-full py-1 px-3 hover:bg-slate-100 text-primary text-sm font-bold '
-                  onClick={(e) => {
-                    e.preventDefault();
-                    FtextShareMethod("Split by percentage");
-                    FplaceholderShareMethod(2);
-                  }}
-                ><FaPercent /></button>
-                <button className='border-2 border-primary rounded-full py-1 px-3 hover:bg-slate-100 text-primary text-sm font-bold '
-                  onClick={(e) => {
-                    e.preventDefault();
-                    FtextShareMethod("Split by share");
-                    FplaceholderShareMethod(3);
-                  }}
-                ><BsBarChartSteps /></button>
-              </div>
-              <div className="m-4">
-                <div className="font-semibold mb-1 text-lg text-left"> {textShareMethod}</div>
+              <div className="mb-4 mx-4">
+                <div className="font-semibold mb-1 text-lg text-left"> Split by amount</div>
                 <div >
-                  {props.groupDetails.userId.map((item) => {
+                  {props.splitBetween.map((item) => {
 
                     return <div key={item.id} className=" flex justify-between mb-4 mt-2">
 
@@ -94,22 +72,26 @@ const SplitPopup = (props) => {
                         <span className='font-semibold m-1'>{item.name}</span>
 
                       </div>
-                      {placeholderShareMethod == 1 && <div className='flex items-center' >
-                        <div className='border-[1px] rounded-l-lg px-2'>INR</div><input type="text" placeholder='00.00' className='rounded-r-lg h-7 w-[70px] ' />
-                      </div>}
-                      {placeholderShareMethod == 2 && <div className='flex items-center' >
-                        <input type="text" placeholder='00' className='rounded-lg h-7 w-[50px] ' /><div className='px-2 font-bold'>%</div>
-                      </div>}
-                      {placeholderShareMethod == 3 && <div className='flex items-center' >
-                        <input type="text" placeholder='0' className='rounded-lg h-7 w-[38px] ' /><div className='px-2 font-light text-xs'>Shares</div>
-                      </div>}
-
-
+                      <div className='flex items-center' >
+                        <div className='border-[1px] rounded-l-lg px-2'>INR</div>
+                        <input
+                          type="text"
+                          placeholder='00.00'
+                          className='rounded-r-lg h-7 w-[70px] '
+                          name={item.user}
+                          value={item.toPay}
+                          onChange={(e) => {
+                            const name = e.target.name;
+                            const value = e.target.value;
+                            props.InputSplitBetween(name, value);
+                          }}
+                        />
+                      </div>
                     </div>
 
                   })}
                   <hr />
-                  {placeholderShareMethod == 1 && <div className='pt-4'>
+                  <div className='pt-4'>
                     <div className='flex justify-between'>
                       <div className='ml-6 font-semibold'>
                         Total
@@ -126,25 +108,7 @@ const SplitPopup = (props) => {
                         <div className='pl-1'> left</div>
                       </div>
                     </div>
-                  </div>}
-                  {placeholderShareMethod == 2 && <div className='pt-4'>
-                    <div className='flex justify-between'>
-                      <div className='ml-6 font-semibold'>
-                        Total
-                      </div>
-                      <div className='font-semibold flex'>
-                        <div> 1009</div>
-                        <div className='px-1'>%</div>
-                      </div>
-                    </div>
-                    <div className='flex justify-end'>
-                      <div className='font-light flex text-[13px]'>
-                        <div>700</div>
-                        <div className='px-1'>%</div>
-                        <div className='pl-1'> left</div>
-                      </div>
-                    </div>
-                  </div>}
+                  </div>
                 </div>
               </div>
 
@@ -153,17 +117,7 @@ const SplitPopup = (props) => {
 
 
 
-          <div className='mb-2'>
-            <button className=' text-primary w-full text-start px-3 py-2 font-semibold hover:bg-slate-200'
-              onClick={
-                (e) => {
-                  e.preventDefault();
-                  FunequillyExpend(false);
-                }}
-            >
-              You own full amount
-            </button>
-          </div>
+          
 
           {/* 3rd div */}
 

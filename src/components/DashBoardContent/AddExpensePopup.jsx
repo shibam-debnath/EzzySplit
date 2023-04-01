@@ -31,15 +31,15 @@ const AddExpensePopup = (props) => {
         }
         );
     };
-   
-    const set =() => {
+
+    const set = () => {
         setTimeout(() => {
-          FtglSaveBtn(true);
-          notify();
-          Caddon(0);
-          
+            FtglSaveBtn(true);
+            notify();
+            Caddon(0);
+
         }, 2000);
-      };
+    };
 
     const [addon, Caddon] = useState(0);
     const [inputData, FinputData] = useState({
@@ -153,6 +153,66 @@ const AddExpensePopup = (props) => {
         Caddon(0)
     }
 
+
+    // Split method 
+    const [split_method, Fsplit_method] = useState('equally');
+    const [splitBetween, FsplitBetween] = useState({
+        user: "",
+        toPay: "",
+        name: ""
+    })
+
+    const InitailizeSplitBetween = () => {
+        const tempArr = props.groupDetails.userId.map((val) => ({
+            user: val._id,
+            toPay: "",
+            name: val.name
+        }));
+        FsplitBetween(() => [...tempArr]);
+    }
+    useEffect(() => {
+        InitailizeSplitBetween();
+    }, []);
+
+    // name => userId and value => amount
+    const InputSplitBetween = (name, value) => {
+        const tempArr = splitBetween.map((val) => {
+            if (val.user === name) {
+                return {
+                    user: val.user,
+                    toPay: value,
+                    name: val.name
+                }
+            }
+            else {
+                return {
+                    user: val.user,
+                    toPay: val.toPay,
+                    name: val.name
+                }
+            }
+        });
+        FsplitBetween(() => [...tempArr]);
+    }
+
+    const InputSplitEquilly = () => {
+
+        const IntAmount = parseInt(inputData.amount);
+        const equl = IntAmount / (splitBetween.length);
+        const toStrEuql = equl.toString();
+
+        const tempArr = splitBetween.map((val) => {
+            return {
+                user: val.user,
+                toPay: toStrEuql,
+                name: val.name
+            }
+        });
+        FsplitBetween(() => [...tempArr]);
+    }
+
+
+    //  posting addexpenses
     const postForm = async () => {
         try {
             var fnarr = [];
@@ -172,6 +232,23 @@ const AddExpensePopup = (props) => {
                 fnarr = paidBySingle;
             }
 
+            var SplitArr = [];
+            if (split_method == "equally") {
+                const IntAmount = parseInt(inputData.amount);
+                const equl = IntAmount / (splitBetween.length);
+                const toStrEuql = equl.toString();
+
+                SplitArr = splitBetween.map((val) => {
+                    return {
+                        user: val.user,
+                        toPay: toStrEuql,
+                        name: val.name
+                    }
+                });
+            }
+            else{
+                SplitArr = splitBetween.filter(val => val.toPay !== '');
+            }
 
             const { amount, description, groupId } = inputData;
             const res = await fetch("http://localhost:8000/expense/addExpense", {
@@ -180,11 +257,11 @@ const AddExpensePopup = (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    amount, description, groupId, paidBy: fnarr
+                    amount, description, groupId, paidBy: fnarr, split_method, split_between: SplitArr
                 })
             })
             const data = await res.json();
-            
+
             if (res.status === 200) {
                 set();
             }
@@ -199,6 +276,10 @@ const AddExpensePopup = (props) => {
             console.log("Error in Adding Expenses");
         }
     }
+
+
+
+
 
     return (
         <>
@@ -262,7 +343,7 @@ const AddExpensePopup = (props) => {
                                         <span><button
                                             className='text-primary rounded-lg px-2 py-0 border-dotted border-emerald-300 border-2 hover:border-primary hover:border-solid'
                                             onClick={split}
-                                        >equilly</button></span>
+                                        >{split_method}</button></span>
                                     </div>
                                 </div>
 
@@ -292,7 +373,7 @@ const AddExpensePopup = (props) => {
                                     tglSaveBtn ? <div className='flex justify-end py-3'>
                                         <div className=' mr-3 text-base font-normal bg-slate-500 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-600  '>
                                             <button className='py-1 px-4 it text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full'
-                                            onClick={props.closeAdd} >
+                                                onClick={props.closeAdd} >
                                                 Cancel
                                             </button>
                                         </div>
@@ -343,7 +424,13 @@ const AddExpensePopup = (props) => {
                             inputAmountCng={inputAmountCng}
                             inputAmountCngSingle={inputAmountCngSingle}
                         />}
-                        {addon === 2 && <SplitPopup closeAdd={closeAdd} groupDetails={props.groupDetails} />}
+                        {addon === 2 && <SplitPopup
+                            closeAdd={closeAdd}
+                            Fsplit_method={Fsplit_method}
+                            splitBetween={splitBetween}
+                            InputSplitBetween={InputSplitBetween}
+                            InputSplitEquilly={InputSplitEquilly}
+                        />}
                         {addon === 3 && <AddDatePopup />}
                         {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}
                         {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
