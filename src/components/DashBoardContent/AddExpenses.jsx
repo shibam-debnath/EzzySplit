@@ -41,7 +41,7 @@ const AddExpenses = (props) => {
               </div>
             )}
             <button
-              className="p-5 text-base bg-lgPrimary text-white rounded-full hover:bg-[#554CBF] shadow-xl"
+              className="p-5 text-base bg-lgPrimary text-white rounded-full hover:bg-primary shadow-xl"
               onClick={addExp}
             >
               <BiPlusMedical />

@@ -3,6 +3,7 @@ import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { BiX, BiRupee } from "react-icons/bi";
+import { useNavigate } from "react-router";
 
 import {
   Chart as ChartJS,
@@ -34,6 +35,7 @@ ChartJS.register(
 );
 
 const DashBoardContent = () => {
+  const navigate = useNavigate();
   const currentColor = "var(--primary-font)";
   const [beforeFetch, fbeforeFetch] = useState(0);
   const [userData, setData] = useState([]);
@@ -42,6 +44,10 @@ const DashBoardContent = () => {
   const [settleExpenseData, setsettleExpenseData] = useState({});
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
+
+  const [settleCall, setSettleCall] = useState(false);
+  const [settleCall2, setSettleCall2] = useState(false);
+  const [settleCallData, setSettleCallData] = useState([]);
   // let userid = "63d38658cd073fceefefe135";
 
   const set = () => {
@@ -87,7 +93,8 @@ const DashBoardContent = () => {
           responseType: "json",
         })
         .then(function (response) {
-          // console.log(response.data);
+          console.log("response.data");
+          console.log(response.data);
           setsettleExpenseData(response.data);
           // fexpend();
           // set();
@@ -114,8 +121,10 @@ const DashBoardContent = () => {
   // console.log(settleExpenseData);
   const fexpend = async () => {
     const temp = [];
+    const temp2 = {};
     if (settleExpenseData && grData) {
       for (var i = 0; i < grData.userId.length; i++) {
+        temp2[grData.userId[i]._id] = grData.userId[i].name;
         const singleData = {
           name: "",
           paid: "",
@@ -128,6 +137,22 @@ const DashBoardContent = () => {
       }
     }
     if (temp) setexpend(temp);
+
+    const temp3 = [];
+    if (settleExpenseData && grData) {
+      for (var i = 0; i < settleExpenseData[2].length; i++) {
+        const singleData = {
+          payer: "",
+          receiver: "",
+          amount: "",
+        };
+        singleData.payer = temp2[settleExpenseData[2][i].payer];
+        singleData.receiver = temp2[settleExpenseData[2][i].receiver];
+        singleData.amount = settleExpenseData[2][i].amount;
+        temp3.push(singleData);
+      }
+    }
+    if (temp3) setSettleCallData(temp3);
   };
 
   useEffect(() => {
@@ -139,17 +164,39 @@ const DashBoardContent = () => {
     // });
   }, [expend]);
 
-  // useEffect(()=>{
-  //   fexpend();
-  // },[grData]);
   const settleExpenseCall = async () => {
-    console.log("clicked");
-    if (!grData.expend) {
-      return <div className="bg-white text-black">No expense exist</div>;
-    } else {
-      return <div classname="bg-white text-black">Expense settled</div>;
-    }
+    setSettleCall(true);
   };
+
+  const settleExpenseCall2 = async () => {
+    console.log("clicked2");
+    console.log(settleCall2);
+    setSettleCall2(true);
+    setSettleCall(false);
+    isSettled();
+    console.log(settleCall2);
+  };
+
+  function isSettled() {
+    try {
+      axios
+        .post(
+          "http://localhost:8000/group/isSettled/63fb8b5629ce0c8a774c4159/true",
+          {
+            responseType: "json",
+          }
+        )
+        .then(function (response) {
+          console.log("response.data");
+          console.log(response);
+          // fexpend();
+          // set();
+          console.log(response.status);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   function displayExpense(expenses) {
     // expenses.preventdefault();
@@ -161,7 +208,15 @@ const DashBoardContent = () => {
 
   const closeDisplayExpense = () => {
     setDisplayExpenseData(false);
+    setSettleCall(false);
   };
+  
+  const closeDisplayExpense2 = () =>{
+    setSettleCall2(false);
+    navigate("/");
+    navigate("/dashboard");
+  }
+
   const earningData = [
     {
       icon: <GiReceiveMoney />,
@@ -241,7 +296,8 @@ const DashBoardContent = () => {
     ],
   };
 
-  let count = 1;
+  let count = 1,
+    count2 = 1;
 
   const style = {
     height: "-webkit-fill-available",
@@ -253,7 +309,13 @@ const DashBoardContent = () => {
   return (
     <>
       <div>
-        <AddExpenses groupDetails={grData} />
+        {!grData.isSettled ? (
+          <AddExpenses groupDetails={grData} />
+        ) : (
+          <div className="fixed bottom-10 right-10 h-18 w-62 bg-white text-black rounded-md shadow-md p-4">
+            You can't add Expense as it is settled
+          </div>
+        )}
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
@@ -319,6 +381,72 @@ const DashBoardContent = () => {
         </div>
       </div>
 
+      {settleCall && (
+        <div className="fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-[25%] mt-20 bg-white  pb-2  text-black rounded-xl border-2 border-primary">
+            <div className="text-white text-md rounded-t-md p-2 bg-primary">
+              Do you really want to close the group and settle up the expenses?
+            </div>
+            <div className="text-xs text-red-400 p-2">
+              💀Warning: In future you will not be able to add any more expense
+              in this group
+            </div>
+            <div className=" flex justify-between p-2">
+              <div
+                onClick={closeDisplayExpense}
+                className="m-2 p-2 bg-primary rounded-md text-white w-1/2 cursor-pointer"
+              >
+                No
+              </div>
+              <div
+                onClick={settleExpenseCall2}
+                className="m-2 p-2 w-1/2 bg-slate-200 rounded-md cursor-pointer"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {settleCall2 && (
+        <div className="fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3  text-black rounded-xl border-2 border-primary">
+            <div className="text-white text-md rounded-t-md p-2 bg-primary flex justify-between">
+              <div>Settled Expenses</div>
+              <div>
+                <BiX
+                  onClick={closeDisplayExpense2}
+                  className="text-2xl cursor-pointer"
+                />
+              </div>
+            </div>
+            <div className="p-2">
+              The overall payment displaying who, to whom and what amount are as
+              follows:
+            </div>
+            <div className=" pl-4 pr-2 h-4/6 overflow-y-auto scrollbar-none smooth-scroll">
+              {settleCallData ? (
+                settleCallData.map((items) => {
+                  return (
+                    <div className="flex jusify-start p-2 text-gray-400">
+                      {count2++}.&nbsp;&nbsp;
+                      <div className="text-black">{items.payer}</div>
+                      &nbsp;&nbsp; needs to pay &nbsp;&nbsp;
+                      <div className="text-black">₹{items.amount}</div>
+                      &nbsp;&nbsp; to &nbsp;&nbsp;
+                      <div className="text-black">{items.receiver}</div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>Nothing to display here</div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* expenses history content starting...*/}
       <div className="mt-6 flex flex-wrap">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
@@ -327,7 +455,7 @@ const DashBoardContent = () => {
               Expenses History
             </div>
             <button
-              className="flex justify-end text-white p-2 bg-lgPrimary rounded-2xl"
+              className="flex justify-end text-white p-2 bg-lgPrimary rounded-xl hover:bg-primary"
               onClick={settleExpenseCall}
             >
               Settle expense
@@ -346,7 +474,7 @@ const DashBoardContent = () => {
           {displayExpenseData && (
             <div className="fixed inset-0 bg-white bg-opacity-70  backdrop-blur-sm bg-fixed flex justify-center">
               <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3 text-black rounded-xl border-2 border-primary">
-                <div className=" flex justify-between p-4  bg-primary rounded-t-xl">
+                <div className=" flex justify-between p-4  bg-primary rounded-t-md">
                   <div className="text-white text-2xl">Expense Description</div>
                   <div>
                     <BiX
@@ -424,7 +552,7 @@ const DashBoardContent = () => {
               </div>
             </div>
           )}
-{/* to display the complete details of an expense ends */}
+          {/* to display the complete details of an expense ends */}
 
           <div className="h-[26rem] overflow-y-auto scrollbar-none scroll-smooth">
             {grData.expenseId ? (
@@ -467,7 +595,7 @@ const DashBoardContent = () => {
               ))
             ) : (
               <div className="h-full w-full text-2xl">
-                Add expenses and left leave up to Us
+                Add expenses and rest leave up to Us 😎
               </div>
             )}
           </div>
@@ -501,20 +629,44 @@ const DashBoardContent = () => {
                 })
               ) : (
                 <div className="text-gray-400 h-full w-full ">
-                  Nothing to show here
+                  Nothing to show here 😐
                 </div>
               )}
             </div>
           </div>
 
-          <div className="bg-white h-72 rounded-xl m-6 w-5/12">
-            <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left">
-              Category wise Expenditure
+          {grData.isSettled ? (
+            <div className=" h-80 m-2 p-4 w-5/12">
+              <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg  rounded-xl  bg-no-repeat bg-cover bg-center ">
+                <div className=" flex justify-between pl-4 p-2 border-b-2 border-spacing-y-12  border-gray-200">
+                  <div className="text-gray-700 ">Settled Expenses</div>
+                </div>
+
+                <div className="h-60 overflow-y-auto scrollbar-none scroll-smooth pb-4 p-2">
+                  {settleCallData ? (
+                    settleCallData.map((items) => {
+                      return (
+                        <div className="flex jusify-start p-2 text-gray-400">
+                          {count2++}.&nbsp;&nbsp;
+                          <div className="text-black">{items.payer}</div>
+                          &nbsp;&nbsp; needs to pay &nbsp;&nbsp;
+                          <div className="text-black">₹{items.amount}</div>
+                          &nbsp;&nbsp; to &nbsp;&nbsp;
+                          <div className="text-black">{items.receiver}</div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div>Nothing to display here</div>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="flex justify-center m-auto h-60 p-4  ">
-              <Doughnut data={chartdata} />{" "}
+          ) : (
+            <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
+              <img style={style} src="../images/boy.jpg" alt="Loading..." />
             </div>
-          </div>
+          )}
         </div>
 
         <div className="flex flex-row md:w-full">
@@ -522,16 +674,18 @@ const DashBoardContent = () => {
             <div className="border-b-2 mt-2 mb-2 text-left  pb-2 pl-4">
               Frequency of expenses
             </div>
-            <div className="flex justify-center h-80 w-auto p-2">
+            <div className="flex justify-center h-72 w-auto p-2">
               <Line data={dailydata} />
             </div>
           </div>
-          <div className="bg-white rounded-xl h-80 m-6 p-4 w-5/12 flex justify-center">
-            <img
-              style={style}
-              src="../images/boy.jpg"
-              alt="Click Me to settle expense"
-            />
+
+          <div className="bg-white h-80 rounded-xl m-6 w-5/12">
+            <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left">
+              Category wise Expenditure
+            </div>
+            <div className="flex justify-center m-auto h-64 p-4  ">
+              <Doughnut data={chartdata} />{" "}
+            </div>
           </div>
         </div>
       </div>
