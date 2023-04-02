@@ -7,7 +7,7 @@ const DashBoard = () => {
   return (
     <>
       <div className="flex flex-row">
-        <div className="fixed bg-white text-left">
+        <div className="fixed bg-white text-left h-full">
           <SideNav />
         </div>
         <div className="ml-[18rem] bg-gray-200 w-full">

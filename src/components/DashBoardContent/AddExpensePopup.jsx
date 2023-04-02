@@ -40,7 +40,11 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
+<<<<<<< HEAD
     groupId: "63e933a5981886a213a6586a",
+=======
+    groupId: "63fb8b5629ce0c8a774c4159",
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -105,7 +109,11 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
+<<<<<<< HEAD
     if (name === "63e9338f981886a213a65868") {
+=======
+    if (name === "63ce3de792e27a2fabc7d06c") {
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -207,7 +215,11 @@ const AddExpensePopup = (props) => {
       if (payer === "You") {
         fnarr = [
           {
+<<<<<<< HEAD
             userId: "63e9338f981886a213a65868",
+=======
+            userId: "63ce3de792e27a2fabc7d06c",
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
             amount: inputData.amount,
             name: "test1",
           },
@@ -219,7 +231,11 @@ const AddExpensePopup = (props) => {
       }
 
       var SplitArr = [];
+<<<<<<< HEAD
       if (split_method === "equally") {
+=======
+      if (split_method == "equally") {
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
         const IntAmount = parseInt(inputData.amount);
         const equl = IntAmount / splitBetween.length;
         const toStrEuql = equl.toString();
@@ -258,9 +274,16 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
+<<<<<<< HEAD
         groupId: "63e933a5981886a213a6586a",
       });
     } catch (error) {
+=======
+        groupId: "63fb8b5629ce0c8a774c4159",
+      });
+    } catch (error) {
+      FtglSaveBtn(true);
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
       failed();
       console.log("Error in Adding Expenses");
     }
@@ -273,9 +296,15 @@ const AddExpensePopup = (props) => {
         <form method="POST">
           <div className="h-3/5 flex justify-center mt-16">
             <div className="border-2 border-primary rounded-xl w-[425px] my-auto bg-white">
+<<<<<<< HEAD
               <div className="bg-primary rounded-lg p-2 px-3 flex justify-between">
                 <h5 className=" text-white font-semibold text-lg">
                   Add an expenses
+=======
+              <div className="bg-primary rounded-t-lg p-2 px-3 flex justify-between">
+                <h5 className=" text-white font-semibold text-lg">
+                  Add an expense
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
                 </h5>
                 <button
                   className="hover:text-red-500 text-xl"
@@ -359,7 +388,11 @@ const AddExpensePopup = (props) => {
 
                 {/* Buttond */}
                 <div className="flex justify-evenly mt-6 mb-10">
+<<<<<<< HEAD
                   <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700  ">
+=======
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
                     <button
                       className=" text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
                       onClick={addDate}
@@ -367,7 +400,11 @@ const AddExpensePopup = (props) => {
                       25 Dec 2022
                     </button>
                   </div>
+<<<<<<< HEAD
                   <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 ">
+=======
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80 ">
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
                     <button
                       className=" text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
                       onClick={addNote}
@@ -381,7 +418,11 @@ const AddExpensePopup = (props) => {
 
                 {tglSaveBtn ? (
                   <div className="flex justify-end py-3">
+<<<<<<< HEAD
                     <div className=" mr-3 text-base font-normal bg-slate-500 text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-600  ">
+=======
+                    <div className=" mr-3 text-base font-normal bg-primary rounded-lg text-white hover:bg-opacity-80 ">
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
                       <button
                         className="py-1 px-4 it text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
                         onClick={props.closeAdd}
@@ -389,7 +430,11 @@ const AddExpensePopup = (props) => {
                         Cancel
                       </button>
                     </div>
+<<<<<<< HEAD
                     <div className=" mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 ">
+=======
+                    <div className=" mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
+>>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
                       <button
                         className="py-1 px-4 text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
                         onClick={(e) => {

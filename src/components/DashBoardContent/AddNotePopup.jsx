@@ -3,10 +3,10 @@ import { VscClose } from "react-icons/vsc";
 
 const AddNotePopup = (props) => {
   return (
-    <div className='border-2 border-emerald-600 w-[350px] my-auto rounded-xl mx-2'>
+    <div className='border-2 border-primary w-[350px] my-auto rounded-xl mx-2'>
         <div className='bg-white rounded-2xl pb-3 '>
 
-          <div className='bg-primary rounded-lg p-2 px-3 flex justify-between mb-1'>
+          <div className='bg-primary rounded-t-lg p-2 px-3 flex justify-between mb-1'>
             <h5 className=' text-white font-semibold text-lg'>Add Image/Note</h5>
             <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>
               <VscClose />
@@ -33,7 +33,7 @@ const AddNotePopup = (props) => {
             <hr />
             <div className='flex justify-end mt-3'>
 
-              <div className='py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-primary dark:hover:bg-gray-700 border-2 border-emerald-300 '>
+              <div className='py-1 px-4 mr-3 text-base font-normal bg-lgPrimary text-gray-900 rounded-lg dark:text-white hover:bg-primary'>
                 <button className=' text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full' >
                   Done
                 </button>

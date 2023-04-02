@@ -17,10 +17,10 @@ const SplitPopup = (props) => {
       {/* <div className='bg-neutral-200 opacity-100 fixed inset-0 z-50 flex-col '>
 
         <div className=' h-3/5 my-auto align-middle '> */}
-      <div className='border-2 border-emerald-600 bg-white w-[350px] my-auto rounded-xl mx-2'>
+      <div className='border-2 border-primary bg-white w-[350px] my-auto rounded-xl mx-2'>
 
 
-        <div className='bg-primary rounded-lg py-2 px-3 flex justify-between'>
+        <div className='bg-primary rounded-t-lg py-2 px-3 flex justify-between'>
           <h5 className=' text-white font-semibold text-lg'>Choose split method</h5>
           <button className='hover:text-red-500 text-xl' onClick={props.closeAdd} >
             <VscClose />
@@ -51,7 +51,7 @@ const SplitPopup = (props) => {
                 (e) => {
                   e.preventDefault();
                   FunequillyExpend(!unequillyExpend);
-                  props.Fsplit_method("amounts");
+                  props.Fsplit_method("unequally");
                 }}
             >
               Split Unequilly
