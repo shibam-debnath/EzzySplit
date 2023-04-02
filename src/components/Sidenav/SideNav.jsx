@@ -21,7 +21,11 @@ const SideNav = () => {
             <NavLink
               to={"/dashboard/"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
-            >
+              style={({ isActive }) => ({
+                  background: isActive? "#6B60F1":"white",
+                  color: isActive ? "white" : "rgb(107 114 128)" 
+                })}
+             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
               </button>
@@ -32,6 +36,10 @@ const SideNav = () => {
             <NavLink
               to={"/dashboard/LastGroup"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive? "#6B60F1":"white",
+                color: isActive ? "white" : "rgb(107 114 128)" 
+              })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <HiOutlineUserGroup />
@@ -43,6 +51,10 @@ const SideNav = () => {
             <NavLink
               to="/dashboard/activity"
               className="flex items-center p-2 mt-3  text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive? "#6B60F1":"white",
+                color: isActive ? "white" : "rgb(107 114 128)" 
+              })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbBrandHipchat />
@@ -57,6 +69,10 @@ const SideNav = () => {
             <NavLink
               to={"/dashboard/friends"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive? "#6B60F1":"white",
+                color: isActive ? "white" : "rgb(107 114 128)" 
+              })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbFriends />
@@ -68,6 +84,10 @@ const SideNav = () => {
             <NavLink
               to={"/"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive? "#6B60F1":"white",
+                color: isActive ? "white" : "rgb(107 114 128)" 
+              })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLogout />
@@ -78,7 +98,11 @@ const SideNav = () => {
           <li>
             <NavLink
               to={"/dashboard/help"}
-              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-lgPrimary hover:text-white  active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive? "#6B60F1":"white",
+                color: isActive ? "white" : "rgb(107 114 128)" 
+              })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <MdOutlineLiveHelp />
