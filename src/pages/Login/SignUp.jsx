@@ -20,9 +20,6 @@ const SignUp = () => {
     if (user && user.emailVerified === true) {
       console.log(user);
       navigate("/dashboard");
-    } else if (!user) {
-      console.log(user);
-      navigate("/login");
     }
     // eslint-disable-next-line
   }, [user]);
