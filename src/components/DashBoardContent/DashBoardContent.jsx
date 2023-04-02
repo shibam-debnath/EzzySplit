@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
-import { BiX, BiRupee } from "react-icons/bi";
+import { BiX } from "react-icons/bi";
 import { useNavigate } from "react-router";
 
 import {
@@ -14,11 +14,6 @@ import {
   LinearScale,
   PointElement,
   Legend,
-<<<<<<< HEAD
-=======
-  plugins,
-  elements,
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
 } from "chart.js";
 
 import { Doughnut, Line } from "react-chartjs-2";
@@ -62,20 +57,12 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-<<<<<<< HEAD
         .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
-=======
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
           responseType: "json",
         })
         .then(function (resp) {
           setgroupData(resp.data.group);
-<<<<<<< HEAD
-          console.log(resp);
-=======
           console.log(resp.data);
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
         });
     } catch (err) {
       console.log(err);
@@ -85,11 +72,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-<<<<<<< HEAD
         .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
-=======
-        .get("http://localhost:8000/user/profile/63ce3de792e27a2fabc7d06c", {
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
           responseType: "json",
         })
         .then(function (response) {
@@ -104,7 +87,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/settle/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (response) {
@@ -126,8 +109,6 @@ const DashBoardContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     fexpend();
   }, [settleExpenseData]);
@@ -198,7 +179,7 @@ const DashBoardContent = () => {
     try {
       axios
         .post(
-          "http://localhost:8000/group/isSettled/63fb8b5629ce0c8a774c4159/true",
+          "http://localhost:8000/group/isSettled/63e933a5981886a213a6586a/true",
           {
             responseType: "json",
           }
@@ -227,14 +208,13 @@ const DashBoardContent = () => {
     setDisplayExpenseData(false);
     setSettleCall(false);
   };
-  
-  const closeDisplayExpense2 = () =>{
+
+  const closeDisplayExpense2 = () => {
     setSettleCall2(false);
     navigate("/");
     navigate("/dashboard");
-  }
+  };
 
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
   const earningData = [
     {
       icon: <GiReceiveMoney />,
@@ -327,9 +307,6 @@ const DashBoardContent = () => {
   return (
     <>
       <div>
-<<<<<<< HEAD
-        <AddExpenses groupDetails={grData} />
-=======
         {!grData.isSettled ? (
           <AddExpenses groupDetails={grData} />
         ) : (
@@ -337,7 +314,6 @@ const DashBoardContent = () => {
             You can't add Expense as it is settled
           </div>
         )}
->>>>>>> 3c24395a585c1403a34c2f9771dddff998f4331e
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
