@@ -17,9 +17,12 @@ const SignUp = () => {
       // maybe trigger a loading screen
       return;
     }
-    if (user) {
+    if (user && user.emailVerified === true) {
       console.log(user);
       navigate("/dashboard");
+    } else if (!user) {
+      console.log(user);
+      navigate("/login");
     }
     // eslint-disable-next-line
   }, [user]);
@@ -33,18 +36,11 @@ const SignUp = () => {
 
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
-      // after signup redirect to dashboard
     } catch (e) {
       alert(e.message);
       alert("Failed to create an account");
     }
   }
-
-  useEffect(() => {
-    if (loading) return;
-    if (user) navigate("/dashboard");
-    // eslint-disable-next-line
-  }, [user, loading]);
 
   return (
     <div>

@@ -9,6 +9,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -29,6 +30,9 @@ export const auth = getAuth(app);
 export async function signup(email, password) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
+    await sendEmailVerification(auth.currentUser);
+    await signOut(auth);
+    alert("Email sent ! verify first and then login");
   } catch (err) {
     console.error(err.message);
     alert(err.message);

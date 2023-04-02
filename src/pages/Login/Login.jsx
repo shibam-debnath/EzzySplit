@@ -1,4 +1,4 @@
-import { React, useState, useRef, useEffect } from "react";
+import { React, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   auth,
@@ -19,9 +19,11 @@ const Login = () => {
     if (loading) {
       return;
     }
-    if (user) {
-      console.log(user.uid);
+    if (user && user.emailVerified === true) {
+      console.log(user);
       navigate("/dashboard");
+    } else if (user && user.emailVerified === false) {
+      alert("Verify email first");
     }
     // eslint-disable-next-line
   }, [user, loading]);
@@ -30,6 +32,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
+      console.log(user);
     } catch (e) {
       alert("Login unsuccessful");
     }

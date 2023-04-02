@@ -43,7 +43,7 @@ const UserProfile = (props) => {
       ) : (
         <div className="nav-item absolute right-0 top-20 bg-slate-50 border-spacing-3 p-8 rounded-lg w-96">
           <div className="flex justify-between items-center">
-            <p className="font-semibold text-primary">User Profile</p>
+            <p className="font-semibold text-xl text-primary">User Profile</p>
             <button
               className="bg-none text-2xl text-primary rounded-2xl"
               onClick={props.closeProfile}
@@ -58,10 +58,16 @@ const UserProfile = (props) => {
               alt="user-profile"
             />
             <div className="flex flex-col">
-              <p className="font-semibold text-2xl text-primary">
-                {UserData.name}
-              </p>
-              <p className="text-gray-500 text-sm">{UserData.emailId}</p>
+              {!UserData.name ? (
+                <p className="text-gray-500 text-xl">No data found</p>
+              ) : (
+                <>
+                  <p className="font-semibold text-2xl text-primary">
+                    {UserData.name}
+                  </p>
+                  <p className="text-gray-500 text-sm">{UserData.emailId}</p>
+                </>
+              )}
             </div>
           </div>
           <div className="mt-5">
