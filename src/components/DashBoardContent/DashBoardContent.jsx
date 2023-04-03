@@ -57,7 +57,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
+        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -72,7 +72,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
+        .get("http://localhost:8000/user/profile/63ce3de792e27a2fabc7d06c", {
           responseType: "json",
         })
         .then(function (response) {
@@ -87,7 +87,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/63e933a5981886a213a6586a", {
+        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (response) {
@@ -179,7 +179,7 @@ const DashBoardContent = () => {
     try {
       axios
         .post(
-          "http://localhost:8000/group/isSettled/63e933a5981886a213a6586a/true",
+          "http://localhost:8000/group/isSettled/63fb8b5629ce0c8a774c4159/true",
           {
             responseType: "json",
           }
@@ -212,7 +212,7 @@ const DashBoardContent = () => {
   const closeDisplayExpense2 = () => {
     setSettleCall2(false);
     navigate("/");
-    navigate("/dashboard");
+    navigate("/dashboard/");
   };
 
   const earningData = [
@@ -380,8 +380,8 @@ const DashBoardContent = () => {
       </div>
 
       {settleCall && (
-        <div className="fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed flex justify-center">
-          <div className=" h-[25%] mt-20 bg-white  pb-2  text-black rounded-xl border-2 border-primary">
+        <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-[25%] mt-20 bg-white  pb-2  text-black rounded-md shadow-2xl">
             <div className="text-white text-md rounded-t-md p-2 bg-primary">
               Do you really want to close the group and settle up the expenses?
             </div>
@@ -408,8 +408,8 @@ const DashBoardContent = () => {
       )}
 
       {settleCall2 && (
-        <div className="fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed flex justify-center">
-          <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3  text-black rounded-xl border-2 border-primary">
+        <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3  text-black rounded-md shadow-2xl">
             <div className="text-white text-md rounded-t-md p-2 bg-primary flex justify-between">
               <div>Settled Expenses</div>
               <div>
@@ -428,11 +428,11 @@ const DashBoardContent = () => {
                 settleCallData.map((items) => {
                   return (
                     <div className="flex jusify-start p-2 text-gray-400">
-                      {count2++}.&nbsp;&nbsp;
+                      {count2++}.&nbsp;
                       <div className="text-black">{items.payer}</div>
-                      &nbsp;&nbsp; needs to pay &nbsp;&nbsp;
+                      &nbsp; needs to pay &nbsp;&nbsp;
                       <div className="text-black">₹{items.amount}</div>
-                      &nbsp;&nbsp; to &nbsp;&nbsp;
+                      &nbsp; to &nbsp;
                       <div className="text-black">{items.receiver}</div>
                     </div>
                   );
@@ -470,8 +470,8 @@ const DashBoardContent = () => {
           {/* to display the complete details of an expense starting... */}
 
           {displayExpenseData && (
-            <div className="fixed inset-0 bg-white bg-opacity-70  backdrop-blur-sm bg-fixed flex justify-center">
-              <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3 text-black rounded-xl border-2 border-primary">
+            <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
+              <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3 text-black rounded-md shadow-2xl">
                 <div className=" flex justify-between p-4  bg-primary rounded-t-md">
                   <div className="text-white text-2xl">Expense Description</div>
                   <div>
@@ -592,7 +592,7 @@ const DashBoardContent = () => {
                 </div>
               ))
             ) : (
-              <div className="h-full w-full text-2xl">
+              <div className="h-2/3 w-full text-2xl text-gray-400 flex justify-center mt-16 p-10 m-2">
                 Add expenses and rest leave up to Us 😎
               </div>
             )}
@@ -626,7 +626,7 @@ const DashBoardContent = () => {
                   );
                 })
               ) : (
-                <div className="text-gray-400 h-full w-full ">
+                <div className="text-gray-400 h-2/3 w-full mt-14 ">
                   Nothing to show here 😐
                 </div>
               )}
@@ -645,11 +645,11 @@ const DashBoardContent = () => {
                     settleCallData.map((items) => {
                       return (
                         <div className="flex jusify-start p-2 text-gray-400">
-                          {count2++}.&nbsp;&nbsp;
+                          {count2++}.&nbsp;
                           <div className="text-black">{items.payer}</div>
-                          &nbsp;&nbsp; needs to pay &nbsp;&nbsp;
+                          &nbsp; needs to pay &nbsp;
                           <div className="text-black">₹{items.amount}</div>
-                          &nbsp;&nbsp; to &nbsp;&nbsp;
+                          &nbsp; to &nbsp;
                           <div className="text-black">{items.receiver}</div>
                         </div>
                       );

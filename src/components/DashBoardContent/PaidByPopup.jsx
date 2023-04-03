@@ -8,8 +8,8 @@ const PaidByPopup = (props) => {
 
   
   return (
-        <div  className='border-2 border-primary w-[370px] my-auto rounded-xl mx-2 '>
-        <div className='bg-white rounded-2xl pb-3 '>
+        <div  className=' w-[370px] my-auto rounded-md mx-2 shadow-2xl'>
+        <div className='bg-white rounded-md pb-3 '>
           <div className='bg-primary rounded-t-lg p-2 px-3 flex justify-between mb-1'>
             <h5 className=' text-white font-semibold text-lg'>Choose Payer</h5>
             <button className='hover:text-red-500 text-xl' onClick={props.closeAdd}>

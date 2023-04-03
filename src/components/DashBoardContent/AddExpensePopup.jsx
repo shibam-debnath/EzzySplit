@@ -39,7 +39,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: "63e933a5981886a213a6586a",
+    groupId: "63fb8b5629ce0c8a774c4159",
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -105,7 +105,7 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
-    if (name === "63e9338f981886a213a65868") {
+    if (name === "63ce3de792e27a2fabc7d06c") {
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -208,7 +208,7 @@ const AddExpensePopup = (props) => {
       if (payer === "You") {
         fnarr = [
           {
-            userId: "63e9338f981886a213a65868",
+            userId: "63ce3de792e27a2fabc7d06c",
             amount: inputData.amount,
             name: "test1",
           },
@@ -259,7 +259,7 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
-        groupId: "63e933a5981886a213a6586a",
+        groupId: "63fb8b5629ce0c8a774c4159",
       });
     } catch (error) {
       FtglSaveBtn(true);
@@ -271,11 +271,11 @@ const AddExpensePopup = (props) => {
   return (
     <>
       {/* <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '> */}
-      <div className="fixed inset-0 bg-white bg-opacity-50  backdrop-blur-sm bg-fixed">
+      <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed">
         <form method="POST">
           <div className="h-3/5 flex justify-center mt-16">
-            <div className="border-2 border-primary rounded-xl w-[425px] my-auto bg-white">
-              <div className="bg-primary rounded-t-lg p-2 px-3 flex justify-between">
+            <div className="rounded-lg w-[425px] my-auto bg-white shadow-2xl">
+              <div className="bg-primary rounded-t-md p-2 px-3 flex justify-between">
                 <h5 className=" text-white font-semibold text-lg">
                   Add an expense
                 </h5>
@@ -361,17 +361,17 @@ const AddExpensePopup = (props) => {
 
                 {/* Buttond */}
                 <div className="flex justify-evenly mt-6 mb-10">
-                  <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
                     <button
-                      className=" text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
+                      className=" text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                       onClick={addDate}
                     >
                       25 Dec 2022
                     </button>
                   </div>
-                  <div className="py-1 px-4 mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80 ">
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80 ">
                     <button
-                      className=" text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
+                      className=" text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                       onClick={addNote}
                     >
                       Add Image/Note
@@ -383,9 +383,9 @@ const AddExpensePopup = (props) => {
 
                 {tglSaveBtn ? (
                   <div className="flex justify-end py-3">
-                    <div className=" mr-3 text-base font-normal bg-primary rounded-lg text-white hover:bg-opacity-80 ">
+                    <div className=" mr-3 text-base font-normal bg-gray-200 rounded-lg text-black hover:bg-opacity-80 ">
                       <button
-                        className="py-1 px-4 it text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
+                        className="py-1 px-4 it text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                         onClick={props.closeAdd}
                       >
                         Cancel

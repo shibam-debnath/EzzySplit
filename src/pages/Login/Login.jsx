@@ -21,7 +21,7 @@ const Login = () => {
     }
     if (user && user.emailVerified === true) {
       console.log(user);
-      navigate("/dashboard");
+      navigate("/dashboard/");
     } else if (user && user.emailVerified === false) {
       alert("Verify email first");
     }
