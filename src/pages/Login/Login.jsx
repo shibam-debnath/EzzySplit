@@ -21,7 +21,7 @@ const Login = () => {
     }
     if (user && user.emailVerified === true) {
       console.log(user);
-      navigate("/dashboard");
+      navigate("/dashboard/");
     } else if (user && user.emailVerified === false) {
       alert("Verify email first");
     }
@@ -52,10 +52,13 @@ const Login = () => {
       <div className=" flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <div>
           <a href="/">
-            <h3 className=" mt-10 text-4xl font-bold text-purple-600">Logo</h3>
+            <div className=" mt-10 text-4xl font-bold flex">
+              <div className="text-black">Ezzy</div>
+              <div className="text-primary">Split</div>
+            </div>
           </a>
         </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
+        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-2xl sm:max-w-lg sm:rounded-lg">
           {error && <h1>{error}</h1>}
           <form onSubmit={handleLoginSubmit}>
             <div className="mt-4">
@@ -94,7 +97,7 @@ const Login = () => {
             </div>
             <NavLink
               onClick={handleForgotPassword}
-              className="text-xs text-purple-600 hover:underline"
+              className="text-xs text-primary hover:underline"
             >
               Forget Password?
             </NavLink>
@@ -102,7 +105,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform hover:bg-lgPrimary rounded-md bg-primary focus:outline-none focus:bg-primary"
               >
                 Log in
               </button>
@@ -111,10 +114,7 @@ const Login = () => {
           <div className="mt-4 text-grey-600">
             Don't have an account?{" "}
             <span>
-              <NavLink
-                className="text-purple-600 hover:underline"
-                to={"/signup"}
-              >
+              <NavLink className="text-primary hover:underline" to={"/signup"}>
                 Register here
               </NavLink>
             </span>
@@ -131,11 +131,26 @@ const Login = () => {
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
                 className="w-5 h-5 fill-current"
+                viewBox="0 0 32 32"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
+                <path
+                  d="M30.0014 16.3109C30.0014 15.1598 29.9061 14.3198 29.6998 13.4487H16.2871V18.6442H24.1601C24.0014 19.9354 23.1442 21.8798 21.2394 23.1864L21.2127 23.3604L25.4536 26.58L25.7474 26.6087C28.4458 24.1665 30.0014 20.5731 30.0014 16.3109Z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M16.2863 29.9998C20.1434 29.9998 23.3814 28.7553 25.7466 26.6086L21.2386 23.1863C20.0323 24.0108 18.4132 24.5863 16.2863 24.5863C12.5086 24.5863 9.30225 22.1441 8.15929 18.7686L7.99176 18.7825L3.58208 22.127L3.52441 22.2841C5.87359 26.8574 10.699 29.9998 16.2863 29.9998Z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M8.15964 18.769C7.85806 17.8979 7.68352 16.9645 7.68352 16.0001C7.68352 15.0356 7.85806 14.1023 8.14377 13.2312L8.13578 13.0456L3.67083 9.64746L3.52475 9.71556C2.55654 11.6134 2.00098 13.7445 2.00098 16.0001C2.00098 18.2556 2.55654 20.3867 3.52475 22.2845L8.15964 18.769Z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M16.2864 7.4133C18.9689 7.4133 20.7784 8.54885 21.8102 9.4978L25.8419 5.64C23.3658 3.38445 20.1435 2 16.2864 2C10.699 2 5.8736 5.1422 3.52441 9.71549L8.14345 13.2311C9.30229 9.85555 12.5086 7.4133 16.2864 7.4133Z"
+                  fill="#EB4335"
+                />
               </svg>
               <p onClick={signInWithGoogle}>Login with Google</p>
             </button>

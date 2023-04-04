@@ -41,13 +41,16 @@ const SignUp = () => {
 
   return (
     <div>
-      <div className=" flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+      <div className=" flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50 ">
         <div>
           <a href="/">
-            <h3 className=" mt-10 text-4xl font-bold text-purple-600">Logo</h3>
+            <div className=" mt-10 text-4xl font-bold flex">
+              <div className="text-black">Ezzy</div>
+              <div className="text-primary">Split</div>
+            </div>
           </a>
         </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
+        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white sm:max-w-lg sm:rounded-lg shadow-2xl">
           {error && <h1>{error}</h1>}
           <form onSubmit={handleSubmit}>
             <div className="mt-4">
@@ -105,7 +108,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-lgPrimary focus:outline-none focus:bg-purple-600"
               >
                 Register
               </button>
@@ -115,7 +118,7 @@ const SignUp = () => {
             Already have an account?{" "}
             <span>
               <NavLink
-                className="text-purple-600 hover:underline"
+                className="text-primary hover:underline"
                 to={"/login"}
               >
                 Log in

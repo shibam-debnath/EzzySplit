@@ -14,7 +14,7 @@ const SplitPopup = (props) => {
       {/* <div className='bg-neutral-200 opacity-100 fixed inset-0 z-50 flex-col '>
 
         <div className=' h-3/5 my-auto align-middle '> */}
-      <div className='border-2 border-primary bg-white w-[350px] my-auto rounded-xl mx-2'>
+      <div className=' bg-white w-[350px] my-auto rounded-md mx-2 shadow-2xl'>
 
 
         <div className='bg-primary rounded-t-lg py-2 px-3 flex justify-between'>
@@ -39,7 +39,7 @@ const SplitPopup = (props) => {
                   props.closeAdd()
                 }}
             >
-              Split Equilly
+              Split Equally
             </button>
           </div>
           <div className='mb-3'>
@@ -51,7 +51,7 @@ const SplitPopup = (props) => {
                   props.Fsplit_method("unequally");
                 }}
             >
-              Split Unequilly
+              Split Unequally
             </button>
           </div>
           {/* Expend the method of uneuilly paid */}
