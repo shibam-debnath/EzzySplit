@@ -111,6 +111,7 @@ const DashBoardContent = () => {
 
   useEffect(() => {
     fexpend();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settleExpenseData]);
 
   // console.log(userData);
@@ -121,7 +122,7 @@ const DashBoardContent = () => {
     const temp = [];
     const temp2 = {};
     if (settleExpenseData && grData) {
-      for (var i = 0; i < grData.userId.length; i++) {
+      for (let i = 0; i < grData.userId.length; i++) {
         temp2[grData.userId[i]._id] = grData.userId[i].name;
         const singleData = {
           name: "",
@@ -138,7 +139,7 @@ const DashBoardContent = () => {
 
     const temp3 = [];
     if (settleExpenseData && grData) {
-      for (var i = 0; i < settleExpenseData[2].length; i++) {
+      for (let i = 0; i < settleExpenseData[2].length; i++) {
         const singleData = {
           payer: "",
           receiver: "",

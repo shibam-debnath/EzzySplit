@@ -10,7 +10,6 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
   sendEmailVerification,
-  updateProfile,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -37,19 +36,6 @@ export async function signup(email, password) {
   } catch (err) {
     console.error(err.message);
     alert(err.message);
-  }
-}
-
-export async function editProfile(name, imageUrl) {
-  try {
-    const user = auth.currentUser;
-    const update = {
-      displayName: name | null,
-      photoURL: imageUrl | null,
-    };
-    await user.updateProfile(update);
-  } catch (err) {
-    console.log(err);
   }
 }
 
