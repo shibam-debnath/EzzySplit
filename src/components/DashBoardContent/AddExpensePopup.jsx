@@ -361,7 +361,7 @@ const AddExpensePopup = (props) => {
 
                 {/* Buttond */}
                 <div className="flex justify-evenly mt-6 mb-10">
-                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-60  ">
                     <button
                       className=" text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                       onClick={addDate}
@@ -369,7 +369,7 @@ const AddExpensePopup = (props) => {
                       25 Dec 2022
                     </button>
                   </div>
-                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80 ">
+                  <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-60 ">
                     <button
                       className=" text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                       onClick={addNote}
@@ -383,7 +383,7 @@ const AddExpensePopup = (props) => {
 
                 {tglSaveBtn ? (
                   <div className="flex justify-end py-3">
-                    <div className=" mr-3 text-base font-normal bg-gray-200 rounded-lg text-black hover:bg-opacity-80 ">
+                    <div className=" mr-3 text-base font-normal bg-gray-200 rounded-lg text-black hover:bg-opacity-60 ">
                       <button
                         className="py-1 px-4 it text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                         onClick={props.closeAdd}
@@ -391,7 +391,7 @@ const AddExpensePopup = (props) => {
                         Cancel
                       </button>
                     </div>
-                    <div className=" mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-80  ">
+                    <div className=" mr-3 text-base font-normal bg-primary text-gray-900 rounded-lg dark:text-white hover:bg-opacity-60  ">
                       <button
                         className="py-1 px-4 text-lg opacity-0.9 text-white hover:drop-shadow-xl rounded-full"
                         onClick={(e) => {

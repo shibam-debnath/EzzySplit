@@ -14,6 +14,8 @@ import LastGroup from "./pages/LastGroup/LastGroup";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Login/SignUp";
 import Error404 from "./pages/Error404/Error404";
+import NewGroup from "./pages/NewGroup/NewGroup";
+import AcceptInvitation from "./pages/AcceptInvitation/AcceptInvitation";
 
 // components
 import Activity from "./components/DashBoardContent/Activity";
@@ -51,10 +53,12 @@ function App() {
             <Route exact path="LastGroup" element={<LastGroup />} />
             <Route exact path="friends" element={<FriendsCheck />} />
             <Route exact path="" element={<DashBoardContent />} />
+            <Route exact path="newGroup" element={<NewGroup />} />
             <Route exact path="activity" element={<Activity />} />
           </Route>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/acceptInvitation/:id" element={<AcceptInvitation />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       )}

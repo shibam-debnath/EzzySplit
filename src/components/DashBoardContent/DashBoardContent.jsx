@@ -43,6 +43,10 @@ const DashBoardContent = () => {
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
 
+  const [groupMembers, setGroupMembers] = useState("");
+  const [members, setMembers] = useState([]);
+  console.log(members);
+
   const [settleCall, setSettleCall] = useState(false);
   const [settleCall2, setSettleCall2] = useState(false);
   const [settleCallData, setSettleCallData] = useState([]);
@@ -57,7 +61,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/details/642c02631d606fe7f899d186", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -84,10 +88,58 @@ const DashBoardContent = () => {
     }
   };
 
+  function handleGroupMembers(event) {
+    setGroupMembers(event.target.value);
+    console.log("groupMembers called");
+    console.log(groupMembers);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (groupMembers) {
+      const temp = groupMembers.split(",");
+      console.log("setmmbers called");
+      console.log("inviteusers called");
+      setMembers(temp);
+      console.log(members);
+    }
+
+    if(members){
+      inviteUsers();
+    }
+    // handle form submission here
+  }
+  const inviteUsers = async () => {
+    for (let i = 0; i < members.length; i++) {
+      // console.log("memebrs[i]")
+      // console.log(members[i]);
+      let config = {
+        method: "post",
+        url: "http://localhost:8000/group/inviteUser",
+
+        data: {
+          groupName: grData._name,
+          emailId: members[i],
+          groupId: grData._id,
+        },
+      };
+
+      try {
+        const response = await axios(config);
+        console.log(response);
+        if(response.status===201)
+        {
+          alert("Invitation sent");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
+        .get("http://localhost:8000/group/settle/642c02631d606fe7f899d186", {
           responseType: "json",
         })
         .then(function (response) {
@@ -154,7 +206,7 @@ const DashBoardContent = () => {
   };
 
   useEffect(() => {
-    console.log("expend");
+    // console.log("expend");
     // console.log(expend);
     // expend.forEach((element) => {
     //   console.log(element.name);
@@ -307,13 +359,15 @@ const DashBoardContent = () => {
   return (
     <>
       <div>
-        {!grData.isSettled ? (
-          <AddExpenses groupDetails={grData} />
-        ) : (
-          <div className="fixed bottom-10 right-10 h-18 w-62 bg-white text-black rounded-md shadow-md p-4">
-            You can't add Expense as it is settled
-          </div>
-        )}
+        {
+          !grData.isSettled && <AddExpenses groupDetails={grData} />
+
+          // : (
+          //   <div className="fixed bottom-10 right-10 h-18 w-62 bg-white text-black rounded-md shadow-md p-4">
+          //     You can't add Expense as it is settled
+          //   </div>
+          // )
+        }
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
@@ -452,12 +506,17 @@ const DashBoardContent = () => {
             <div className="text-gray-700 text-2xl font-bold ">
               Expenses History
             </div>
-            <button
-              className="flex justify-end text-white p-2 bg-lgPrimary rounded-xl hover:bg-primary"
-              onClick={settleExpenseCall}
-            >
-              Settle expense
-            </button>
+
+            {!grData.isSettled &&
+              grData.expenseId &&
+              grData.expenseId.length > 0 && (
+                <button
+                  className="flex justify-end text-white p-2 bg-lgPrimary rounded-md hover:bg-primary"
+                  onClick={settleExpenseCall}
+                >
+                  Settle Expense
+                </button>
+              )}
           </div>
           <div className="text-gray-400 ml-8 mr-8 mt-2 flex border-b-2  ">
             <div className="p-2 w-[4rem]">S.No.</div>
@@ -553,7 +612,7 @@ const DashBoardContent = () => {
           {/* to display the complete details of an expense ends */}
 
           <div className="h-[26rem] overflow-y-auto scrollbar-none scroll-smooth">
-            {grData.expenseId ? (
+            {grData.expenseId && grData.expenseId.length > 0 ? (
               grData.expenseId.map((expenses) => (
                 <div className="">
                   <div
@@ -633,36 +692,68 @@ const DashBoardContent = () => {
             </div>
           </div>
 
-          {grData.isSettled ? (
-            <div className=" h-80 m-2 p-4 w-5/12">
-              <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg  rounded-xl  bg-no-repeat bg-cover bg-center ">
-                <div className=" flex justify-between pl-4 p-2 border-b-2 border-spacing-y-12  border-gray-200">
-                  <div className="text-gray-700 ">Settled Expenses</div>
-                </div>
+          {grData.expenseId && grData.expenseId.length > 0 ? (
+            grData.isSettled ? (
+              <div className=" h-80 m-2 p-4 w-5/12">
+                <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg  rounded-xl  bg-no-repeat bg-cover bg-center ">
+                  <div className=" flex justify-between pl-4 p-2 border-b-2 border-spacing-y-12  border-gray-200">
+                    <div className="text-gray-700 ">Settled Expenses</div>
+                  </div>
 
-                <div className="h-60 overflow-y-auto scrollbar-none scroll-smooth pb-4 p-2">
-                  {settleCallData ? (
-                    settleCallData.map((items) => {
-                      return (
-                        <div className="flex jusify-start p-2 text-gray-400">
-                          {count2++}.&nbsp;
-                          <div className="text-black">{items.payer}</div>
-                          &nbsp; needs to pay &nbsp;
-                          <div className="text-black">₹{items.amount}</div>
-                          &nbsp; to &nbsp;
-                          <div className="text-black">{items.receiver}</div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div>Nothing to display here</div>
-                  )}
+                  <div className="h-60 overflow-y-auto scrollbar-none scroll-smooth pb-4 p-2">
+                    {settleCallData ? (
+                      settleCallData.map((items) => {
+                        return (
+                          <div className="flex jusify-start p-2 text-gray-400">
+                            {count2++}.&nbsp;
+                            <div className="text-black">{items.payer}</div>
+                            &nbsp; needs to pay &nbsp;
+                            <div className="text-black">₹{items.amount}</div>
+                            &nbsp; to &nbsp;
+                            <div className="text-black">{items.receiver}</div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div>Nothing to display here</div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
+                <img style={style} src="../images/boy.jpg" alt="Loading..." />
+              </div>
+            )
           ) : (
             <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
-              <img style={style} src="../images/boy.jpg" alt="Loading..." />
+              {/* <img style={style} src="../images/boy.jpg" alt="Loading..." /> */}
+              <div className="mb-2 h-full">
+                <label
+                  htmlFor="members"
+                  className="block text-gray-700 border-b-2 flex  font-bold mb-2"
+                >
+                  Invite Members
+                </label>
+                <div className="text-gray-400 mt-8 m-2 text-sm">
+                  Send invitation before adding expenses (Enter the email addresses separated with comma)
+                </div>
+                <input
+                  type="text"
+                  id="members"
+                  name="members"
+                  className="shadow appearance-none border-gray-400 rounded w-full py-2  text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
+                  placeholder="Enter email addresses separated by comma"
+                  onChange={handleGroupMembers}
+                  required
+                />
+                <div className="flex justify-center">
+
+              <div className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer" onClick={handleSubmit}>
+                Invite
+              </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

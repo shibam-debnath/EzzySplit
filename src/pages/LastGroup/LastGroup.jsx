@@ -11,7 +11,7 @@ const LastGroup = () => {
   const lastGroupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/63d38658cd073fceefefe135", {
+        .get("http://localhost:8000/group/63ce3de792e27a2fabc7d06c", {
           responseType: "json",
         })
         .then(function (response) {

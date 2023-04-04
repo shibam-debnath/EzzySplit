@@ -10,7 +10,7 @@ import {
   TbLogout,
 } from "react-icons/tb";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { MdOutlineLiveHelp } from "react-icons/md";
+import { MdOutlineLiveHelp, MdOutlineGroupAdd } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 const SideNav = () => {
@@ -46,10 +46,10 @@ const SideNav = () => {
               to={"/dashboard/"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                  background: isActive? "#6B60F1":"white",
-                  color: isActive ? "white" : "rgb(107 114 128)" 
-                })}
-             >
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
+              })}
+            >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <TbLayoutDashboard />
               </button>
@@ -58,11 +58,26 @@ const SideNav = () => {
           </li>
           <li>
             <NavLink
+              to={"/dashboard/newGroup"}
+              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
+              style={({ isActive }) => ({
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
+              })}
+            >
+              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
+                <MdOutlineGroupAdd />
+              </button>
+              <span className="ml-3">Create Group</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to={"/dashboard/LastGroup"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                background: isActive? "#6B60F1":"white",
-                color: isActive ? "white" : "rgb(107 114 128)" 
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
               })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
@@ -76,8 +91,8 @@ const SideNav = () => {
               to="/dashboard/activity"
               className="flex items-center p-2 mt-3  text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                background: isActive? "#6B60F1":"white",
-                color: isActive ? "white" : "rgb(107 114 128)" 
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
               })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
@@ -94,8 +109,8 @@ const SideNav = () => {
               to={"/dashboard/friends"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                background: isActive? "#6B60F1":"white",
-                color: isActive ? "white" : "rgb(107 114 128)" 
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
               })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
@@ -109,8 +124,8 @@ const SideNav = () => {
               to={"/"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                background: isActive? "#6B60F1":"white",
-                color: isActive ? "white" : "rgb(107 114 128)" 
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
               })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
@@ -129,8 +144,8 @@ const SideNav = () => {
               to={"/dashboard/help"}
               className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-lgPrimary hover:text-white  active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
-                background: isActive? "#6B60F1":"white",
-                color: isActive ? "white" : "rgb(107 114 128)" 
+                background: isActive ? "#6B60F1" : "white",
+                color: isActive ? "white" : "rgb(107 114 128)",
               })}
             >
               <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
