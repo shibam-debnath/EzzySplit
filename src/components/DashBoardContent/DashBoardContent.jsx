@@ -61,7 +61,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63e28d86e007610a77e259da", {
+        .get("http://localhost:8000/group/details/64283b4cb3dc45d696bc578b", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -76,7 +76,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/user/profile/63d645f7e653329b6cab4ef8", {
+        .get("http://localhost:8000/user/profile/6428396bb3dc45d696bc5782", {
           responseType: "json",
         })
         .then(function (response) {
@@ -139,7 +139,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/63e28d86e007610a77e259da", {
+        .get("http://localhost:8000/group/settle/64283b4cb3dc45d696bc578b", {
           responseType: "json",
         })
         .then(function (response) {
@@ -231,7 +231,7 @@ const DashBoardContent = () => {
     try {
       axios
         .post(
-          "http://localhost:8000/group/isSettled/63e28d86e007610a77e259da/true",
+          "http://localhost:8000/group/isSettled/64283b4cb3dc45d696bc578b/true",
           {
             responseType: "json",
           }

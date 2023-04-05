@@ -21,7 +21,7 @@ const UserProfile = (props) => {
     try {
       let config = {
         method: "get",
-        url: "http://localhost:8000/user/profile/63d645f7e653329b6cab4ef8",
+        url: "http://localhost:8000/user/profile/6428396bb3dc45d696bc5782",
       };
       response = await axios(config);
       FgetUsersData(response.data.users);
