@@ -731,7 +731,7 @@ const DashBoardContent = () => {
               <div className="mb-2 h-full">
                 <label
                   htmlFor="members"
-                  className="block text-gray-700 border-b-2 flex  font-bold mb-2"
+                  className="block text-gray-700 border-b-2 font-bold mb-2"
                 >
                   Invite Members
                 </label>
