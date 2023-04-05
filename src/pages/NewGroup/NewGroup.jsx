@@ -47,7 +47,7 @@ const NewGroup = () => {
     try {
       axios
       .post(
-        "http://localhost:8000/group/creategroup/63ce3de792e27a2fabc7d06c",
+        "http://localhost:8000/group/creategroup/63d645f7e653329b6cab4ef8",
         {
           groupName: groupName,
           // groupIcon:groupImage
