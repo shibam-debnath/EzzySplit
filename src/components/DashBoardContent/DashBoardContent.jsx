@@ -61,7 +61,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -139,7 +139,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (response) {
@@ -611,7 +611,7 @@ const DashBoardContent = () => {
           )}
           {/* to display the complete details of an expense ends */}
 
-          <div className="h-[26rem] overflow-y-auto scrollbar-none scroll-smooth">
+          <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
             {grData.expenseId && grData.expenseId.length > 0 ? (
               grData.expenseId.map((expenses) => (
                 <div className="">
