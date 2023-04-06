@@ -35,7 +35,7 @@ export async function signup(email, password) {
     await createUserWithEmailAndPassword(auth, email, password);
     await sendEmailVerification(auth.currentUser);
     await signOut(auth);
-    alert("Email sent ! verify first and then login");
+    alert("Email sent! verify first and then login");
   } catch (err) {
     console.error(err.message);
     alert(err.message);
