@@ -103,7 +103,7 @@ const DashBoardContent = () => {
       console.log(members);
     }
 
-    if(members){
+    if (members) {
       inviteUsers();
     }
     // handle form submission here
@@ -126,8 +126,7 @@ const DashBoardContent = () => {
       try {
         const response = await axios(config);
         console.log(response);
-        if(response.status===201)
-        {
+        if (response.status === 201) {
           alert("Invitation sent");
         }
       } catch (err) {
@@ -731,12 +730,13 @@ const DashBoardContent = () => {
               <div className="mb-2 h-full">
                 <label
                   htmlFor="members"
-                  className="block text-gray-700 border-b-2 flex  font-bold mb-2"
+                  className="block text-gray-700 border-b-2 font-bold mb-2"
                 >
                   Invite Members
                 </label>
                 <div className="text-gray-400 mt-8 m-2 text-sm">
-                  Send invitation before adding expenses (Enter the email addresses separated with comma)
+                  Send invitation before adding expenses (Enter the email
+                  addresses separated with comma)
                 </div>
                 <input
                   type="text"
@@ -748,10 +748,12 @@ const DashBoardContent = () => {
                   required
                 />
                 <div className="flex justify-center">
-
-              <div className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer" onClick={handleSubmit}>
-                Invite
-              </div>
+                  <div
+                    className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer"
+                    onClick={handleSubmit}
+                  >
+                    Invite
+                  </div>
                 </div>
               </div>
             </div>
