@@ -29,6 +29,11 @@ import loader from "./preloader-3.json";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  // const currentUser = true;
+
+  // const RequireAuth = ({ children }) => {
+  //   return currentUser ? children : <Navigate to="/login" />;
+  // };
 
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1500);
@@ -50,16 +55,63 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/dashBoard" element={<DashBoard />}>
-            <Route exact path="LastGroup" element={<LastGroup />} />
-            <Route exact path="friends" element={<FriendsCheck />} />
-            <Route exact path="" element={<DashBoardContent />} />
-            <Route exact path="newGroup" element={<NewGroup />} />
-            <Route exact path="activity" element={<Activity />} />
+            <Route
+              exact
+              path="LastGroup"
+              element={
+                // <RequireAuth>
+                <LastGroup />
+                // </RequireAuth>
+              }
+            />
+            <Route
+              exact
+              path="friends"
+              element={
+                // <RequireAuth>
+                <FriendsCheck />
+                // </RequireAuth>
+              }
+            />
+            <Route
+              exact
+              path=""
+              element={
+                // <RequireAuth>
+                <DashBoardContent />
+                // </RequireAuth>
+              }
+            />
+            <Route
+              exact
+              path="newGroup"
+              element={
+                // <RequireAuth>
+                <NewGroup />
+                // </RequireAuth>
+              }
+            />
+            <Route
+              exact
+              path="activity"
+              element={
+                // <RequireAuth>
+                <Activity />
+                // </RequireAuth>
+              }
+            />
           </Route>
+          <Route
+            path="/acceptInvitation/:id"
+            element={
+              // <RequireAuth>
+              <AcceptInvitation />
+              // </RequireAuth>
+            }
+          />
+          <Route path="*" element={<Error404 />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/acceptInvitation/:id" element={<AcceptInvitation />} />
-          <Route path="*" element={<Error404 />} />
         </Routes>
       )}
     </div>

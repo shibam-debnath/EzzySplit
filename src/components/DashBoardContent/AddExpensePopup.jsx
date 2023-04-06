@@ -39,7 +39,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: "63fb8b5629ce0c8a774c4159",
+    groupId: "63e933a5981886a213a6586a",
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -105,7 +105,7 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
-    if (name === "63ce3de792e27a2fabc7d06c") {
+    if (name === "63e9338f981886a213a65868") {
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -259,7 +259,7 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
-        groupId: "63fb8b5629ce0c8a774c4159",
+        groupId: "63e933a5981886a213a6586a",
       });
     } catch (error) {
       FtglSaveBtn(true);

@@ -61,7 +61,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/details/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -76,7 +76,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/user/profile/63ce3de792e27a2fabc7d06c", {
+        .get("http://localhost:8000/user/profile/63e9338f981886a213a65868", {
           responseType: "json",
         })
         .then(function (response) {
@@ -103,7 +103,7 @@ const DashBoardContent = () => {
       console.log(members);
     }
 
-    if(members){
+    if (members) {
       inviteUsers();
     }
     // handle form submission here
@@ -126,8 +126,7 @@ const DashBoardContent = () => {
       try {
         const response = await axios(config);
         console.log(response);
-        if(response.status===201)
-        {
+        if (response.status === 201) {
           alert("Invitation sent");
         }
       } catch (err) {
@@ -139,7 +138,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/settle/63e933a5981886a213a6586a", {
           responseType: "json",
         })
         .then(function (response) {
@@ -232,7 +231,7 @@ const DashBoardContent = () => {
     try {
       axios
         .post(
-          "http://localhost:8000/group/isSettled/63fb8b5629ce0c8a774c4159/true",
+          "http://localhost:8000/group/isSettled/63e933a5981886a213a6586a/true",
           {
             responseType: "json",
           }
@@ -732,12 +731,13 @@ const DashBoardContent = () => {
               <div className="mb-2 h-full">
                 <label
                   htmlFor="members"
-                  className="block text-gray-700 border-b-2 flex  font-bold mb-2"
+                  className="block text-gray-700 border-b-2 font-bold mb-2"
                 >
                   Invite Members
                 </label>
                 <div className="text-gray-400 mt-8 m-2 text-sm">
-                  Send invitation before adding expenses (Enter the email addresses separated with comma)
+                  Send invitation before adding expenses (Enter the email
+                  addresses separated with comma)
                 </div>
                 <input
                   type="text"
@@ -749,10 +749,12 @@ const DashBoardContent = () => {
                   required
                 />
                 <div className="flex justify-center">
-
-              <div className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer" onClick={handleSubmit}>
-                Invite
-              </div>
+                  <div
+                    className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer"
+                    onClick={handleSubmit}
+                  >
+                    Invite
+                  </div>
                 </div>
               </div>
             </div>

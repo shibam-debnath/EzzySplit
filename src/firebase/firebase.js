@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+
 import {
   createUserWithEmailAndPassword,
   signOut,
@@ -26,6 +28,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // exports
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 export async function signup(email, password) {
   try {

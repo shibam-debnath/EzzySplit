@@ -2,9 +2,13 @@ import React from "react";
 import "./Navbar.css";
 import { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
+  const [user] = useAuthState(auth);
+
   return (
     <nav className="w-full bg-transparent fixed !h-16 top-0 glass ">
       <div className="justify-between px-4 mx-auto lg:max-w-8xl md:items-center md:flex md:px-8">
@@ -78,14 +82,16 @@ const Navbar = () => {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <a
-                  href="/login"
-                  className="inline-block rounded-md  px-6 outline-1 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
-                >
-                  LogIn
-                </a>
-              </li>
+              {!user && (
+                <li>
+                  <a
+                    href="/login"
+                    className="inline-block rounded-md  px-6 outline-1 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
+                  >
+                    LogIn
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>
