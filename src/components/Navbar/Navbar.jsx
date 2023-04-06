@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
+  const location = useLocation();
+  const help = location.state;
+
+
+  const clickButton = ()=>{
+    document.getElementById('contactUs').click();
+  }
+  useEffect(()=>{
+    if(help){
+      clickButton();
+    }
+  },[])
   return (
     <nav className="w-full bg-transparent fixed !h-16 top-0 glass ">
       <div className="justify-between px-4 mx-auto lg:max-w-8xl md:items-center md:flex md:px-8">
@@ -73,7 +86,8 @@ const Navbar = () => {
                   spy={true}
                   smooth={true}
                   offset={-50}
-                  duration={500}
+                  duration={1000}
+                  id="contactUs"
                 >
                   Contact Us
                 </Link>

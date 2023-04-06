@@ -8,7 +8,7 @@ const NewGroup = () => {
   const [groupDescription, setGroupDescription] = useState("");
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
-  const [groupId,setGroupId] = useState("");
+  const [groupId, setGroupId] = useState("");
 
   function handleGroupNameChange(event) {
     setGroupName(event.target.value);
@@ -27,7 +27,7 @@ const NewGroup = () => {
   }
   const [members, setMembers] = useState([]);
   console.log(members);
-  
+
   function handleSubmit(event) {
     event.preventDefault();
     if (groupMembers) {
@@ -37,45 +37,41 @@ const NewGroup = () => {
       setMembers(temp);
       post();
     }
-    
+
     // handle form submission here
   }
   console.log("after");
   console.log(members);
-  
+
   const post = async () => {
     try {
       axios
-      .post(
-        "http://localhost:8000/group/creategroup/63ce3de792e27a2fabc7d06c",
-        {
-          groupName: groupName,
-          // groupIcon:groupImage
-        }
+        .post(
+          "http://localhost:8000/group/creategroup/63ce3de792e27a2fabc7d06c",
+          {
+            groupName: groupName,
+            // groupIcon:groupImage
+          }
         )
         .then((response) => {
           console.log(response);
-          if(response.status===201)
-          {
+          if (response.status === 201) {
             setGroupId(response.data.groupId);
           }
           console.log(groupId);
-          if(groupId!=="")
-          {
-      
+          if (groupId !== "") {
             inviteUsers();
             // inviteUsers();
             alert("Group created and mail sent");
             navigate("/dashboard/");
           }
         });
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-
-  const inviteUsers = async ()=> {
+  const inviteUsers = async () => {
     for (let i = 0; i < members.length; i++) {
       // console.log("memebrs[i]")
       // console.log(members[i]);
@@ -86,7 +82,7 @@ const NewGroup = () => {
         data: {
           groupName: groupName,
           emailId: members[i],
-          groupId:groupId,
+          groupId: groupId,
         },
       };
 
@@ -97,7 +93,7 @@ const NewGroup = () => {
         console.log(err);
       }
     }
-  }
+  };
 
   console.log(groupName);
   console.log(groupDescription);

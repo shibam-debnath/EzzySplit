@@ -2,6 +2,7 @@ import { React, useEffect } from "react";
 import { logout, auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 // icons import
 import {
   TbLayoutDashboard,
@@ -32,6 +33,10 @@ const SideNav = () => {
     } catch (e) {
       alert("Logout unsuccessful");
     }
+  }
+
+  const triggerHelp = ()=>{
+    navigate('/',{state:{help:true}});
   }
 
   return (
@@ -140,19 +145,15 @@ const SideNav = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to={"/dashboard/help"}
-              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-lgPrimary hover:text-white  active:bg-primary active:text-white font-normal rounded-lg"
-              style={({ isActive }) => ({
-                background: isActive ? "#6B60F1" : "white",
-                color: isActive ? "white" : "rgb(107 114 128)",
-              })}
+            <button 
+            onClick={triggerHelp}
+              className="w-full flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-lgPrimary hover:text-white  active:bg-primary active:text-white font-normal rounded-lg"
             >
-              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
+              <div className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <MdOutlineLiveHelp />
-              </button>
-              <span className="flex-1 ml-3 whitespace-nowrap">Help</span>
-            </NavLink>
+              </div>
+              <div className="ml-3 whitespace-nowrap">Help</div>
+            </button >
           </li>
         </ul>
       </div>
