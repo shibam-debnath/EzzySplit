@@ -61,7 +61,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (resp) {
@@ -139,7 +139,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/642c02631d606fe7f899d186", {
+        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
           responseType: "json",
         })
         .then(function (response) {
