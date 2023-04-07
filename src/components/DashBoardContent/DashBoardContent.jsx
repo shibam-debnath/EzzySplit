@@ -688,7 +688,7 @@ const DashBoardContent = () => {
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}
                     >
-                      {(isHovered && grData.isSettled) ? (
+                      {(isHovered && !grData.isSettled) ? (
                         <div className="flex justify-center">
                           <RiDeleteBin5Line
                             className="text-red-500 cursor:pointer"
