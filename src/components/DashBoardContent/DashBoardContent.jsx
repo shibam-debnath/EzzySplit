@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
-import { BiX } from "react-icons/bi";
 import { useNavigate } from "react-router";
 
 import {
@@ -21,6 +20,8 @@ import { Doughnut, Line } from "react-chartjs-2";
 // icons
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+import { BiX } from "react-icons/bi";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 ChartJS.register(
   ArcElement,
@@ -35,6 +36,7 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const currentColor = "var(--primary-font)";
+  const [isHovered, setIsHovered] = useState(false);
   const [beforeFetch, fbeforeFetch] = useState(0);
   const [userData, setData] = useState([]);
   const [grData, setgroupData] = useState({});
@@ -50,6 +52,9 @@ const DashBoardContent = () => {
   const [settleCall, setSettleCall] = useState(false);
   const [settleCall2, setSettleCall2] = useState(false);
   const [settleCallData, setSettleCallData] = useState([]);
+
+  const [deleteExpenseId, setDeleteExpenseId] = useState(false);
+  const [expenseIdToDelete, setExpenseIdToDelete] = useState({});
   // let userid = "63d38658cd073fceefefe135";
 
   const set = () => {
@@ -145,7 +150,7 @@ const DashBoardContent = () => {
           console.log("response.data");
           console.log(response.data);
           setsettleExpenseData(response.data);
-          // fexpend();
+          fexpend();
           // set();
         });
     } catch (err) {
@@ -247,6 +252,30 @@ const DashBoardContent = () => {
     }
   }
 
+  const fdeleteExpense = () => {
+    console.log("expense");
+    console.log(expenseIdToDelete._id);
+    try {
+      axios
+        .delete(
+          `http://localhost:8000/expense/delete/${expenseIdToDelete._id}`,
+          {
+            responseType: "json",
+          }
+        )
+        .then(function (response) {
+          console.log("response.data after deleting call");
+          console.log(response);
+          setExpenseIdToDelete("");
+          // fexpend();
+          // set();
+          console.log(response.status);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   function displayExpense(expenses) {
     // expenses.preventdefault();
     // console.log("expense div clicked");
@@ -264,6 +293,41 @@ const DashBoardContent = () => {
     setSettleCall2(false);
     navigate("/");
     navigate("/dashboard/");
+  };
+
+  const deleteExpense = (expenses) => {
+    // expenses.preventdefault();
+    // console.log("expense div clicked");
+    // console.log(expenses);
+
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(true);
+    console.log("expenseId deleting called");
+    console.log(expenses);
+    console.log(expenseIdToDelete);
+    setExpenseIdToDelete(expenses);
+    console.log(expenseIdToDelete);
+    // setExpenseId(expenses);
+  };
+
+  const deleteExpenseCall = () => {
+    fdeleteExpense();
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(false);
+    // setExpenseIdToDelete('');
+  };
+
+  const closeDeleteExpense = () => {
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(false);
+    setExpenseIdToDelete("");
+    // setSettleCall(false);
   };
 
   const earningData = [
@@ -619,7 +683,22 @@ const DashBoardContent = () => {
                     className="text-black ml-8 mr-8  flex border-b-2 cursor-pointer hover:bg-gray-100"
                     onClick={() => displayExpense(expenses)}
                   >
-                    <div className="px-2 py-2 w-[4rem]">{count++}</div>
+                    <div
+                      className="px-2 py-2 w-[4rem]"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      {(isHovered && grData.isSettled) ? (
+                        <div className="flex justify-center">
+                          <RiDeleteBin5Line
+                            className="text-red-500 cursor:pointer"
+                            onClick={() => deleteExpense(expenses)}
+                          />
+                        </div>
+                      ) : (
+                        <div>{count++}</div>
+                      )}
+                    </div>
                     <div className="px-2 py-2 w-1/4">
                       {expenses.description}
                     </div>
@@ -657,6 +736,31 @@ const DashBoardContent = () => {
           </div>
         </div>
       </div>
+
+      {deleteExpenseId && (
+        <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-[20%] mt-20 bg-white  pb-2  text-black rounded-md shadow-2xl">
+            <div className="text-white text-md rounded-t-md p-2 bg-primary">
+              Do you really want to delete this expense?
+            </div>
+
+            <div className=" flex justify-between p-2">
+              <div
+                onClick={closeDeleteExpense}
+                className="m-2 p-2 bg-primary rounded-md text-white w-1/2 cursor-pointer"
+              >
+                No
+              </div>
+              <div
+                onClick={deleteExpenseCall}
+                className="m-2 p-2 w-1/2 bg-slate-200 rounded-md cursor-pointer"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/*  strating of the different charts section... */}
 
