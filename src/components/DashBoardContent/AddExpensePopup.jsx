@@ -10,6 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dna } from "react-loader-spinner";
 
 const AddExpensePopup = (props) => {
+
+  const groupId = "63fb8b5629ce0c8a774c4159";
+  const userId = "63ce3de792e27a2fabc7d06c";
+
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);
   const cngExpDate = (val) => {
@@ -60,7 +64,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: "64283b4cb3dc45d696bc578b",
+    groupId: `${groupId}`,
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -126,7 +130,7 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
-    if (name === "63ce3de792e27a2fabc7d06c") {
+    if (name === `${userId}`) {
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -227,7 +231,7 @@ const AddExpensePopup = (props) => {
       if (payer === "You") {
         fnarr = [
           {
-            userId: "63ce3de792e27a2fabc7d06c",
+            userId: `${userId}`,
             amount: inputData.amount,
             name: "test1",
           },
@@ -279,7 +283,7 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
-        groupId: "64283b4cb3dc45d696bc578b",
+        groupId: `${groupId}`,
       });
     } catch (error) {
       FtglSaveBtn(true);

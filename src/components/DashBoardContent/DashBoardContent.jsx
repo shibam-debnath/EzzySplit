@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
-import { BiX } from "react-icons/bi";
 import { useNavigate } from "react-router";
 
 import {
@@ -21,6 +20,8 @@ import { Doughnut, Line } from "react-chartjs-2";
 // icons
 import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+import { BiX } from "react-icons/bi";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 ChartJS.register(
   ArcElement,
@@ -35,6 +36,7 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const currentColor = "var(--primary-font)";
+  const [isHovered, setIsHovered] = useState(false);
   const [beforeFetch, fbeforeFetch] = useState(0);
   const [userData, setData] = useState([]);
   const [grData, setgroupData] = useState({});
@@ -50,7 +52,9 @@ const DashBoardContent = () => {
   const [settleCall, setSettleCall] = useState(false);
   const [settleCall2, setSettleCall2] = useState(false);
   const [settleCallData, setSettleCallData] = useState([]);
-  // let userid = "63d38658cd073fceefefe135";
+
+  const [deleteExpenseId, setDeleteExpenseId] = useState(false);
+  const [expenseIdToDelete, setExpenseIdToDelete] = useState({});
 
   const set = () => {
     setTimeout(() => {
@@ -58,10 +62,13 @@ const DashBoardContent = () => {
     }, 500);
   };
 
+  const groupId = "63fb8b5629ce0c8a774c4159";
+  const userId = "63ce3de792e27a2fabc7d06c";
+
   const groupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/details/63fb8b5629ce0c8a774c4159", {
+        .get(`http://localhost:8000/group/details/${groupId}`, {
           responseType: "json",
         })
         .then(function (resp) {
@@ -76,7 +83,7 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/user/profile/63ce3de792e27a2fabc7d06c", {
+        .get(`http://localhost:8000/user/profile/${userId}`, {
           responseType: "json",
         })
         .then(function (response) {
@@ -138,14 +145,14 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get("http://localhost:8000/group/settle/63fb8b5629ce0c8a774c4159", {
+        .get(`http://localhost:8000/group/settle/${groupId}`, {
           responseType: "json",
         })
         .then(function (response) {
           console.log("response.data");
           console.log(response.data);
           setsettleExpenseData(response.data);
-          // fexpend();
+          fexpend();
           // set();
         });
     } catch (err) {
@@ -229,12 +236,9 @@ const DashBoardContent = () => {
   function isSettled() {
     try {
       axios
-        .post(
-          "http://localhost:8000/group/isSettled/64283b4cb3dc45d696bc578b/true",
-          {
-            responseType: "json",
-          }
-        )
+        .post(`http://localhost:8000/group/isSettled/${groupId}/true`, {
+          responseType: "json",
+        })
         .then(function (response) {
           console.log("response.data");
           console.log(response);
@@ -246,6 +250,30 @@ const DashBoardContent = () => {
       console.log(err);
     }
   }
+
+  const fdeleteExpense = () => {
+    console.log("expense");
+    console.log(expenseIdToDelete._id);
+    try {
+      axios
+        .delete(
+          `http://localhost:8000/expense/delete/${expenseIdToDelete._id}`,
+          {
+            responseType: "json",
+          }
+        )
+        .then(function (response) {
+          console.log("response.data after deleting call");
+          console.log(response);
+          setExpenseIdToDelete("");
+          // fexpend();
+          // set();
+          console.log(response.status);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   function displayExpense(expenses) {
     // expenses.preventdefault();
@@ -264,6 +292,41 @@ const DashBoardContent = () => {
     setSettleCall2(false);
     navigate("/");
     navigate("/dashboard/");
+  };
+
+  const deleteExpense = (expenses) => {
+    // expenses.preventdefault();
+    // console.log("expense div clicked");
+    // console.log(expenses);
+
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(true);
+    console.log("expenseId deleting called");
+    console.log(expenses);
+    console.log(expenseIdToDelete);
+    setExpenseIdToDelete(expenses);
+    console.log(expenseIdToDelete);
+    // setExpenseId(expenses);
+  };
+
+  const deleteExpenseCall = () => {
+    fdeleteExpense();
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(false);
+    // setExpenseIdToDelete('');
+  };
+
+  const closeDeleteExpense = () => {
+    setDisplayExpenseData(false);
+    setSettleCall(false);
+    setSettleCall2(false);
+    setDeleteExpenseId(false);
+    setExpenseIdToDelete("");
+    // setSettleCall(false);
   };
 
   const earningData = [
@@ -373,13 +436,24 @@ const DashBoardContent = () => {
           <div className="bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-bold text-white flex">Hi,</p>
-                {/* <p className="text-gray-400 text-2xl font-bold"> */}
                 {beforeFetch === 1 && (
-                  <div className="flex-col">
-                    <p className="text-white text-2xl font-bold">
-                      {userData.name}
-                    </p>
+                  <div className="flex-col justify-start">
+                    <div className=" text-white flex items-center">
+                      <div className="pb-0 pl-0 p-2 font-bold">Hi</div>
+                      <div className="text-white text-2xl font-bold pl-0 p-2">
+                        {userData.name},
+                      </div>
+                    </div>
+                    <div className="flex justify-start">
+                      <div className="text-white flex  items-center">
+                        <div className="pb-0 pl-0 text-sm pt-0 p-2">
+                          Welcome back to the group
+                        </div>
+                        <div className="font-bold pl-0 pt-0 pb-0 p-2">
+                          {grData.groupName}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
                 {beforeFetch === 0 && (
@@ -531,8 +605,9 @@ const DashBoardContent = () => {
             <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
               <div className=" h-3/5 mt-20 bg-white w-[425px] pb-3 text-black rounded-md shadow-2xl">
                 <div className=" flex justify-between p-4  bg-primary rounded-t-md">
-                  <div className="text-white text-2xl">Expense Description</div>
-                  <div>
+                  <div className="text-white text-xl">Expense Description</div>
+                  <div className="flex">
+                    <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">Edit</div>
                     <BiX
                       className=" text-2xl cursor-pointer"
                       onClick={closeDisplayExpense}
@@ -610,7 +685,7 @@ const DashBoardContent = () => {
           )}
           {/* to display the complete details of an expense ends */}
 
-          <div className="h-[26rem] overflow-y-auto scrollbar-none scroll-smooth">
+          <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
             {grData.expenseId && grData.expenseId.length > 0 ? (
               grData.expenseId.map((expenses) => (
                 <div className="">
@@ -619,7 +694,22 @@ const DashBoardContent = () => {
                     className="text-black ml-8 mr-8  flex border-b-2 cursor-pointer hover:bg-gray-100"
                     onClick={() => displayExpense(expenses)}
                   >
-                    <div className="px-2 py-2 w-[4rem]">{count++}</div>
+                    <div
+                      className="px-2 py-2 w-[4rem]"
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      {isHovered && !grData.isSettled ? (
+                        <div className="flex justify-center">
+                          <RiDeleteBin5Line
+                            className="text-red-500 cursor:pointer"
+                            onClick={() => deleteExpense(expenses)}
+                          />
+                        </div>
+                      ) : (
+                        <div>{count++}</div>
+                      )}
+                    </div>
                     <div className="px-2 py-2 w-1/4">
                       {expenses.description}
                     </div>
@@ -657,6 +747,31 @@ const DashBoardContent = () => {
           </div>
         </div>
       </div>
+
+      {deleteExpenseId && (
+        <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed flex justify-center">
+          <div className=" h-[20%] mt-20 bg-white  pb-2  text-black rounded-md shadow-2xl">
+            <div className="text-white text-md rounded-t-md p-2 bg-primary">
+              Do you really want to delete this expense?
+            </div>
+
+            <div className=" flex justify-between p-2">
+              <div
+                onClick={closeDeleteExpense}
+                className="m-2 p-2 bg-primary rounded-md text-white w-1/2 cursor-pointer"
+              >
+                No
+              </div>
+              <div
+                onClick={deleteExpenseCall}
+                className="m-2 p-2 w-1/2 bg-slate-200 rounded-md cursor-pointer"
+              >
+                Yes
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/*  strating of the different charts section... */}
 

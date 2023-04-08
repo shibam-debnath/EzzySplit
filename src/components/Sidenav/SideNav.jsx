@@ -93,7 +93,7 @@ const SideNav = () => {
           </li>
           <li>
             <NavLink
-              to="/dashboard/activity"
+              to="/"
               className="flex items-center p-2 mt-3  text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
               style={({ isActive }) => ({
                 background: isActive ? "#6B60F1" : "white",
@@ -109,21 +109,7 @@ const SideNav = () => {
               </span>
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to={"/dashboard/friends"}
-              className="flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-primary hover:text-white active:bg-primary active:text-white font-normal rounded-lg"
-              style={({ isActive }) => ({
-                background: isActive ? "#6B60F1" : "white",
-                color: isActive ? "white" : "rgb(107 114 128)",
-              })}
-            >
-              <button className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
-                <TbFriends />
-              </button>
-              <span className="flex-1 ml-3 whitespace-nowrap">Friends</span>
-            </NavLink>
-          </li>
+          
           <li>
             <NavLink
               to={"/"}
@@ -147,7 +133,7 @@ const SideNav = () => {
           <li>
             <button 
             onClick={triggerHelp}
-              className="w-full flex items-center p-2 mt-3 text-base text-gray-500 hover:bg-lgPrimary hover:text-white  active:bg-primary active:text-white font-normal rounded-lg"
+              className="w-full flex items-center p-2 mt-3 text-base text-gray-500  active:bg-primary active:text-white font-normal rounded-lg"
             >
               <div className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <MdOutlineLiveHelp />
