@@ -5,12 +5,15 @@ import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
+  const groupId = "63fb8b5629ce0c8a774c4159";
+  const userId = "63ce3de792e27a2fabc7d06c";
+
   const [groupData, setgroupData] = useState({});
 
   const lastGroupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/63ce3de792e27a2fabc7d06c", {
+        .get(`http://localhost:8000/group/${userId}`, {
           responseType: "json",
         })
         .then(function (response) {
