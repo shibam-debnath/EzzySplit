@@ -39,7 +39,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: "63e28d86e007610a77e259da",
+    groupId: "63d60a1be17421d4c1fc4b1d",
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -259,7 +259,7 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
-        groupId: "63e28d86e007610a77e259da",
+        groupId: "63d60a1be17421d4c1fc4b1d",
       });
     } catch (error) {
       FtglSaveBtn(true);
