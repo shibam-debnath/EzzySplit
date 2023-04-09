@@ -91,10 +91,13 @@ const NewGroup = () => {
   console.log(members);
 
   const post = async () => {
+    const groupId = "63f7a42883b9e985364c5a7c";
+    const userId = "63f7a3a583b9e985364c5a6a";
+
     try {
       axios
         .post(
-          "http://localhost:8000/group/creategroup/63d645f7e653329b6cab4ef8",
+          `http://localhost:8000/group/creategroup/${userId}`,
           {
             groupName: groupName,
             // groupIcon:groupImage
@@ -145,7 +148,7 @@ const NewGroup = () => {
         set2();
       }
     }
-  }
+  };
 
   console.log(groupName);
   console.log(groupDescription);

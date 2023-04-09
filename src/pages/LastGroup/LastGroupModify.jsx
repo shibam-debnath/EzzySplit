@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDropright } from "react-icons/io";
-import { BiChevronRight } from "react-icons/bi";
-import { LastGroupMember } from "../../data/LastGroupMember";
+import { BiRightArrow } from "react-icons/bi";
+// import { LastGroupMember } from "../../data/LastGroupMember";
+import { useNavigate } from "react-router-dom";
 
 export default function LastGroupModify(props) {
+  const navigate = useNavigate();
   const [toggleDesc, FtoggleDesc] = useState(false);
 
   const callToggle = (e) => {
@@ -25,10 +27,14 @@ export default function LastGroupModify(props) {
         </button>
         <div>
           <button
-            className="text-xl rounded-xl p-1 hover:cursor-pointer"
+            className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
+            onClick={(e)=>{
+                e.preventDefault();
+                navigate('/dashboard/',{state:{groupid:props.groupid}});
+            }}  
             
           >
-            <BiChevronRight />
+            <BiRightArrow />
           </button>
         </div>
         
@@ -43,11 +49,11 @@ export default function LastGroupModify(props) {
                 <div>Join Date</div>
               </div>
               {/* <div className="bg-gray-200 h-15 rounded-xl w-full   flex space-x-24 overflow-x-visible"> */}
-              {LastGroupMember.map((item) => (
+              {props.user.map((item) => (
                 <div className="bg-gray-200 h-15 rounded-xl w-full mt-2  flex justify-between overflow-x-visible">
                   <div>{item.name}</div>
-                  <div>{item.expenses}</div>
-                  <div className="pl-0">{item.created}</div>
+                  <div>expense</div>
+                  <div className="pl-0">created</div>
                 </div>
               ))}
             </div>

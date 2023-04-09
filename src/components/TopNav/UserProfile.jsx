@@ -6,8 +6,11 @@ import axios from "axios";
 var response;
 
 const UserProfile = (props) => {
-  const [UserData, FgetUsersData] = useState({});
+  const groupId = "63f7a42883b9e985364c5a7c";
+  const userId = "63f7a3a583b9e985364c5a6a";
 
+  const [UserData, FgetUsersData] = useState({});
+  
   async function handleLogout(e) {
     e.preventDefault();
     try {
@@ -21,7 +24,7 @@ const UserProfile = (props) => {
     try {
       let config = {
         method: "get",
-        url: "http://localhost:8000/user/profile/63d645f7e653329b6cab4ef8",
+        url: `http://localhost:8000/user/profile/${userId}`,
       };
       response = await axios(config);
       FgetUsersData(response.data.users);
