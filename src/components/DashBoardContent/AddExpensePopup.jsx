@@ -271,6 +271,7 @@ const AddExpensePopup = (props) => {
           paidBy: fnarr,
           split_method,
           notes,
+          expDate,
           split_between: SplitArr,
         }),
       });
