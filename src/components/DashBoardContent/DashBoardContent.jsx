@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
-import { useNavigate,useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 import {
   Chart as ChartJS,
@@ -19,7 +19,7 @@ import { Doughnut, Line } from "react-chartjs-2";
 
 // icons
 import { IoPeopleSharp } from "react-icons/io5";
-import { GiReceiveMoney, GiPayMoney } from "react-icons/gi";
+import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
@@ -36,21 +36,29 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "63f7a42883b9e985364c5a7c";
+  var groupId = "63fb8b5629ce0c8a774c4159";
   console.log("state");
   console.log(location.state);
   // console.log(location.state.groupid);
-  if(location.state){
+  if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "63f7a3a583b9e985364c5a6a";
+  const userId = "63ce3de792e27a2fabc7d06c";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
   const [beforeFetch, fbeforeFetch] = useState(0);
   const [userData, setData] = useState([]);
   const [grData, setgroupData] = useState({});
+
   const [expend, setexpend] = useState([]);
+  const [cardData, setCardData] = useState({
+    amount: "0",
+    member: "0",
+    paid: "0",
+    expense: "0",
+  });
+
   const [settleExpenseData, setsettleExpenseData] = useState({});
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
@@ -65,6 +73,9 @@ const DashBoardContent = () => {
 
   const [deleteExpenseId, setDeleteExpenseId] = useState(false);
   const [expenseIdToDelete, setExpenseIdToDelete] = useState({});
+
+  const [doughnutData, setDoughnutData] = useState([]);
+  const [lineData, setLineData] = useState([]);
 
   const set = () => {
     setTimeout(() => {
@@ -163,7 +174,7 @@ const DashBoardContent = () => {
           // set();
         });
 
-        console.log("IN settle exp 1");
+      console.log("IN settle exp 1");
     } catch (err) {
       console.log(err);
     }
@@ -176,8 +187,6 @@ const DashBoardContent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
-
   // console.log(userData);
   // console.log(grData.expenseId);
   // console.log(userData.users);
@@ -188,6 +197,8 @@ const DashBoardContent = () => {
     console.log("in fexap fun 3");
     const temp = [];
     const temp2 = {};
+    const temp4 = { amount: "0", paid: "0", expense: "0", member: "0" };
+
     console.log("grData");
     console.log(grData);
     if (settleExpenseData && grData) {
@@ -202,11 +213,32 @@ const DashBoardContent = () => {
         singleData.paid = settleExpenseData[1][grData.userId[i]._id];
         singleData.expense = settleExpenseData[0][grData.userId[i]._id];
         temp.push(singleData);
+        if (grData.userId[i]._id === userId) {
+          temp4.amount = grData.total;
+          temp4.member = grData.userId.length;
+          if (
+            settleExpenseData[1][grData.userId[i]._id] >
+            settleExpenseData[0][grData.userId[i]._id]
+          )
+            temp4.paid =
+              settleExpenseData[1][grData.userId[i]._id] -
+              settleExpenseData[0][grData.userId[i]._id];
+          else if (
+            settleExpenseData[0][grData.userId[i]._id] >
+            settleExpenseData[1][grData.userId[i]._id]
+          )
+            temp4.expense =
+              settleExpenseData[0][grData.userId[i]._id] -
+              settleExpenseData[1][grData.userId[i]._id];
+        }
       }
     }
+
+    setCardData(temp4);
+    console.log(temp4);
     console.log("Temp:");
     console.log(temp);
-    if (temp.length>0) setexpend(()=>[...temp]);
+    if (temp.length > 0) setexpend(() => [...temp]);
 
     const temp3 = [];
     if (settleExpenseData && grData) {
@@ -223,6 +255,24 @@ const DashBoardContent = () => {
       }
     }
     if (temp3) setSettleCallData(temp3);
+
+    if (grData) {
+      const temp5 = [0, 0, 0, 0, 0];
+      for (var i = 0; i < grData.expenseId.length; i++) {
+        if (grData.expenseId[i].category === "Ticket")
+          temp5[0] += Number(grData.expenseId[i].amount);
+        if (grData.expenseId[i].category === "Food")
+          temp5[1] += Number(grData.expenseId[i].amount);
+        if (grData.expenseId[i].category === "Shopping")
+          temp5[2] += Number(grData.expenseId[i].amount);
+        if (grData.expenseId[i].category === "Hotel")
+          temp5[3] += Number(grData.expenseId[i].amount);
+        else temp5[4] += Number(grData.expenseId[i].amount);
+      }
+      setDoughnutData(temp5);
+      console.log("temp5");
+      console.log(temp5);
+    }
   };
 
   useEffect(() => {
@@ -350,23 +400,30 @@ const DashBoardContent = () => {
 
   const earningData = [
     {
-      icon: <GiReceiveMoney />,
+      icon: <GiExpense />,
       title: "Total Spent",
-      amount: userData.totalAmountToPay,
+      amount: grData.total,
       iconColor: "#03C9D7",
       iconBg: "#E5FAFB",
     },
     {
-      icon: <GiPayMoney />,
+      icon: <IoPeopleSharp />,
+      title: "Members count",
+      amount: Number(cardData.member),
+      iconColor: "rgb(228, 106, 118)",
+      iconBg: "rgb(255, 244, 229)",
+    },
+    {
+      icon: <GiReceiveMoney />,
       title: "You Owe",
-      amount: userData.totalAmountpaid,
+      amount: Number(cardData.paid),
       iconColor: "rgb(255 158 18)",
       iconBg: "rgb(255 211 55 / 21%)",
     },
     {
-      icon: <IoPeopleSharp />,
+      icon: <GiPayMoney />,
       title: "Amount Left to Pay",
-      amount: userData.totalAmountRecieved,
+      amount: Number(cardData.expense),
       iconColor: "rgb(228, 106, 118)",
       iconBg: "rgb(255, 244, 229)",
     },
@@ -380,17 +437,20 @@ const DashBoardContent = () => {
     let endValue = valueDisplay.getAttribute("data-val");
 
     let duration = Math.floor(interval / endValue);
-    let counter = setInterval(function () {
-      startValue += 1;
-      valueDisplay.textContent = startValue;
-      if (startValue >= endValue) {
-        clearInterval(counter);
-      }
-    }, duration);
+    // let duration = 1000;
+    if (endValue > 0) {
+      let counter = setInterval(function () {
+        startValue += 1;
+        valueDisplay.textContent = startValue;
+        if (startValue >= endValue) {
+          clearInterval(counter);
+        }
+      }, duration);
+    }
   });
 
   const chartdata = {
-    labels: ["Food", "Travel", "Hotel", "Shopping", "Others"],
+    labels: ["Ticket", "Food", "Shopping", "Hotel", "Others"],
     datasets: [
       {
         backgroundColor: [
@@ -401,8 +461,8 @@ const DashBoardContent = () => {
           "#6600ff",
         ],
         borderColor: ["#ffffff "],
-        label: "Total Expenses",
-        data: [5, 6, 7, 3, 2],
+        label: "Expenses(₹)",
+        data: doughnutData,
       },
     ],
   };
@@ -452,7 +512,7 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-10 my-5 bg-no-repeat bg-cover bg-center">
+          <div className="bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-6 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
                 {beforeFetch === 1 && (
@@ -494,11 +554,11 @@ const DashBoardContent = () => {
               />
             </div>
           </div>
-          <div className="width-full flex mx-10 my-6 justify-left gap-10  items-center">
+          <div className="width-full flex mx-6 my-6 justify-left gap-8 items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
-                className="bg-white h-44 md:w-56  p-4 pt-9 rounded-2xl "
+                className="bg-white h-44 md:w-52 p-4 pt-9 rounded-2xl "
               >
                 <button
                   type="button"
@@ -626,7 +686,11 @@ const DashBoardContent = () => {
                 <div className=" flex justify-between p-4  bg-primary rounded-t-md">
                   <div className="text-white text-xl">Expense Description</div>
                   <div className="flex">
-                    <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">Edit</div>
+                    {!grData.isSettled && (
+                      <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">
+                        Edit
+                      </div>
+                    )}
                     <BiX
                       className=" text-2xl cursor-pointer"
                       onClick={closeDisplayExpense}
@@ -647,7 +711,13 @@ const DashBoardContent = () => {
                       <div className="text-gray-500">
                         Date of Expense:&nbsp;
                       </div>
-                      <div></div>
+                      <div>
+                        {expenseId.expDate
+                          .substring(0, 10)
+                          .split("-")
+                          .reverse()
+                          .join("-")}
+                      </div>
                     </div>
                     <div className="flex justify-start p-2">
                       <div className="text-gray-500">
@@ -693,10 +763,12 @@ const DashBoardContent = () => {
                         )}
                       </div>
                     </div>
-                    <div className="flex justify-start p-2">
-                      <div className="text-gray-500">Notes:&nbsp;</div>
-                      <div></div>
-                    </div>
+                    {expenseId.notes.length > 0 && (
+                      <div className="flex justify-start p-2">
+                        <div className="text-gray-500">Notes:&nbsp;</div>
+                        <div>{expenseId.notes}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -34,7 +34,7 @@ const NewGroup = () => {
       FtoggleGroup(true);
       navigate("/dashboard/");
     }, 1000);
-  }
+  };
   const set = () => {
     setTimeout(() => {
       notify();
@@ -47,8 +47,6 @@ const NewGroup = () => {
       failed();
     }, 2000);
   };
-
-
 
   function handleGroupNameChange(event) {
     setGroupName(event.target.value);
@@ -79,8 +77,7 @@ const NewGroup = () => {
       console.log("check1");
       post();
       console.log("check2");
-    }
-    else {
+    } else {
       console.log("check3");
       set2();
     }
@@ -91,18 +88,15 @@ const NewGroup = () => {
   console.log(members);
 
   const post = async () => {
-    const groupId = "63f7a42883b9e985364c5a7c";
-    const userId = "63f7a3a583b9e985364c5a6a";
+    const groupId = "63fb8b5629ce0c8a774c4159";
+    const userId = "63ce3de792e27a2fabc7d06c";
 
     try {
       axios
-        .post(
-          `http://localhost:8000/group/creategroup/${userId}`,
-          {
-            groupName: groupName,
-            // groupIcon:groupImage
-          }
-        )
+        .post(`http://localhost:8000/group/creategroup/${userId}`, {
+          groupName: groupName,
+          // groupIcon:groupImage
+        })
         .then((response) => {
           console.log("In res");
           console.log(response);
@@ -124,7 +118,6 @@ const NewGroup = () => {
       set2();
     }
   };
-
 
   const inviteUsers = async () => {
     for (let i = 0; i < members.length; i++) {
@@ -228,16 +221,17 @@ const NewGroup = () => {
             onChange={handleGroupImageChange}
           />
         </div>
-        {
-          toggleGroup ? <div>
+        {toggleGroup ? (
+          <div>
             <button
               type="submit"
               className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-primary transition-colors duration-300"
             >
               Create Group
             </button>
-          </div> : <div className='items-center flex justify-center'>
-
+          </div>
+        ) : (
+          <div className="items-center flex justify-center">
             <ThreeDots
               height="50"
               width="50"
@@ -249,8 +243,7 @@ const NewGroup = () => {
               visible={true}
             />
           </div>
-        }
-
+        )}
       </form>
       <ToastContainer />
     </div>

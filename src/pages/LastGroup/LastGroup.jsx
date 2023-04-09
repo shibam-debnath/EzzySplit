@@ -5,8 +5,8 @@ import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
-  const groupId = "63f7a42883b9e985364c5a7c";
-  const userId = "63f7a3a583b9e985364c5a6a";
+  const groupId = "63fb8b5629ce0c8a774c4159";
+  const userId = "63ce3de792e27a2fabc7d06c";
 
   const [groupData, setgroupData] = useState({});
 
@@ -44,7 +44,7 @@ const LastGroup = () => {
                   id={count++}
                   name={group.groupName}
                   created={group.created}
-                  groupid ={group._id}
+                  groupid={group._id}
                   user={group.userId}
                 />
               ))
