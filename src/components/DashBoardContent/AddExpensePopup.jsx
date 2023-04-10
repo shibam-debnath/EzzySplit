@@ -7,8 +7,7 @@ import PaidByPopup from "./PaidByPopup";
 import AddCurrencyPopup from "./AddCurrencyPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Dna } from "react-loader-spinner";
-
+import { ThreeDots } from "react-loader-spinner";
 const AddExpensePopup = (props) => {
 
   const groupId = "64283b4cb3dc45d696bc578b";
@@ -465,13 +464,15 @@ const AddExpensePopup = (props) => {
                   </div>
                 ) : (
                   <div className=" justify-end flex mr-10 py-2">
-                    <Dna
-                      visible={true}
-                      height="60"
-                      width="80"
-                      ariaLabel="dna-loading"
+                    <ThreeDots
+                      height="50"
+                      width="50"
+                      radius="9"
+                      color="#6B60F1"
+                      ariaLabel="three-dots-loading"
                       wrapperStyle={{}}
-                      wrapperClass="dna-wrapper"
+                      wrapperClassName=""
+                      visible={true}
                     />
                   </div>
                 )}

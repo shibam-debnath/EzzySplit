@@ -1,28 +1,31 @@
-import { React, useRef, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { auth, signup } from "../../firebase/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { React, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import { signup } from "../../firebase/firebase";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
 
-  // redirect to dashboard if already logged in
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
+  async function post() {
+    try {
+      axios
+        .post("http://localhost:8000/user/adduser", {
+          emailId: emailRef.current.value,
+          name: "user",
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Successfully added the user");
+          }
+        });
+    } catch (err) {
+      console.log(err);
     }
-    if (user && user.emailVerified === true) {
-      console.log(user);
-      navigate("/dashboard");
-    }
-    // eslint-disable-next-line
-  }, [user]);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,13 +33,14 @@ const SignUp = () => {
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return alert("Passwords do not match");
     }
-
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
     } catch (e) {
       alert(e.message);
       alert("Failed to create an account");
     }
+    post();
+    navigate("/login");
   }
 
   return (
@@ -51,7 +55,6 @@ const SignUp = () => {
           </a>
         </div>
         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white sm:max-w-lg sm:rounded-lg shadow-2xl">
-          {error && <h1>{error}</h1>}
           <form onSubmit={handleSubmit}>
             <div className="mt-4">
               <label
@@ -107,7 +110,6 @@ const SignUp = () => {
             <div className="flex items-center mt-4">
               <button
                 type="submit"
-                disabled={loading}
                 className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-primary rounded-md hover:bg-lgPrimary focus:outline-none focus:bg-purple-600"
               >
                 Register
@@ -117,10 +119,7 @@ const SignUp = () => {
           <div className="mt-4 text-grey-600">
             Already have an account?{" "}
             <span>
-              <NavLink
-                className="text-primary hover:underline"
-                to={"/login"}
-              >
+              <NavLink className="text-primary hover:underline" to={"/login"}>
                 Log in
               </NavLink>
             </span>

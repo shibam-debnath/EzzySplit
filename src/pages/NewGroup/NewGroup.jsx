@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ThreeDots } from "react-loader-spinner";
 
 const NewGroup = () => {
   const navigate = useNavigate();
@@ -9,6 +12,41 @@ const NewGroup = () => {
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
   const [groupId, setGroupId] = useState("");
+
+  const [toggleGroup, FtoggleGroup] = useState(true);
+  const notify = () => {
+    toast.success("Group created successfully", {
+      autoClose: 1200,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
+  const failed = () => {
+    toast.error("Error occured", {
+      autoClose: 1200,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
+
+  const dly = () => {
+    setTimeout(() => {
+      FtoggleGroup(true);
+      navigate("/dashboard/");
+    }, 1000);
+  };
+  const set = () => {
+    setTimeout(() => {
+      notify();
+      dly();
+    }, 2000);
+  };
+  const set2 = () => {
+    setTimeout(() => {
+      FtoggleGroup(true);
+      failed();
+    }, 2000);
+  };
 
   function handleGroupNameChange(event) {
     setGroupName(event.target.value);
@@ -30,12 +68,18 @@ const NewGroup = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    FtoggleGroup(false);
     if (groupMembers) {
       const temp = groupMembers.split(",");
       console.log("setmmbers called");
       console.log("inviteusers called");
       setMembers(temp);
+      console.log("check1");
       post();
+      console.log("check2");
+    } else {
+      console.log("check3");
+      set2();
     }
 
     // handle form submission here
@@ -49,28 +93,29 @@ const NewGroup = () => {
 
     try {
       axios
-        .post(
-          `http://localhost:8000/group/creategroup/${userId}`,
-          {
-            groupName: groupName,
-            // groupIcon:groupImage
-          }
-        )
+        .post(`http://localhost:8000/group/creategroup/${userId}`, {
+          groupName: groupName,
+          // groupIcon:groupImage
+        })
         .then((response) => {
+          console.log("In res");
           console.log(response);
+          if (response.status !== 201) {
+            console.log("check4");
+            set2();
+          }
           if (response.status === 201) {
             setGroupId(response.data.groupId);
           }
           console.log(groupId);
           if (groupId !== "") {
             inviteUsers();
-            // inviteUsers();
-            alert("Group created and mail sent");
-            navigate("/dashboard/");
           }
+          set();
         });
     } catch (err) {
-      console.log(err);
+      console.log("check5");
+      set2();
     }
   };
 
@@ -93,7 +138,7 @@ const NewGroup = () => {
         const response = await axios(config);
         console.log(response);
       } catch (err) {
-        console.log(err);
+        set2();
       }
     }
   };
@@ -176,13 +221,31 @@ const NewGroup = () => {
             onChange={handleGroupImageChange}
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-primary transition-colors duration-300"
-        >
-          Create Group
-        </button>
+        {toggleGroup ? (
+          <div>
+            <button
+              type="submit"
+              className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-primary transition-colors duration-300"
+            >
+              Create Group
+            </button>
+          </div>
+        ) : (
+          <div className="items-center flex justify-center">
+            <ThreeDots
+              height="50"
+              width="50"
+              radius="9"
+              color="#6B60F1"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </div>
+        )}
       </form>
+      <ToastContainer />
     </div>
   );
 };

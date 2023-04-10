@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 
 import { VscClose } from "react-icons/vsc";
-import { FaPercent } from "react-icons/fa"
 import { CgProfile } from "react-icons/cg";
-import { BiDollar } from "react-icons/bi";
-import { BsBarChartSteps } from "react-icons/bs";
 
 const SplitPopup = (props) => {
 

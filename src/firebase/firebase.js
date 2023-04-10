@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+
 import {
   createUserWithEmailAndPassword,
   signOut,
@@ -10,7 +12,6 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
   sendEmailVerification,
-  updateProfile,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -27,29 +28,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // exports
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 export async function signup(email, password) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
     await sendEmailVerification(auth.currentUser);
     await signOut(auth);
-    alert("Email sent ! verify first and then login");
+    alert("Email sent! verify first and then login");
   } catch (err) {
     console.error(err.message);
     alert(err.message);
-  }
-}
-
-export async function editProfile(name, imageUrl) {
-  try {
-    const user = auth.currentUser;
-    const update = {
-      displayName: name | null,
-      photoURL: imageUrl | null,
-    };
-    await user.updateProfile(update);
-  } catch (err) {
-    console.log(err);
   }
 }
 

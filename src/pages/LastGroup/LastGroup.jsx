@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SideNav from "../../components/Sidenav/SideNav";
+// import SideNav from "../../components/Sidenav/SideNav";
 import { LastGroupData } from "../../data/LastGroupData";
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
@@ -44,6 +44,8 @@ const LastGroup = () => {
                   id={count++}
                   name={group.groupName}
                   created={group.created}
+                  groupid={group._id}
+                  user={group.userId}
                 />
               ))
             ) : (
