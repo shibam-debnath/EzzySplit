@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,9 +39,9 @@ const AcceptInvitation = () => {
   const dlyInvitation = () => {
     setTimeout(() => {
       FtoggleInvitation(true);
-      navigate('/dashboard/',{state:{groupid:groupId}});
+      navigate("/dashboard/", { state: { groupid: groupId } });
     }, 1000);
-  }
+  };
   const setInvitation = () => {
     setTimeout(() => {
       notifyInvitation();
@@ -77,34 +76,35 @@ const AcceptInvitation = () => {
 
   const verify = async () => {
     try {
-        const res = await fetch(`http://localhost:8000/user/profile/emailId/${emailId}`,{
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        })
-        console.log(res.status);
-        const data = await res.json();
-        console.log(data);
-        if(res.status === 422){
-          set2Proceed();
+      const res = await fetch(
+        `http://localhost:8000/user/profile/emailId/${emailId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-        else{
-          setUserData(data[0]);
-          if (res.status === 200) setProceed(true);
-        }
-        console.log('gaaya');
-    }
-    catch (error) {
+      );
+      console.log(res.status);
+      const data = await res.json();
+      console.log(data);
+      if (res.status === 422) {
+        set2Proceed();
+      } else {
+        setUserData(data[0]);
+        if (res.status === 200) setProceed(true);
+      }
+      console.log("gaaya");
+    } catch (error) {
       console.log("exit");
       set2Proceed();
-  }
+    }
   };
 
   const addUser = async () => {
     try {
       FtoggleInvitation(false);
-        const res = await fetch("http://localhost:8000/group/addUser", {
+      const res = await fetch("http://localhost:8000/group/addUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,13 +116,11 @@ const AcceptInvitation = () => {
       });
       await res.json();
 
-      if(res.status===200){
+      if (res.status === 200) {
         setInvitation();
-      }
-      else{
+      } else {
         set2Invitation("User already exist");
       }
-
     } catch (err) {
       FtoggleInvitation(false);
       set2Invitation("Error occured..!!");
@@ -136,36 +134,35 @@ const AcceptInvitation = () => {
           <div>
             <div>Click accept to join the group 🤖</div>
 
-            {
-              toggleInvitation ?
-                <div className="flex ">
-                  <div
-                    className="w-1/2 p-4 mt-4 rounded-md m-2 bg-gray-400 text-white cursor-pointer hover:bg-opacity-80 "
-                    onClick={back}
-                  >
-                    Back
-                  </div><div
-                    className="w-1/2 p-4 mt-4 rounded-md m-2 bg-primary text-white cursor-pointer hover:bg-opacity-80 "
-                    onClick={addUser}
-                  >
-                    Accept
-                  </div>
-                </div> : <div className='items-center flex justify-center mt-5'>
-
-                  <ThreeDots
-                    height="50"
-                    width="50"
-                    radius="9"
-                    color="#6B60F1"
-                    ariaLabel="three-dots-loading"
-                    wrapperStyle={{}}
-                    wrapperClassName=""
-                    visible={true}
-                  />
+            {toggleInvitation ? (
+              <div className="flex ">
+                <div
+                  className="w-1/2 p-4 mt-4 rounded-md m-2 bg-gray-400 text-white cursor-pointer hover:bg-opacity-80 "
+                  onClick={back}
+                >
+                  Back
                 </div>
-            }
-
-
+                <div
+                  className="w-1/2 p-4 mt-4 rounded-md m-2 bg-primary text-white cursor-pointer hover:bg-opacity-80 "
+                  onClick={addUser}
+                >
+                  Accept
+                </div>
+              </div>
+            ) : (
+              <div className="items-center flex justify-center mt-5">
+                <ThreeDots
+                  height="50"
+                  width="50"
+                  radius="9"
+                  color="#6B60F1"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <div>

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { IoIosArrowDropright } from "react-icons/io";
+import React, { useState } from "react";
 import { BiRightArrow } from "react-icons/bi";
-// import { LastGroupMember } from "../../data/LastGroupMember";
 import { useNavigate } from "react-router-dom";
 
 export default function LastGroupModify(props) {
@@ -17,27 +15,25 @@ export default function LastGroupModify(props) {
     <>
       <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
         <button className="w-full" onClick={callToggle}>
-        <div className="flex text-lg">
-          <span className="pl-2 pr-2">{props.id}.</span>
-          <p className="pl-2 hover:cursor-pointer">{props.name}</p>
-          <p className="pl-2  text-[13px] font-light hover:cursor-pointer">
-            Created on: {props.created}
-          </p>
-        </div>
+          <div className="flex text-lg">
+            <span className="pl-2 pr-2">{props.id}.</span>
+            <p className="pl-2 hover:cursor-pointer">{props.name}</p>
+            <p className="pl-2  text-[13px] font-light hover:cursor-pointer">
+              Created on: {props.created}
+            </p>
+          </div>
         </button>
         <div>
           <button
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
-            onClick={(e)=>{
-                e.preventDefault();
-                navigate('/dashboard/',{state:{groupid:props.groupid}});
-            }}  
-            
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/dashboard/", { state: { groupid: props.groupid } });
+            }}
           >
             <BiRightArrow />
           </button>
         </div>
-        
       </div>
       {toggleDesc && (
         <div className="flex justify-between ">

@@ -22,7 +22,6 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { te } from "date-fns/locale";
 
 ChartJS.register(
   ArcElement,
@@ -37,14 +36,14 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "63fb8b5629ce0c8a774c4159";
+  var groupId = "63e933a5981886a213a6586a";
   console.log("state");
   console.log(location.state);
   // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "63ce3de792e27a2fabc7d06c";
+  const userId = "63e9338f981886a213a65868";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
@@ -208,7 +207,7 @@ const DashBoardContent = () => {
     console.log("grData");
     console.log(grData);
     if (settleExpenseData && grData) {
-      for (var i = 0; i < grData.userId.length; i++) {
+      for (let i = 0; i < grData.userId.length; i++) {
         temp2[grData.userId[i]._id] = grData.userId[i].name;
         const singleData = {
           name: "",
@@ -248,7 +247,7 @@ const DashBoardContent = () => {
 
     const temp3 = [];
     if (settleExpenseData && grData) {
-      for (var i = 0; i < settleExpenseData[2].length; i++) {
+      for (let i = 0; i < settleExpenseData[2].length; i++) {
         const singleData = {
           payer: "",
           receiver: "",
@@ -311,16 +310,10 @@ const DashBoardContent = () => {
   useEffect(() => {
     console.log("In useeffect of fexpan2");
     fexpend();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settleExpenseData]);
 
-  useEffect(() => {
-    // console.log("expend");
-    // console.log(expend);
-    // expend.forEach((element) => {
-    //   console.log(element.name);
-    //   console.log(element.expense);
-    // });
-  }, [expend]);
+  useEffect(() => {}, [expend]);
 
   const settleExpenseCall = async () => {
     setSettleCall(true);
