@@ -468,25 +468,22 @@ const DashBoardContent = () => {
   valueDisplays.forEach((valueDisplay) => {
     let startValue = 0;
     let endValue = valueDisplay.getAttribute("data-val");
+    let duration = 500; // duration in milliseconds
+    let startTime = null;
 
-    let totalTime = 1000; // duration of animation in milliseconds
-    let valueDiff = endValue - startValue;
-    let duration = 0;
-    let interval = 50;
-    if (valueDiff > 0) duration = totalTime / valueDiff;
-    console.log("duration");
-    console.log(duration);
-    // let duration = Math.floor(interval / endValue);
-    // let duration = 1000;
-    if (endValue > 0) {
-      let counter = setInterval(function () {
-        startValue += 1;
-        valueDisplay.textContent = startValue;
-        if (startValue >= endValue) {
-          clearInterval(counter);
-        }
-      }, interval);
+    function updateValue(currentTime) {
+      if (!startTime) startTime = currentTime;
+      let elapsedTime = currentTime - startTime;
+      let progress = elapsedTime / duration;
+      let currentValue = Math.floor(progress * endValue);
+      if (currentValue > endValue) currentValue = endValue;
+      valueDisplay.textContent = currentValue;
+      if (currentValue < endValue) {
+        requestAnimationFrame(updateValue);
+      }
     }
+
+    requestAnimationFrame(updateValue);
   });
 
   const chartdata = {
