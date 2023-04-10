@@ -98,8 +98,23 @@ const UserProfile = (props) => {
   }, [ProfileImage]);
 
   function handleSubmit(e) {
+    console.log("button clicked");
     e.preventDefault();
-    // now we have the uid , Url to store it in the db
+    try {
+      axios
+        .post("http://localhost:8000/user/edituser/6433c5b22e64c9bc0d4931a6", {
+          name: ProfileName,
+          uid: uid,
+          imageUrl: Url,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Successfully edited the user");
+          }
+        });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -155,7 +170,7 @@ const UserProfile = (props) => {
         </div>
       )}
       {editProfile && (
-        <div className="fixed right-80 flex flex-col bg-white pt-5 items-center justify-center h-50 scrollbar-none">
+        <div className="fixed right-1/3 flex flex-col bg-white top-[12%] pt-5 items-center justify-center h-50 scrollbar-none">
           <div className="flex justify-between items-center">
             <p className="font-semibold text-xl text-primary">User Profile</p>
             <button

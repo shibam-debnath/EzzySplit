@@ -13,7 +13,7 @@ const SignUp = () => {
   async function post() {
     try {
       axios
-        .post("http://localhost:8000/user/addUser", {
+        .post("http://localhost:8000/user/adduser", {
           emailId: emailRef.current.value,
           name: "user",
         })
