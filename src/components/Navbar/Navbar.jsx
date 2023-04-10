@@ -3,6 +3,7 @@ import "./Navbar.css";
 import { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
 import { useLocation } from "react-router-dom";
+import { bgcolor } from "@mui/system";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
@@ -51,10 +52,12 @@ const Navbar = () => {
           <div
             // className={navbar ? "hidden" : "block"}
             className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              navbar ? "block" : "hidden"
+              navbar ? "block"  : "hidden"
+            
             }`}
-          >
-            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+           >
+            <ul className="items-center justify-center space-y-8
+            md:flex md:space-x-6 md:space-y-0">
               <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-primary hover:font-bold cursor-pointer">
                 <Link
                   activeClass="active"

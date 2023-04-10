@@ -16,7 +16,7 @@ import SignUp from "./pages/Login/SignUp";
 import Error404 from "./pages/Error404/Error404";
 import NewGroup from "./pages/NewGroup/NewGroup";
 import AcceptInvitation from "./pages/AcceptInvitation/AcceptInvitation";
-
+import Team from "./pages/team/Team";
 // components
 import Activity from "./components/DashBoardContent/Activity";
 import DashBoardContent from "./components/DashBoardContent/DashBoardContent";
@@ -60,6 +60,7 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/acceptInvitation/:id" element={<AcceptInvitation />} />
           <Route path="*" element={<Error404 />} />
+          <Route path="/team" element={<Team/>}/>
         </Routes>
       )}
     </div>

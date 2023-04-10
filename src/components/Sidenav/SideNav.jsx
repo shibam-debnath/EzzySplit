@@ -38,12 +38,16 @@ const SideNav = () => {
   const triggerHelp = ()=>{
     navigate('/',{state:{help:true}});
   }
-
+const triggerHero=()=>{
+  navigate('/');
+}
   return (
     <div class="flex md:w-64 md:ml-5 flex-col ">
+    <button onClick={triggerHero}>
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
         Ezzy<span className="text-primary">Split</span>
       </h1>
+      </button>
       <div class="mt-12  py-4 px-3 rounded">
         <ul class="space-y-2">
           <li>
