@@ -40,12 +40,12 @@ const SideNav = () => {
   }
 
   return (
-    <div class="flex md:w-64 md:ml-5 flex-col ">
+    <div className="flex md:w-64 md:ml-5 flex-col ">
       <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
         Ezzy<span className="text-primary">Split</span>
       </h1>
-      <div class="mt-12  py-4 px-3 rounded">
-        <ul class="space-y-2">
+      <div className="mt-12  py-4 px-3 rounded">
+        <ul className="space-y-2">
           <li>
             <NavLink
               to={"/dashboard/"}

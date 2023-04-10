@@ -22,6 +22,7 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { te } from "date-fns/locale";
 
 ChartJS.register(
   ArcElement,
@@ -76,26 +77,12 @@ const DashBoardContent = () => {
 
   const [doughnutData, setDoughnutData] = useState([]);
   const [lineData, setLineData] = useState([]);
+  const [lineDataLabel, setLineDataLabel] = useState([]);
 
   const set = () => {
     setTimeout(() => {
       fbeforeFetch(1);
     }, 500);
-  };
-
-  const groupData = async () => {
-    try {
-      await axios
-        .get(`http://localhost:8000/group/details/${groupId}`, {
-          responseType: "json",
-        })
-        .then(function (resp) {
-          setgroupData(resp.data.group);
-          console.log(resp.data);
-        });
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const getData = async () => {
@@ -107,6 +94,22 @@ const DashBoardContent = () => {
         .then(function (response) {
           setData(response.data.users);
           set();
+          settleExpense();
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const groupData = async () => {
+    try {
+      await axios
+        .get(`http://localhost:8000/group/details/${groupId}`, {
+          responseType: "json",
+        })
+        .then(function (resp) {
+          setgroupData(resp.data.group);
+          console.log(resp.data);
         });
     } catch (err) {
       console.log(err);
@@ -133,6 +136,7 @@ const DashBoardContent = () => {
     }
     // handle form submission here
   }
+
   const inviteUsers = async () => {
     for (let i = 0; i < members.length; i++) {
       // console.log("memebrs[i]")
@@ -183,7 +187,7 @@ const DashBoardContent = () => {
   useEffect(() => {
     getData();
     groupData();
-    settleExpense();
+    // settleExpense();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -191,8 +195,10 @@ const DashBoardContent = () => {
   // console.log(grData.expenseId);
   // console.log(userData.users);
   // console.log(settleExpenseData);
-  console.log("settleExpenseData1");
-  console.log(settleExpenseData);
+
+  // console.log("settleExpenseData1");
+  // console.log(settleExpenseData);
+
   const fexpend = async () => {
     console.log("in fexap fun 3");
     const temp = [];
@@ -258,7 +264,9 @@ const DashBoardContent = () => {
 
     if (grData) {
       const temp5 = [0, 0, 0, 0, 0];
-      for (var i = 0; i < grData.expenseId.length; i++) {
+      const temp6 = [];
+      const temp7 = [];
+      for (var i = grData.expenseId.length - 1; i >= 0; i--) {
         if (grData.expenseId[i].category === "Ticket")
           temp5[0] += Number(grData.expenseId[i].amount);
         if (grData.expenseId[i].category === "Food")
@@ -267,11 +275,36 @@ const DashBoardContent = () => {
           temp5[2] += Number(grData.expenseId[i].amount);
         if (grData.expenseId[i].category === "Hotel")
           temp5[3] += Number(grData.expenseId[i].amount);
-        else temp5[4] += Number(grData.expenseId[i].amount);
+        else if (grData.expenseId[i].category === "Others")
+          temp5[4] += Number(grData.expenseId[i].amount);
+
+        const temp8 = grData.expenseId[i].date
+          .substring(0, 10)
+          .split("-")
+          .reverse()
+          .join("-");
+        const date = temp8.substring(0, 5);
+        console.log("date");
+        console.log(date);
+        const length = temp6.length;
+        if (length < 30 || temp6[length - 1] === date) {
+          if (temp6[length - 1] === date) {
+            temp7[length - 1] =
+              Number(temp7[length - 1]) + Number(grData.expenseId[i].amount);
+          } else {
+            temp6.push(date);
+            temp7.push(grData.expenseId[i].amount);
+          }
+        }
       }
       setDoughnutData(temp5);
       console.log("temp5");
       console.log(temp5);
+
+      temp6.reverse();
+      temp7.reverse();
+      setLineDataLabel(temp6);
+      setLineData(temp7);
     }
   };
 
@@ -436,7 +469,14 @@ const DashBoardContent = () => {
     let startValue = 0;
     let endValue = valueDisplay.getAttribute("data-val");
 
-    let duration = Math.floor(interval / endValue);
+    let totalTime = 1000; // duration of animation in milliseconds
+    let valueDiff = endValue - startValue;
+    let duration = 0;
+    let interval = 50;
+    if (valueDiff > 0) duration = totalTime / valueDiff;
+    console.log("duration");
+    console.log(duration);
+    // let duration = Math.floor(interval / endValue);
     // let duration = 1000;
     if (endValue > 0) {
       let counter = setInterval(function () {
@@ -445,7 +485,7 @@ const DashBoardContent = () => {
         if (startValue >= endValue) {
           clearInterval(counter);
         }
-      }, duration);
+      }, interval);
     }
   });
 
@@ -468,21 +508,23 @@ const DashBoardContent = () => {
   };
 
   const dailydata = {
-    labels: [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-      22, 23, 24, 25, 26, 27, 28, 29, 30,
-    ],
+    // labels: [
+    //   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    //   22, 23, 24, 25, 26, 27, 28, 29, 30,
+    // ],
+    labels: lineDataLabel,
     datasets: [
       {
         backgroundColor: ["#6B60F1"],
         borderColor: ["#6B60F1"],
-        label: "No of expenses added",
+        label: "Expenses(₹)",
         fill: true,
         tension: 0.5,
-        data: [
-          2, 0, 1, 5, 3, 0, 8, 4, 4, 5, 5, 6, 7, 3, 2, 3, 4, 5, 6, 2, 1, 3, 2,
-          4, 2, 5, 7, 6, 3, 1,
-        ],
+        // data: [
+        //   2, 0, 1, 5, 3, 0, 8, 4, 4, 5, 5, 6, 7, 3, 2, 3, 4, 5, 6, 2, 1, 3, 2,
+        //   4, 2, 5, 7, 6, 3, 1,
+        // ],
+        data: lineData,
       },
     ],
   };
@@ -969,7 +1011,7 @@ const DashBoardContent = () => {
         <div className="flex flex-row md:w-full">
           <div className="bg-white rounded-xl m-6 w-7/12">
             <div className="border-b-2 mt-2 mb-2 text-left  pb-2 pl-4">
-              Frequency of expenses
+              Expenses of last 30 days
             </div>
             <div className="flex justify-center h-72 w-auto p-2">
               <Line data={dailydata} />
