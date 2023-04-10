@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import SideNav from "../../components/Sidenav/SideNav";
+// import SideNav from "../../components/Sidenav/SideNav";
 import { LastGroupData } from "../../data/LastGroupData";
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
+  const groupId = "63e933a5981886a213a6586a";
+  const userId = "63e9338f981886a213a65868";
+
   const [groupData, setgroupData] = useState({});
 
   const lastGroupData = async () => {
     try {
       await axios
-        .get("http://localhost:8000/group/63e9338f981886a213a65868", {
+        .get(`http://localhost:8000/group/${userId}`, {
           responseType: "json",
         })
         .then(function (response) {
@@ -41,6 +44,8 @@ const LastGroup = () => {
                   id={count++}
                   name={group.groupName}
                   created={group.created}
+                  groupid={group._id}
+                  user={group.userId}
                 />
               ))
             ) : (

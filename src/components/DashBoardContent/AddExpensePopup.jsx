@@ -7,9 +7,32 @@ import PaidByPopup from "./PaidByPopup";
 import AddCurrencyPopup from "./AddCurrencyPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Dna } from "react-loader-spinner";
-
+import { ThreeDots } from "react-loader-spinner";
 const AddExpensePopup = (props) => {
+  const groupId = "63e933a5981886a213a6586a";
+  const userId = "63e9338f981886a213a65868";
+
+  const tdDate = new Date();
+  const [expDate, FexpDate] = useState(tdDate);
+  const cngExpDate = (val) => {
+    FexpDate(val);
+  };
+
+  const [err, setErr] = useState(false);
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const handleCheck = () => {
+    if (description.length <= 0 || amount.length <= 0) setErr(true);
+    if (description.length > 0 && amount.length > 0) {
+      setErr(false);
+    }
+  };
+
+  const [notes, Fnotes] = useState("");
+  const cngNotes = (value) => {
+    Fnotes(value);
+  };
   const [tglSaveBtn, FtglSaveBtn] = useState(true);
 
   const notify = () => {
@@ -39,7 +62,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: "63e933a5981886a213a6586a",
+    groupId: `${groupId}`,
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -105,7 +128,7 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
-    if (name === "63e9338f981886a213a65868") {
+    if (name === `${userId}`) {
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -114,9 +137,7 @@ const AddExpensePopup = (props) => {
   useEffect(() => {
     console.log("paid by Single:", paidBySingle);
   }, [paidBySingle]);
-  const InputEvent = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  const InputEvent = (name, value) => {
     FinputData({ ...inputData, [name]: value });
   };
 
@@ -208,7 +229,7 @@ const AddExpensePopup = (props) => {
       if (payer === "You") {
         fnarr = [
           {
-            userId: "63ce3de792e27a2fabc7d06c",
+            userId: `${userId}`,
             amount: inputData.amount,
             name: "test1",
           },
@@ -248,6 +269,8 @@ const AddExpensePopup = (props) => {
           groupId,
           paidBy: fnarr,
           split_method,
+          notes,
+          expDate,
           split_between: SplitArr,
         }),
       });
@@ -259,7 +282,7 @@ const AddExpensePopup = (props) => {
       FinputData({
         amount: "",
         description: "",
-        groupId: "63e933a5981886a213a6586a",
+        groupId: `${groupId}`,
       });
     } catch (error) {
       FtglSaveBtn(true);
@@ -312,9 +335,23 @@ const AddExpensePopup = (props) => {
                         className="rounded-lg h-7 w-full border-none focus:ring-0"
                         name="description"
                         value={inputData.description}
-                        onChange={InputEvent}
+                        onChange={(e) => {
+                          const name = e.target.name;
+                          const value = e.target.value;
+                          setDescription(value);
+                          InputEvent(name, value);
+                          handleCheck();
+                          // console.log(value);
+                        }}
                       />
                     </div>
+                    {err && description.length <= 0 ? (
+                      <label className="text-red-600 text-sm">
+                        description can not be blank
+                      </label>
+                    ) : (
+                      ""
+                    )}
                     <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
                       <button
                         className="font-medium hover:text-slate-500"
@@ -328,9 +365,22 @@ const AddExpensePopup = (props) => {
                         className="rounded-lg h-7 w-52 border-none focus:ring-0"
                         name="amount"
                         value={inputData.amount}
-                        onChange={InputEvent}
+                        onChange={(e) => {
+                          const name = e.target.name;
+                          const value = e.target.value;
+                          setAmount(value);
+                          handleCheck();
+                          InputEvent(name, value);
+                        }}
                       />
                     </div>
+                    {err && amount.length <= 0 ? (
+                      <label className="text-red-600 text-sm">
+                        amount can not be zero
+                      </label>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
 
@@ -366,7 +416,7 @@ const AddExpensePopup = (props) => {
                       className=" text-lg opacity-0.9 text-gray-700 hover:drop-shadow-xl rounded-full"
                       onClick={addDate}
                     >
-                      25 Dec 2022
+                      {expDate.toString().substring(4, 15)}
                     </button>
                   </div>
                   <div className="py-1 px-4 mr-3 text-base font-normal bg-gray-200 text-gray-900 rounded-lg dark:text-white hover:bg-opacity-60 ">
@@ -397,7 +447,14 @@ const AddExpensePopup = (props) => {
                         onClick={(e) => {
                           e.preventDefault();
                           FtglSaveBtn(false);
-                          postForm();
+                          handleCheck();
+                          if (description.length === 0 || amount.length === 0) {
+                            //console.log()
+                            failed();
+                            FtglSaveBtn(true);
+                          } else {
+                            postForm();
+                          }
                         }}
                       >
                         Save
@@ -406,13 +463,15 @@ const AddExpensePopup = (props) => {
                   </div>
                 ) : (
                   <div className=" justify-end flex mr-10 py-2">
-                    <Dna
-                      visible={true}
-                      height="60"
-                      width="80"
-                      ariaLabel="dna-loading"
+                    <ThreeDots
+                      height="50"
+                      width="50"
+                      radius="9"
+                      color="#6B60F1"
+                      ariaLabel="three-dots-loading"
                       wrapperStyle={{}}
-                      wrapperClass="dna-wrapper"
+                      wrapperClassName=""
+                      visible={true}
                     />
                   </div>
                 )}
@@ -436,8 +495,16 @@ const AddExpensePopup = (props) => {
                 InputSplitEquilly={InputSplitEquilly}
               />
             )}
-            {addon === 3 && <AddDatePopup />}
-            {addon === 4 && <AddNotePopup closeAdd={closeAdd} />}
+            {addon === 3 && (
+              <AddDatePopup cngExpDate={cngExpDate} closeAdd={closeAdd} />
+            )}
+            {addon === 4 && (
+              <AddNotePopup
+                cngNotes={cngNotes}
+                closeAdd={closeAdd}
+                notes={notes}
+              />
+            )}
             {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
             {/* </div> */}
           </div>

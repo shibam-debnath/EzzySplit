@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { useState } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { useLocation, Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -9,6 +9,18 @@ const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   const [user] = useAuthState(auth);
 
+  const location = useLocation();
+  const help = location.state;
+
+  const clickButton = () => {
+    document.getElementById("contactUs").click();
+  };
+  useEffect(() => {
+    if (help) {
+      clickButton();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <nav className="w-full bg-transparent fixed !h-16 top-0 glass ">
       <div className="justify-between px-4 mx-auto lg:max-w-8xl md:items-center md:flex md:px-8">
@@ -77,7 +89,8 @@ const Navbar = () => {
                   spy={true}
                   smooth={true}
                   offset={-50}
-                  duration={500}
+                  duration={1000}
+                  id="contactUs"
                 >
                   Contact Us
                 </Link>

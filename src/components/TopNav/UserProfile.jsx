@@ -11,6 +11,7 @@ var response;
 
 const UserProfile = (props) => {
   const [user] = useAuthState(auth);
+  const userId = "63e9338f981886a213a65868";
   const [UserData, FgetUsersData] = useState({});
   const [ProfileName, setProfileName] = useState("");
   const [ProfileImage, setProfileImage] = useState("");
@@ -34,7 +35,7 @@ const UserProfile = (props) => {
     try {
       let config = {
         method: "get",
-        url: "http://localhost:8000/user/profile/63e9338f981886a213a65868",
+        url: `http://localhost:8000/user/profile/${userId}`,
       };
       response = await axios(config);
       FgetUsersData(response.data.users);
