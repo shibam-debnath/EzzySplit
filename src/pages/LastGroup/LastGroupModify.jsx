@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { AppContext } from "../../AppContext";
 import { BiRightArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,9 @@ export default function LastGroupModify(props) {
     FtoggleDesc(!toggleDesc);
   };
 
+  const { variable, updateVariable } = useContext(AppContext);
+  const userId = variable.userId;
+  
   return (
     <>
       <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
@@ -29,6 +33,8 @@ export default function LastGroupModify(props) {
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
             onClick={(e) => {
               e.preventDefault();
+              const temp = {userId:userId,groupId:props.groupid};
+              updateVariable(temp);
               navigate("/dashboard/", { state: { groupid: props.groupid } });
             }}
           >
