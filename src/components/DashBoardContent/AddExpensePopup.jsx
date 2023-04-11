@@ -4,7 +4,7 @@ import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
 import SplitPopup from "./SplitPopup";
 import PaidByPopup from "./PaidByPopup";
-import AddCurrencyPopup from "./AddCurrencyPopup";
+import AddCategoryPopup from "./AddCategoryPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
@@ -158,7 +158,7 @@ const AddExpensePopup = (props) => {
     e.preventDefault();
     Caddon(4);
   };
-  const addCurrency = (e) => {
+  const addCategory = (e) => {
     e.preventDefault();
     Caddon(6);
   };
@@ -259,32 +259,56 @@ const AddExpensePopup = (props) => {
       }
 
       const { amount, description, groupId } = inputData;
-      const res = await fetch("http://localhost:8000/expense/addExpense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          description,
-          groupId,
-          paidBy: fnarr,
-          split_method,
-          notes,
-          expDate,
-          split_between: SplitArr,
-        }),
-      });
-      await res.json();
 
-      if (res.status === 200) {
-        set();
+      var totalPiadBy = 0;
+      var totalSplitBetween = 0;
+
+      for (var i = 0; i < fnarr.length; i++) {
+        totalPiadBy = Number(totalPiadBy) + Number(fnarr[i].amount);
       }
-      FinputData({
-        amount: "",
-        description: "",
-        groupId: `${groupId}`,
-      });
+      for (var i = 0; i < SplitArr.length; i++) {
+        totalSplitBetween = Number(totalSplitBetween) + Number(SplitArr[i].toPay);
+      }
+
+      console.log("totalPiadBy");
+      console.log("totalSplitBetween");
+
+      console.log(totalPiadBy);
+      console.log(totalSplitBetween);
+
+      if (totalPiadBy === amount && totalSplitBetween === amount) {
+  
+        const res = await fetch("http://localhost:8000/expense/addExpense", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount,
+            description,
+            groupId,
+            paidBy: fnarr,
+            split_method,
+            notes,
+            expDate,
+            split_between: SplitArr,
+          }),
+        });
+        await res.json();
+  
+        if (res.status === 200) {
+          set();
+        }
+        FinputData({
+          amount: "",
+          description: "",
+          groupId: `${groupId}`,
+        });
+      }
+else{
+  failed();
+  FtglSaveBtn(true);
+}
     } catch (error) {
       FtglSaveBtn(true);
       failed();
@@ -325,7 +349,13 @@ const AddExpensePopup = (props) => {
                 <div className="flex items-center mt-3">
                   <div className="w-2/6 ">
                     <div className="w-2/5 m-auto py-3 ">
+                    <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
                       <img src="../images/grocery.png" alt="Loading" />
+                      <span className="text-blue-700 text-sm"> Category</span>
+                      </button>
                     </div>
                   </div>
                   <div className="w-3/5  ">
@@ -354,12 +384,7 @@ const AddExpensePopup = (props) => {
                       ""
                     )}
                     <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
-                      <button
-                        className="font-medium hover:text-slate-500"
-                        onClick={addCurrency}
-                      >
-                        INR
-                      </button>
+                     INR
                       <input
                         type="text"
                         placeholder="Amount"
@@ -506,7 +531,7 @@ const AddExpensePopup = (props) => {
                 notes={notes}
               />
             )}
-            {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
+            {addon === 6 && <AddCategoryPopup closeAdd={closeAdd} />}
             {/* </div> */}
           </div>
         </form>
