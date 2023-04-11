@@ -18,8 +18,6 @@ const LastGroup = () => {
         })
         .then(function (response) {
           setgroupData(response.data);
-          console.log(response);
-          console.log(groupData);
         });
     } catch (err) {
       console.log(err);
@@ -43,7 +41,7 @@ const LastGroup = () => {
                 <LastGroupModify
                   id={count++}
                   name={group.groupName}
-                  created={group.created}
+                  created={group.createdOn}
                   groupid={group._id}
                   user={group.userId}
                 />

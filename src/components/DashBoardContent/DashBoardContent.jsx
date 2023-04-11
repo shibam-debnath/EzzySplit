@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { useNavigate, useLocation } from "react-router";
+import { AppContext } from "../../AppContext";
 
 import {
   Chart as ChartJS,
@@ -36,14 +37,20 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "64283b4cb3dc45d696bc578b";
+  const { variable, updateVariable } = useContext(AppContext);
+  console.log("variable");
+  console.log(variable);
+  // var groupId = "63fb8b5629ce0c8a774c4159";
+  var groupId = variable.groupId;
+  var userId = variable.userId;
+  console.log(userId);
+  console.log(groupId);
   console.log("state");
   console.log(location.state);
   // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "642839ceb3dc45d696bc5786";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
@@ -91,6 +98,7 @@ const DashBoardContent = () => {
           responseType: "json",
         })
         .then(function (response) {
+          console.log(response.data.users);
           setData(response.data.users);
           set();
           settleExpense();

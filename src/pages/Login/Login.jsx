@@ -1,5 +1,7 @@
-import { React, useRef, useEffect } from "react";
+import { React, useRef, useEffect, useState, useContext } from "react";
+import { AppContext } from "../../AppContext";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   auth,
   login,
@@ -14,25 +16,58 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [user, loading, error] = useAuthState(auth);
+  const { variable, updateVariable } = useContext(AppContext);
 
   useEffect(() => {
     if (loading) {
       return;
     }
     if (user && user.emailVerified === true) {
-      console.log(user);
-      navigate("/dashboard/");
+      console.log("isme aa gaya");
+      console.log(user.email);
+      getId(user.email);
     } else if (user && user.emailVerified === false) {
       alert("Verify email first");
     }
     // eslint-disable-next-line
   }, [user, loading]);
 
+  const getId = async (emailId) => {
+    try {
+      await axios
+        .get(`http://localhost:8000/user/profile/emailId/${emailId}`, {
+          responseType: "json",
+        })
+        .then(function (response) {
+          console.log(response.data[0]._id);
+          getData(response.data[0]._id);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getData = async (userId) => {
+    try {
+      await axios
+        .get(`http://localhost:8000/user/profile/${userId}`, {
+          responseType: "json",
+        })
+        .then(function (response) {
+          console.log(response.data.users);
+          const temp = {userId:userId,groupId:response.data.users.groupid[0]};
+          updateVariable(temp);
+          navigate("/dashboard/");
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
-      console.log(user);
+      // console.log(user.email);
     } catch (e) {
       alert("Login unsuccessful");
     }
