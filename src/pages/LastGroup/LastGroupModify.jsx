@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 export default function LastGroupModify(props) {
   const navigate = useNavigate();
   const [toggleDesc, FtoggleDesc] = useState(false);
-
+  console.log("props");
+  console.log(props);
   const callToggle = (e) => {
     e.preventDefault();
     FtoggleDesc(!toggleDesc);
@@ -18,8 +19,8 @@ export default function LastGroupModify(props) {
           <div className="flex text-lg">
             <span className="pl-2 pr-2">{props.id}.</span>
             <p className="pl-2 hover:cursor-pointer">{props.name}</p>
-            <p className="pl-2  text-[13px] font-light hover:cursor-pointer">
-              Created on: {props.created}
+            <p className="pl-6  text-[13px] font-light hover:cursor-pointer">
+              Created on: {props.created.substring(0,10).split("-").reverse().join("-")}
             </p>
           </div>
         </button>

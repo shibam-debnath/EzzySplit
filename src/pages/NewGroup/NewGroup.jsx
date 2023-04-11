@@ -8,7 +8,6 @@ import { ThreeDots } from "react-loader-spinner";
 const NewGroup = () => {
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
-  const [groupDescription, setGroupDescription] = useState("");
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
   const [groupId, setGroupId] = useState("");
@@ -50,10 +49,6 @@ const NewGroup = () => {
 
   function handleGroupNameChange(event) {
     setGroupName(event.target.value);
-  }
-
-  function handleGroupDescriptionChange(event) {
-    setGroupDescription(event.target.value);
   }
 
   function handleGroupMembers(event) {
@@ -144,19 +139,18 @@ const NewGroup = () => {
   };
 
   console.log(groupName);
-  console.log(groupDescription);
   console.log(groupMembers);
 
   // console.log(groupImage);
   // console.log(groupName);
   return (
-    <div className="flex flex-col items-center justify-center h-full scrollbar-none bg-gray-200">
+    <div className="flex flex-col items-center mt-6 justify-center  scrollbar-none bg-gray-200">
       <h1 className="text-3xl font-bold mb-2">Create a New Group</h1>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
       >
-        <div className="mb-2">
+        <div className="mb-4">
           <label
             htmlFor="group-name"
             className="block text-gray-700 font-bold mb-2"
@@ -170,25 +164,12 @@ const NewGroup = () => {
             className="w-full border border-gray-400 p-2 rounded-lg focus:outline-none focus:border-indigo-500"
             value={groupName}
             onChange={handleGroupNameChange}
+            placeholder="GroupName"
             required
           />
         </div>
-        <div className="mb-2">
-          <label
-            htmlFor="group-description"
-            className="block text-gray-700 font-bold mb-2"
-          >
-            Group Description:
-          </label>
-          <textarea
-            id="group-description"
-            name="group-description"
-            className="w-full border border-gray-400 p-2 rounded-lg focus:outline-none focus:border-indigo-500"
-            value={groupDescription}
-            onChange={handleGroupDescriptionChange}
-          />
-        </div>
-        <div className="mb-2">
+    
+        <div className="mb-4">
           <label
             htmlFor="members"
             className="block text-gray-700 font-bold mb-2"
@@ -205,7 +186,7 @@ const NewGroup = () => {
             required
           />
         </div>
-        <div className="mb-2">
+        <div className="mb-4">
           <label
             htmlFor="group-image"
             className="block text-gray-700 font-bold mb-2"
