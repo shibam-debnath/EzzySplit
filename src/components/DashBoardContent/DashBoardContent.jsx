@@ -36,14 +36,14 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "63e933a5981886a213a6586a";
+  var groupId = "63fb8b5629ce0c8a774c4159";
   console.log("state");
   console.log(location.state);
   // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "63e9338f981886a213a65868";
+  const userId = "63ce3de792e27a2fabc7d06c";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
