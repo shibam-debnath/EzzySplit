@@ -55,8 +55,14 @@ const Login = () => {
         })
         .then(function (response) {
           console.log(response.data.users);
-          const temp = {userId:userId,groupId:response.data.users.groupid[0]};
+          console.log(variable);
+          const temp = {
+            userId: userId,
+            groupId: response.data.users.groupid[0],
+          };
+          console.log(temp);
           updateVariable(temp);
+          console.log(variable);
           navigate("/dashboard/");
         });
     } catch (err) {

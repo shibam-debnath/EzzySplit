@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
+import { AppContext } from "../../AppContext";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
@@ -8,9 +9,12 @@ import AddCurrencyPopup from "./AddCurrencyPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
+
+
 const AddExpensePopup = (props) => {
-  const groupId = "63fb8b5629ce0c8a774c4159";
-  const userId = "63ce3de792e27a2fabc7d06c";
+  const { variable, updateVariable } = useContext(AppContext);
+  const groupId = variable.groupId;
+  const userId = variable.userId;
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);

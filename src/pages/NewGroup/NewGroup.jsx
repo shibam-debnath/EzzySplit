@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { AppContext } from "../../AppContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -11,6 +12,7 @@ const NewGroup = () => {
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
   const [groupId, setGroupId] = useState("");
+  const { variable, updateVariable } = useContext(AppContext);
 
   const [toggleGroup, FtoggleGroup] = useState(true);
   const notify = () => {
@@ -83,8 +85,7 @@ const NewGroup = () => {
   console.log(members);
 
   const post = async () => {
-    const groupId = "63fb8b5629ce0c8a774c4159";
-    const userId = "63ce3de792e27a2fabc7d06c";
+    const userId = variable.userId;
 
     try {
       axios
