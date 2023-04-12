@@ -9,8 +9,8 @@ import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
 const AddExpensePopup = (props) => {
-  const groupId = "63e933a5981886a213a6586a";
-  const userId = "63e9338f981886a213a65868";
+  const groupId = "63f7a42883b9e985364c5a7c";
+  const userId = "63f7a3a583b9e985364c5a6a";
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);

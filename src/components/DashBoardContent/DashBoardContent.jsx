@@ -22,6 +22,7 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import EditExpensesPopup from "./EditExpensesPopup";
 
 ChartJS.register(
   ArcElement,
@@ -36,14 +37,14 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "63e933a5981886a213a6586a";
+  var groupId = "63f7a42883b9e985364c5a7c";
   console.log("state");
   console.log(location.state);
   // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "63e9338f981886a213a65868";
+  const userId = "63f7a3a583b9e985364c5a6a";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
@@ -61,6 +62,7 @@ const DashBoardContent = () => {
 
   const [settleExpenseData, setsettleExpenseData] = useState({});
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
+  const [editExpenseData, seteditExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
 
   const [groupMembers, setGroupMembers] = useState("");
@@ -381,6 +383,7 @@ const DashBoardContent = () => {
   const closeDisplayExpense = () => {
     setDisplayExpenseData(false);
     setSettleCall(false);
+    seteditExpenseData(false);
   };
 
   const closeDisplayExpense2 = () => {
@@ -722,9 +725,15 @@ const DashBoardContent = () => {
                   <div className="text-white text-xl">Expense Description</div>
                   <div className="flex">
                     {!grData.isSettled && (
-                      <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">
+                      <button className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center items-center"
+                      onClick={(e)=>{
+                        e.preventDefault();
+                        seteditExpenseData(true);
+                        setDisplayExpenseData(false);
+                      }}
+                      >
                         Edit
-                      </div>
+                      </button>
                     )}
                     <BiX
                       className=" text-2xl cursor-pointer"
@@ -808,6 +817,15 @@ const DashBoardContent = () => {
                 </div>
               </div>
             </div>
+          )}
+          {/* edit expenses */}
+          {editExpenseData && (
+            <EditExpensesPopup
+            closeDisplayExpense={closeDisplayExpense}
+            expenseDetails={expenseId}
+            groupDetails={grData}
+            userId={userId}
+            />
           )}
           {/* to display the complete details of an expense ends */}
 
