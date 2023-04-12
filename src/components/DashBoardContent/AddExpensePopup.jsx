@@ -276,7 +276,7 @@ const AddExpensePopup = (props) => {
       console.log(totalPiadBy);
       console.log(totalSplitBetween);
 
-      if (totalPiadBy === amount && totalSplitBetween === amount) {
+     // if (totalPiadBy === amount && totalSplitBetween === amount) {
   
         const res = await fetch("http://localhost:8000/expense/addExpense", {
           method: "POST",
@@ -304,11 +304,11 @@ const AddExpensePopup = (props) => {
           description: "",
           groupId: `${groupId}`,
         });
-      }
-else{
-  failed();
-  FtglSaveBtn(true);
-}
+     // }
+//else{
+  //failed();
+  //FtglSaveBtn(true);
+//}
     } catch (error) {
       FtglSaveBtn(true);
       failed();
