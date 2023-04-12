@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { useNavigate, useLocation } from "react-router";
-import { AppContext } from "../../AppContext";
 
 import {
   Chart as ChartJS,
@@ -37,14 +36,13 @@ ChartJS.register(
 const DashBoardContent = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { variable, updateVariable } = useContext(AppContext);
-  console.log("variable");
-  console.log(variable);
-  // var groupId = "63fb8b5629ce0c8a774c4159";
-  var groupId = variable.groupId;
-  var userId = variable.userId;
+  const groupId = process.env.REACT_APP_GROUP_ID;
+  const userId = process.env.REACT_APP_USER_ID;
   console.log("state");
   console.log(location.state);
+  console.log("userrrrrrr");
+  console.log(groupId);
+  console.log(userId);
   // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
@@ -462,10 +460,8 @@ const DashBoardContent = () => {
   ];
 
   let valueDisplays = document.querySelectorAll(".num");
-  let interval = 1;
 
   valueDisplays.forEach((valueDisplay) => {
-    let startValue = 0;
     let endValue = valueDisplay.getAttribute("data-val");
     let duration = 500; // duration in milliseconds
     let startTime = null;

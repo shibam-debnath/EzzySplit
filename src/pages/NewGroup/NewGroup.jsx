@@ -1,5 +1,4 @@
-import React, { useState,useContext } from "react";
-import { AppContext } from "../../AppContext";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -11,8 +10,8 @@ const NewGroup = () => {
   const [groupName, setGroupName] = useState("");
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
-  const [groupId, setGroupId] = useState("");
-  const { variable, updateVariable } = useContext(AppContext);
+  const [groupId, setGroupId] = useState(process.env.REACT_APP_GROUP_ID);
+  const userId = process.env.REACT_APP_USER_ID;
 
   const [toggleGroup, FtoggleGroup] = useState(true);
   const notify = () => {
@@ -85,8 +84,6 @@ const NewGroup = () => {
   console.log(members);
 
   const post = async () => {
-    const userId = variable.userId;
-
     try {
       axios
         .post(`http://localhost:8000/group/creategroup/${userId}`, {
@@ -169,7 +166,7 @@ const NewGroup = () => {
             required
           />
         </div>
-    
+
         <div className="mb-4">
           <label
             htmlFor="members"

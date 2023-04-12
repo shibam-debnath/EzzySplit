@@ -1,15 +1,11 @@
-import React, { useState, useEffect,useContext } from "react";
-import { AppContext } from "../../AppContext";
-// import SideNav from "../../components/Sidenav/SideNav";
-import { LastGroupData } from "../../data/LastGroupData";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
-  const { variable, updateVariable } = useContext(AppContext);
-  const groupId = variable.groupId;
-  const userId = variable.userId;
-
+  const userId = process.env.REACT_APP_USER_ID;
+  console.log("last");
+  console.log(userId);
   const [groupData, setgroupData] = useState({});
 
   const lastGroupData = async () => {

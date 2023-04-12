@@ -1,5 +1,4 @@
-import { React, useRef, useEffect, useState, useContext } from "react";
-import { AppContext } from "../../AppContext";
+import { React, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -16,7 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [user, loading, error] = useAuthState(auth);
-  const { variable, updateVariable } = useContext(AppContext);
 
   useEffect(() => {
     if (loading) {
@@ -55,14 +53,6 @@ const Login = () => {
         })
         .then(function (response) {
           console.log(response.data.users);
-          console.log(variable);
-          const temp = {
-            userId: userId,
-            groupId: response.data.users.groupid[0],
-          };
-          console.log(temp);
-          updateVariable(temp);
-          console.log(variable);
           navigate("/dashboard/");
         });
     } catch (err) {
@@ -73,7 +63,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
-      // console.log(user.email);
+      console.log(user);
     } catch (e) {
       alert("Login unsuccessful");
     }

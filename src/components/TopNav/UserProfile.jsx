@@ -1,5 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
-import { AppContext } from "../../AppContext";
+import React, { useState, useEffect } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { logout } from "../../firebase/firebase";
 import axios from "axios";
@@ -11,8 +10,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 var response;
 
 const UserProfile = (props) => {
-  const { variable, updateVariable } = useContext(AppContext);
-  const userId = variable.userId;
+  const userId = process.env.REACT_APP_USER_ID;
   const [user] = useAuthState(auth);
   const [UserData, FgetUsersData] = useState({});
   const [ProfileName, setProfileName] = useState("");

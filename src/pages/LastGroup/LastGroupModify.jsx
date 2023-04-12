@@ -1,21 +1,16 @@
-import React, { useState,useContext } from "react";
-import { AppContext } from "../../AppContext";
+import React, { useState } from "react";
 import { BiRightArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 export default function LastGroupModify(props) {
   const navigate = useNavigate();
   const [toggleDesc, FtoggleDesc] = useState(false);
-  console.log("props");
-  console.log(props);
+  // console.log("props");
+  // console.log(props);
   const callToggle = (e) => {
     e.preventDefault();
     FtoggleDesc(!toggleDesc);
   };
-
-  const { variable, updateVariable } = useContext(AppContext);
-  const userId = variable.userId;
-  
   return (
     <>
       <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
@@ -24,7 +19,8 @@ export default function LastGroupModify(props) {
             <span className="pl-2 pr-2">{props.id}.</span>
             <p className="pl-2 hover:cursor-pointer">{props.name}</p>
             <p className="pl-6  text-[13px] font-light hover:cursor-pointer">
-              Created on: {props.created.substring(0,10).split("-").reverse().join("-")}
+              Created on:{" "}
+              {props.created.substring(0, 10).split("-").reverse().join("-")}
             </p>
           </div>
         </button>
@@ -33,8 +29,6 @@ export default function LastGroupModify(props) {
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
             onClick={(e) => {
               e.preventDefault();
-              const temp = {userId:userId,groupId:props.groupid};
-              updateVariable(temp);
               navigate("/dashboard/", { state: { groupid: props.groupid } });
             }}
           >
