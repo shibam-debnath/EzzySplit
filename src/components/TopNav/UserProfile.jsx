@@ -1,5 +1,4 @@
 import React, { useState, useEffect,useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { MdOutlineCancel } from "react-icons/md";
 import { logout } from "../../firebase/firebase";
 import axios from "axios";
@@ -11,9 +10,10 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 var response;
 
 const UserProfile = (props) => {
-  const { variable, updateVariable } = useContext(AppContext);
-  const userId = variable.userId;
   const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const userId = temp[0];
   const [UserData, FgetUsersData] = useState({});
   const [ProfileName, setProfileName] = useState("");
   const [ProfileImage, setProfileImage] = useState("");

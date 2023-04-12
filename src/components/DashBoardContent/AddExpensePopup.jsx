@@ -1,5 +1,4 @@
 import React, { useEffect, useState,useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
@@ -9,12 +8,15 @@ import AddCurrencyPopup from "./AddCurrencyPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
-
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AddExpensePopup = (props) => {
-  const { variable, updateVariable } = useContext(AppContext);
-  const groupId = variable.groupId;
-  const userId = variable.userId;
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);

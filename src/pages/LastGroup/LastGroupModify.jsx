@@ -1,9 +1,15 @@
 import React, { useState,useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { BiRightArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { getAuth, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function LastGroupModify(props) {
+  const auth1 = getAuth();
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
   const navigate = useNavigate();
   const [toggleDesc, FtoggleDesc] = useState(false);
   console.log("props");
@@ -13,8 +19,23 @@ export default function LastGroupModify(props) {
     FtoggleDesc(!toggleDesc);
   };
 
-  const { variable, updateVariable } = useContext(AppContext);
-  const userId = variable.userId;
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+      .then(() => {
+        console.log('Display name updated successfully');
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
+    }
+  };
+  const userId = temp[0];
   
   return (
     <>
@@ -33,8 +54,8 @@ export default function LastGroupModify(props) {
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
             onClick={(e) => {
               e.preventDefault();
-              const temp = {userId:userId,groupId:props.groupid};
-              updateVariable(temp);
+              const temp1 = userId+"---"+props.groupid;
+              updateDisplayName(temp1);
               navigate("/dashboard/", { state: { groupid: props.groupid } });
             }}
           >

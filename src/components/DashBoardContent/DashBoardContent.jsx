@@ -3,7 +3,8 @@ import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { useNavigate, useLocation } from "react-router";
-import { AppContext } from "../../AppContext";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import {
   Chart as ChartJS,
@@ -35,17 +36,17 @@ ChartJS.register(
 );
 
 const DashBoardContent = () => {
+
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+
   const navigate = useNavigate();
   const location = useLocation();
-  const { variable, updateVariable } = useContext(AppContext);
-  console.log("variable");
-  console.log(variable);
-  // var groupId = "63fb8b5629ce0c8a774c4159";
-  var groupId = variable.groupId;
-  var userId = variable.userId;
+  var groupId = temp[1];
+  var userId = temp[0];
   console.log("state");
   console.log(location.state);
-  // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }

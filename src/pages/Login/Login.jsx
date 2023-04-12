@@ -1,5 +1,4 @@
 import { React, useRef, useEffect, useState, useContext } from "react";
-import { AppContext } from "../../AppContext";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -10,13 +9,15 @@ import {
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { getAuth, updateProfile } from "firebase/auth";
+
 const Login = () => {
+  const auth1 = getAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
 
   const [user, loading, error] = useAuthState(auth);
-  const { variable, updateVariable } = useContext(AppContext);
 
   useEffect(() => {
     if (loading) {
@@ -31,6 +32,24 @@ const Login = () => {
     }
     // eslint-disable-next-line
   }, [user, loading]);
+
+
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+      .then(() => {
+        console.log('Display name updated successfully');
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
+    }
+  };
 
   const getId = async (emailId) => {
     try {
@@ -55,14 +74,8 @@ const Login = () => {
         })
         .then(function (response) {
           console.log(response.data.users);
-          console.log(variable);
-          const temp = {
-            userId: userId,
-            groupId: response.data.users.groupid[0],
-          };
-          console.log(temp);
-          updateVariable(temp);
-          console.log(variable);
+          const temp = userId+"---"+response.data.users.groupid[0];
+          updateDisplayName(temp);
           navigate("/dashboard/");
         });
     } catch (err) {
@@ -73,7 +86,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
-      // console.log(user.email);
+      console.log(user);
     } catch (e) {
       alert("Login unsuccessful");
     }
