@@ -40,6 +40,7 @@ function App() {
   }, []);
 
   return (
+
     <div className="App">
       {isLoading ? (
         <div className="preloader flex items-center m-auto w-screen h-screen">
@@ -115,6 +116,7 @@ function App() {
         </Routes>
       )}
     </div>
+
   );
 }
 

@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from "react";
-// import SideNav from "../../components/Sidenav/SideNav";
-import { LastGroupData } from "../../data/LastGroupData";
+import React, { useState, useEffect,useContext } from "react";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, updateProfile } from "firebase/auth";
+
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
-  const groupId = "63f7a42883b9e985364c5a7c";
-  const userId = "63f7a3a583b9e985364c5a6a";
+  const auth1 = getAuth();
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const [groupData, setgroupData] = useState({});
 
@@ -18,11 +25,26 @@ const LastGroup = () => {
         })
         .then(function (response) {
           setgroupData(response.data);
-          console.log(response);
-          console.log(groupData);
         });
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+      .then(() => {
+        console.log('Display name updated successfully');
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
     }
   };
 
@@ -43,7 +65,7 @@ const LastGroup = () => {
                 <LastGroupModify
                   id={count++}
                   name={group.groupName}
-                  created={group.created}
+                  created={group.createdOn}
                   groupid={group._id}
                   user={group.userId}
                 />

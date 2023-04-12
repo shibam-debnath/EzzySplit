@@ -1,5 +1,6 @@
-import { React, useRef, useEffect } from "react";
+import { React, useRef, useEffect, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   auth,
   login,
@@ -8,7 +9,10 @@ import {
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { getAuth, updateProfile } from "firebase/auth";
+
 const Login = () => {
+  const auth1 = getAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -20,14 +24,64 @@ const Login = () => {
       return;
     }
     if (user && user.emailVerified === true) {
-      console.log(user);
-      navigate("/dashboard/");
+      console.log("isme aa gaya");
+      console.log(user.email);
+      getId(user.email);
     } else if (user && user.emailVerified === false) {
       alert("Verify email first");
     }
     // eslint-disable-next-line
   }, [user, loading]);
 
+
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+      .then(() => {
+        console.log('Display name updated successfully');
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
+    }
+  };
+
+  const getId = async (emailId) => {
+    try {
+      await axios
+        .get(`http://localhost:8000/user/profile/emailId/${emailId}`, {
+          responseType: "json",
+        })
+        .then(function (response) {
+          console.log(response.data[0]._id);
+          getData(response.data[0]._id);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getData = async (userId) => {
+    try {
+      await axios
+        .get(`http://localhost:8000/user/profile/${userId}`, {
+          responseType: "json",
+        })
+        .then(function (response) {
+          console.log(response.data.users);
+          const temp = userId+"---"+response.data.users.groupid[0];
+          updateDisplayName(temp);
+          navigate("/dashboard/");
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {

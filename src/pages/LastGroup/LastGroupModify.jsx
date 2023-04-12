@@ -1,16 +1,42 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { BiRightArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { getAuth, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function LastGroupModify(props) {
+  const auth1 = getAuth();
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
   const navigate = useNavigate();
   const [toggleDesc, FtoggleDesc] = useState(false);
-
+  console.log("props");
+  console.log(props);
   const callToggle = (e) => {
     e.preventDefault();
     FtoggleDesc(!toggleDesc);
   };
 
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+      .then(() => {
+        console.log('Display name updated successfully');
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
+    }
+  };
+  const userId = temp[0];
+  
   return (
     <>
       <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
@@ -18,8 +44,8 @@ export default function LastGroupModify(props) {
           <div className="flex text-lg">
             <span className="pl-2 pr-2">{props.id}.</span>
             <p className="pl-2 hover:cursor-pointer">{props.name}</p>
-            <p className="pl-2  text-[13px] font-light hover:cursor-pointer">
-              Created on: {props.created}
+            <p className="pl-6  text-[13px] font-light hover:cursor-pointer">
+              Created on: {props.created.substring(0,10).split("-").reverse().join("-")}
             </p>
           </div>
         </button>
@@ -28,6 +54,8 @@ export default function LastGroupModify(props) {
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
             onClick={(e) => {
               e.preventDefault();
+              const temp1 = userId+"---"+props.groupid;
+              updateDisplayName(temp1);
               navigate("/dashboard/", { state: { groupid: props.groupid } });
             }}
           >

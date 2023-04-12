@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
@@ -8,9 +8,15 @@ import AddCurrencyPopup from "./AddCurrencyPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 const AddExpensePopup = (props) => {
-  const groupId = "63f7a42883b9e985364c5a7c";
-  const userId = "63f7a3a583b9e985364c5a6a";
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);

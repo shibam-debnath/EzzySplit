@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { useNavigate, useLocation } from "react-router";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import {
   Chart as ChartJS,
@@ -35,16 +37,20 @@ ChartJS.register(
 );
 
 const DashBoardContent = () => {
+
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = "63f7a42883b9e985364c5a7c";
+  var groupId = temp[1];
+  var userId = temp[0];
   console.log("state");
   console.log(location.state);
-  // console.log(location.state.groupid);
   if (location.state) {
     groupId = location.state.groupid;
   }
-  const userId = "63f7a3a583b9e985364c5a6a";
 
   const currentColor = "var(--primary-font)";
   const [isHovered, setIsHovered] = useState(false);
@@ -93,6 +99,7 @@ const DashBoardContent = () => {
           responseType: "json",
         })
         .then(function (response) {
+          console.log(response.data.users);
           setData(response.data.users);
           set();
           settleExpense();
@@ -464,25 +471,22 @@ const DashBoardContent = () => {
   valueDisplays.forEach((valueDisplay) => {
     let startValue = 0;
     let endValue = valueDisplay.getAttribute("data-val");
+    let duration = 500; // duration in milliseconds
+    let startTime = null;
 
-    let totalTime = 1000; // duration of animation in milliseconds
-    let valueDiff = endValue - startValue;
-    let duration = 0;
-    let interval = 50;
-    if (valueDiff > 0) duration = totalTime / valueDiff;
-    console.log("duration");
-    console.log(duration);
-    // let duration = Math.floor(interval / endValue);
-    // let duration = 1000;
-    if (endValue > 0) {
-      let counter = setInterval(function () {
-        startValue += 1;
-        valueDisplay.textContent = startValue;
-        if (startValue >= endValue) {
-          clearInterval(counter);
-        }
-      }, interval);
+    function updateValue(currentTime) {
+      if (!startTime) startTime = currentTime;
+      let elapsedTime = currentTime - startTime;
+      let progress = elapsedTime / duration;
+      let currentValue = Math.floor(progress * endValue);
+      if (currentValue > endValue) currentValue = endValue;
+      valueDisplay.textContent = currentValue;
+      if (currentValue < endValue) {
+        requestAnimationFrame(updateValue);
+      }
     }
+
+    requestAnimationFrame(updateValue);
   });
 
   const chartdata = {
