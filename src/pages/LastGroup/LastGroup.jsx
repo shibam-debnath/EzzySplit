@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { auth } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, updateProfile } from "firebase/auth";
@@ -39,12 +39,12 @@ const LastGroup = () => {
         displayName: newName,
         // photoURL: "https://example.com/newProfilePhoto.jpg"
       })
-      .then(() => {
-        console.log('Display name updated successfully');
-      })
-      .catch((error) => {
-        console.log(`Error updating display name: ${error}`);
-      });
+        .then(() => {
+          console.log("Display name updated successfully");
+        })
+        .catch((error) => {
+          console.log(`Error updating display name: ${error}`);
+        });
     }
   };
 

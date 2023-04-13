@@ -771,6 +771,10 @@ const DashBoardContent = () => {
                       </div>
                     </div>
                     <div className="flex justify-start p-2">
+                      <div className="text-gray-500">Category:&nbsp;</div>
+                      <div>{expenseId.category}</div>
+                    </div>
+                    <div className="flex justify-start p-2">
                       <div className="text-gray-500">Paid By: &nbsp;</div>
                       <div>
                         {expenseId.paidBy.map((items) => {
