@@ -553,7 +553,7 @@ const DashBoardContent = () => {
     <>
       <div>
         {
-          !grData.isSettled && <AddExpenses groupDetails={grData} />
+          !grData.isSettled && <AddExpenses groupDetails={grData} groupData={groupData} />
 
           // : (
           //   <div className="fixed bottom-10 right-10 h-18 w-62 bg-white text-black rounded-md shadow-md p-4">
@@ -845,6 +845,7 @@ const DashBoardContent = () => {
               expenseDetails={expenseId}
               groupDetails={grData}
               userId={userId}
+              groupData={groupData}
             />
           )}
           {/* to display the complete details of an expense ends */}

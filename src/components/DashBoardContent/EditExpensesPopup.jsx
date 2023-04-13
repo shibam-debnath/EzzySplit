@@ -332,6 +332,7 @@ const EditExpensesPopup = (props) => {
 
       if (res.status === 200) {
         set();
+        props.groupData();
       }
       FinputData({
         amount: "",
@@ -359,7 +360,7 @@ const EditExpensesPopup = (props) => {
               </h5>
               <button
                 className="hover:text-red-500 text-xl"
-                onClick={props.closeDisplayExpense}
+                onClick={()=>{props.closeDisplayExpense();props.groupData()}}
               >
                 <VscClose />
               </button>
