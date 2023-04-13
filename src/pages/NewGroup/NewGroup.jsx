@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -6,11 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
 
 const NewGroup = () => {
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+
   const navigate = useNavigate();
   const [groupName, setGroupName] = useState("");
   const [groupMembers, setGroupMembers] = useState("");
   const [groupImage, setGroupImage] = useState(null);
   const [groupId, setGroupId] = useState("");
+
 
   const [toggleGroup, FtoggleGroup] = useState(true);
   const notify = () => {
@@ -83,9 +90,8 @@ const NewGroup = () => {
   console.log(members);
 
   const post = async () => {
-    const groupId = "64283b4cb3dc45d696bc578b";
-    const userId = "642839ceb3dc45d696bc5786";
-
+    const userId = temp[0];
+    console.log(userId)
     try {
       axios
         .post(`http://localhost:8000/group/creategroup/${userId}`, {

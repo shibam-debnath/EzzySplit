@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
-// import SideNav from "../../components/Sidenav/SideNav";
-import { LastGroupData } from "../../data/LastGroupData";
+import React, { useState, useEffect,useContext } from "react";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, updateProfile } from "firebase/auth";
+
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
-  const groupId = "64283b4cb3dc45d696bc578b";
-  const userId = "642839ceb3dc45d696bc5786";
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const [groupData, setgroupData] = useState({});
 
@@ -17,12 +23,17 @@ const LastGroup = () => {
           responseType: "json",
         })
         .then(function (response) {
+          console.log("response")
+          console.log(response.data)
           setgroupData(response.data);
+          console.log("grdata");
+          console.log(groupData)
         });
     } catch (err) {
       console.log(err);
     }
   };
+
 
   useEffect(() => {
     lastGroupData();

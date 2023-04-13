@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { MdOutlineCancel } from "react-icons/md";
 import { logout } from "../../firebase/firebase";
 import axios from "axios";
@@ -12,7 +12,9 @@ var response;
 const UserProfile = (props) => {
   
   const [user] = useAuthState(auth);
-  const userId = "642839ceb3dc45d696bc5786";
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const userId = temp[0];
   const [UserData, FgetUsersData] = useState({});
   const [ProfileName, setProfileName] = useState("");
   const [ProfileImage, setProfileImage] = useState("");

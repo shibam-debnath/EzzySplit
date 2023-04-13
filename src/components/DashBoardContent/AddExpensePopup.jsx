@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
@@ -8,10 +8,15 @@ import AddCategoryPopup from "./AddCategoryPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
-const AddExpensePopup = (props) => {
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-  const groupId = "64283b4cb3dc45d696bc578b";
-  const userId = "642839ceb3dc45d696bc5786";
+const AddExpensePopup = (props) => {
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);
@@ -51,6 +56,13 @@ const AddExpensePopup = (props) => {
     });
   };
 
+  const cfailed = () => {
+    toast.error("Total paidby or split between isn't equal to amount", {
+      autoClose: 2000,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
   const set = () => {
     setTimeout(() => {
       FtglSaveBtn(true);
@@ -95,7 +107,11 @@ const AddExpensePopup = (props) => {
     InitailizePaidByArr();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+// expence Category
+const[category,Fcategory]=useState("Others");
+const setcategory=(categor)=>{
+  Fcategory(categor);
+}
   // you or multiple
   const [payer, Fpayer] = useState("You");
   const setPayer = (text) => {
@@ -224,6 +240,8 @@ const AddExpensePopup = (props) => {
   };
 
   //  posting addexpenses
+  //console.log("before post");
+  //console.log(category);
   const postForm = async () => {
     try {
       var fnarr = [];
@@ -271,18 +289,20 @@ const AddExpensePopup = (props) => {
       }
 
       console.log("totalPiadBy");
-      console.log("totalSplitBetween");
-
       console.log(totalPiadBy);
+      console.log("totalSplitBetween");
       console.log(totalSplitBetween);
-
-     // if (totalPiadBy === amount && totalSplitBetween === amount) {
-  
+      console.log("amount");
+      console.log(amount);
+      if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
+       // console.log("before post");
+        //console.log(category);
         const res = await fetch("http://localhost:8000/expense/addExpense", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+        
           body: JSON.stringify({
             amount,
             description,
@@ -291,11 +311,14 @@ const AddExpensePopup = (props) => {
             split_method,
             notes,
             expDate,
+            category:category,
             split_between: SplitArr,
           }),
+          
         });
         await res.json();
-  
+        // console.log("before post");
+        // console.log(category);
         if (res.status === 200) {
           set();
         }
@@ -304,18 +327,21 @@ const AddExpensePopup = (props) => {
           description: "",
           groupId: `${groupId}`,
         });
-     // }
-//else{
-  //failed();
-  //FtglSaveBtn(true);
-//}
+     }
+    
+else{
+  cfailed();
+  FtglSaveBtn(true);
+}
+
     } catch (error) {
       FtglSaveBtn(true);
       failed();
       console.log("Error in Adding Expenses");
     }
   };
-
+ // console.log("Afer post");
+  //console.log(category);
   return (
     <>
       {/* <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '> */}
@@ -347,17 +373,23 @@ const AddExpensePopup = (props) => {
 
               <div>
                 <div className="flex items-center mt-3">
-                  <div className="w-2/6 ">
-                    <div className="w-2/5 m-auto py-3 ">
+                  <div className="w-2/5 ">
+                    <div className="w-2/6 m-auto pt-1 ">
                     <button
                         className="font-medium hover:text-slate-500"
                         onClick={addCategory}
                       >
                       <img src="../images/grocery.png" alt="Loading" />
-                      <span className="text-blue-700 text-sm"> Category</span>
                       </button>
                     </div>
+                    <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
+                      <span className="text-blue-700 text-sm"> <span className="text-black ">category:</span> {category}</span>
+                      </button>
                   </div>
+                
                   <div className="w-3/5  ">
                     <div className="border-b-[1px] border-dotted border-emerald-500">
                       <input
@@ -531,7 +563,10 @@ const AddExpensePopup = (props) => {
                 notes={notes}
               />
             )}
-            {addon === 6 && <AddCategoryPopup closeAdd={closeAdd} />}
+            {addon === 6 && <AddCategoryPopup 
+            closeAdd={closeAdd}
+            setcategory={setcategory}
+             />}
             {/* </div> */}
           </div>
         </form>
