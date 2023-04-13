@@ -37,15 +37,15 @@ ChartJS.register(
 );
 
 const DashBoardContent = () => {
-
   const [user] = useAuthState(auth);
+  console.log(user);
   var temp = user.displayName.split("---");
   console.log(temp);
+  var groupId = temp[1];
+  var userId = temp[0];
 
   const navigate = useNavigate();
   const location = useLocation();
-  var groupId = temp[1];
-  var userId = temp[0];
   console.log("state");
   console.log(location.state);
   if (location.state) {
@@ -86,6 +86,14 @@ const DashBoardContent = () => {
   const [lineData, setLineData] = useState([]);
   const [lineDataLabel, setLineDataLabel] = useState([]);
 
+  const check = ()=>{
+    if(groupId==='undefined')
+    {
+      console.log("idhar aaya hai dekhho")
+      navigate("/dashboard/newGroup");
+    }
+  };
+  
   const set = () => {
     setTimeout(() => {
       fbeforeFetch(1);
@@ -193,6 +201,7 @@ const DashBoardContent = () => {
   };
 
   useEffect(() => {
+    check();
     getData();
     groupData();
     // settleExpense();
@@ -370,6 +379,8 @@ const DashBoardContent = () => {
           console.log("response.data after deleting call");
           console.log(response);
           setExpenseIdToDelete("");
+          getData();
+          groupData();
           // fexpend();
           // set();
           console.log(response.status);
@@ -395,8 +406,8 @@ const DashBoardContent = () => {
 
   const closeDisplayExpense2 = () => {
     setSettleCall2(false);
-    navigate("/");
-    navigate("/dashboard/");
+    getData();
+    groupData();
   };
 
   const deleteExpense = (expenses) => {
@@ -422,7 +433,6 @@ const DashBoardContent = () => {
     setSettleCall(false);
     setSettleCall2(false);
     setDeleteExpenseId(false);
-    // setExpenseIdToDelete('');
   };
 
   const closeDeleteExpense = () => {
@@ -703,6 +713,7 @@ const DashBoardContent = () => {
 
             {!grData.isSettled &&
               grData.expenseId &&
+              grData.userId.length > 1 &&
               grData.expenseId.length > 0 && (
                 <button
                   className="flex justify-end text-white p-2 bg-lgPrimary rounded-md hover:bg-primary"
@@ -729,12 +740,13 @@ const DashBoardContent = () => {
                   <div className="text-white text-xl">Expense Description</div>
                   <div className="flex">
                     {!grData.isSettled && (
-                      <button className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center items-center"
-                      onClick={(e)=>{
-                        e.preventDefault();
-                        seteditExpenseData(true);
-                        setDisplayExpenseData(false);
-                      }}
+                      <button
+                        className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center items-center"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          seteditExpenseData(true);
+                          setDisplayExpenseData(false);
+                        }}
                       >
                         Edit
                       </button>
@@ -829,10 +841,10 @@ const DashBoardContent = () => {
           {/* edit expenses */}
           {editExpenseData && (
             <EditExpensesPopup
-            closeDisplayExpense={closeDisplayExpense}
-            expenseDetails={expenseId}
-            groupDetails={grData}
-            userId={userId}
+              closeDisplayExpense={closeDisplayExpense}
+              expenseDetails={expenseId}
+              groupDetails={grData}
+              userId={userId}
             />
           )}
           {/* to display the complete details of an expense ends */}
@@ -871,13 +883,21 @@ const DashBoardContent = () => {
                         expenses.paidBy.map((items) => {
                           return (
                             <div className="flex">
-                              {items.userId.name},&nbsp;
+                              {items.userId._id === userId ? (
+                                <div>You,&nbsp;</div>
+                              ) : (
+                                <div>{items.userId.name},&nbsp;</div>
+                              )}
                             </div>
                           );
                         })
                       ) : (
                         <div className="flex">
-                          {expenses.paidBy[0].userId.name}
+                          {expenses.paidBy[0].userId._id === userId ? (
+                            <div>You</div>
+                          ) : (
+                            <div>{expenses.paidBy[0].userId.name}</div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -929,7 +949,7 @@ const DashBoardContent = () => {
 
       <div className="flex flex-col ">
         <div className="flex flex-row md:w-full">
-          <div className="bg-white h-72 rounded-xl m-6 w-7/12">
+          <div className="bg-white h-72 rounded-xl m-6 w-1/2">
             <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left text-black ">
               Group Members
             </div>
@@ -960,7 +980,7 @@ const DashBoardContent = () => {
 
           {grData.expenseId && grData.expenseId.length > 0 ? (
             grData.isSettled ? (
-              <div className=" h-80 m-2 p-4 w-5/12">
+              <div className=" h-80 m-2 p-4 w-1/2">
                 <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg  rounded-xl  bg-no-repeat bg-cover bg-center ">
                   <div className=" flex justify-between pl-4 p-2 border-b-2 border-spacing-y-12  border-gray-200">
                     <div className="text-gray-700 ">Settled Expenses</div>
@@ -987,7 +1007,7 @@ const DashBoardContent = () => {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
+              <div className="bg-white rounded-xl h-72 m-6 p-4 w-1/2 flex justify-center">
                 <img style={style} src="../images/boy.jpg" alt="Loading..." />
               </div>
             )
