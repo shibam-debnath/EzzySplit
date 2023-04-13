@@ -24,6 +24,7 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import EditExpensesPopup from "./EditExpensesPopup";
 
 ChartJS.register(
   ArcElement,
@@ -67,6 +68,7 @@ const DashBoardContent = () => {
 
   const [settleExpenseData, setsettleExpenseData] = useState({});
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
+  const [editExpenseData, seteditExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
 
   const [groupMembers, setGroupMembers] = useState("");
@@ -388,6 +390,7 @@ const DashBoardContent = () => {
   const closeDisplayExpense = () => {
     setDisplayExpenseData(false);
     setSettleCall(false);
+    seteditExpenseData(false);
   };
 
   const closeDisplayExpense2 = () => {
@@ -726,9 +729,15 @@ const DashBoardContent = () => {
                   <div className="text-white text-xl">Expense Description</div>
                   <div className="flex">
                     {!grData.isSettled && (
-                      <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">
+                      <button className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center items-center"
+                      onClick={(e)=>{
+                        e.preventDefault();
+                        seteditExpenseData(true);
+                        setDisplayExpenseData(false);
+                      }}
+                      >
                         Edit
-                      </div>
+                      </button>
                     )}
                     <BiX
                       className=" text-2xl cursor-pointer"
@@ -816,6 +825,15 @@ const DashBoardContent = () => {
                 </div>
               </div>
             </div>
+          )}
+          {/* edit expenses */}
+          {editExpenseData && (
+            <EditExpensesPopup
+            closeDisplayExpense={closeDisplayExpense}
+            expenseDetails={expenseId}
+            groupDetails={grData}
+            userId={userId}
+            />
           )}
           {/* to display the complete details of an expense ends */}
 
