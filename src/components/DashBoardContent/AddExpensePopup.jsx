@@ -34,13 +34,13 @@ const AddExpensePopup = (props) => {
       setErr(false);
     }
   };
-
+  
   const [notes, Fnotes] = useState("");
   const cngNotes = (value) => {
     Fnotes(value);
   };
   const [tglSaveBtn, FtglSaveBtn] = useState(true);
-
+  
   const notify = () => {
     toast.success("Expense added successfully..!!", {
       autoClose: 1200,
@@ -55,6 +55,7 @@ const AddExpensePopup = (props) => {
       transition: Flip,
     });
   };
+  
 
   const cfailed = () => {
     toast.error("Total paidby or split between isn't equal to amount", {

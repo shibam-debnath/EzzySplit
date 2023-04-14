@@ -8,7 +8,6 @@ import {
   sendPasswordReset,
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-
 import { getAuth, updateProfile } from "firebase/auth";
 
 const Login = () => {
@@ -76,7 +75,8 @@ const Login = () => {
           console.log(response.data.users);
           const temp = userId+"---"+response.data.users.groupid[0];
           updateDisplayName(temp);
-          navigate("/dashboard/");
+          if(response.data.users.groupid[0]===undefined)navigate("/dashboard/newGroup");
+          else navigate("/dashboard/");
         });
     } catch (err) {
       console.log(err);

@@ -150,7 +150,7 @@ const Team = () => {
                     </div>
 
                 </section>
-                <Footer />
+               
             </div>
         </>
     )
