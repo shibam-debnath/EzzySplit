@@ -5,7 +5,7 @@ import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
 import SplitPopup from "./SplitPopup";
 import PaidByPopup from "./PaidByPopup";
-import AddCurrencyPopup from "./AddCurrencyPopup";
+import AddCategoryPopup from "./AddCategoryPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
@@ -53,6 +53,13 @@ const EditExpensesPopup = (props) => {
     });
   };
 
+  const cfailed = () => {
+    toast.error("Total paidby or split between isn't equal to amount", {
+      autoClose: 2000,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
   const set = () => {
     setTimeout(() => {
       FtglSaveBtn(true);
@@ -126,6 +133,10 @@ const EditExpensesPopup = (props) => {
   if(props.expenseDetails.paidBy.length >1){
     pyr = "Multiple P.";
   }
+  const[category,Fcategory]=useState(props.expenseDetails.category);
+const setcategory=(categor)=>{
+  Fcategory(categor);
+}
   const [payer, Fpayer] = useState(pyr);
   const setPayer = (text) => {
     Fpayer(text);
@@ -187,7 +198,7 @@ const EditExpensesPopup = (props) => {
     e.preventDefault();
     Caddon(4);
   };
-  const addCurrency = (e) => {
+  const addCategory = (e) => {
     e.preventDefault();
     Caddon(6);
   };
@@ -310,7 +321,20 @@ const EditExpensesPopup = (props) => {
         SplitArr = splitBetween.filter((val) => val.toPay !== "");
       }
 
-      const { amount, description, groupId } = inputData;
+      const { amount, descrbiption, groupId } = inputData;
+      var totalPiadBy = 0;
+      var totalSplitBetween = 0;
+
+      for (var i = 0; i < fnarr.length; i++) {
+        totalPiadBy = Number(totalPiadBy) + Number(fnarr[i].amount);
+      }
+      for (var i = 0; i < SplitArr.length; i++) {
+        totalSplitBetween = Number(totalSplitBetween) + Number(SplitArr[i].toPay);
+      }
+      console.log("category before ppppop");
+      console.log(category);
+
+      if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
       const res = await fetch(`http://localhost:8000/expense/${userId}/${groupId}/${expenseId}`, {
         method: "PATCH",
         headers: {
@@ -324,6 +348,7 @@ const EditExpensesPopup = (props) => {
           split_method,
           notes,
           expDate,
+          category:category,
           split_between: SplitArr,
           prevAmount:prevAmount
         }),
@@ -332,12 +357,20 @@ const EditExpensesPopup = (props) => {
 
       if (res.status === 200) {
         set();
+        props.groupData();
       }
       FinputData({
         amount: "",
         description: "",
         groupId: `${groupId}`,
       });
+    }
+
+    else{
+      cfailed();
+      FtglSaveBtn(true);
+    }
+
     } catch (error) {
       FtglSaveBtn(true);
       failed();
@@ -359,7 +392,7 @@ const EditExpensesPopup = (props) => {
               </h5>
               <button
                 className="hover:text-red-500 text-xl"
-                onClick={props.closeDisplayExpense}
+                onClick={()=>{props.closeDisplayExpense();props.groupData()}}
               >
                 <VscClose />
               </button>
@@ -379,8 +412,19 @@ const EditExpensesPopup = (props) => {
               <div className="flex items-center mt-3">
                 <div className="w-2/6 ">
                   <div className="w-2/5 m-auto py-3 ">
-                    <img src="../images/grocery.png" alt="Loading" />
+<button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
+                      <img src="../images/grocery.png" alt="Loading" />
+                      </button>
                   </div>
+                  <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
+                      <span className="text-blue-700 text-sm"> <span className="text-black ">category:</span> {category}</span>
+                      </button>
                 </div>
                 <div className="w-3/5  ">
                   <div className="border-b-[1px] border-dotted border-emerald-500">
@@ -408,12 +452,7 @@ const EditExpensesPopup = (props) => {
                     ""
                   )}
                   <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
-                    <button
-                      className="font-medium hover:text-slate-500"
-                      onClick={addCurrency}
-                    >
                       INR
-                    </button>
                     <input
                       type="text"
                       placeholder="Amount"
@@ -560,7 +599,10 @@ const EditExpensesPopup = (props) => {
               notes={notes}
             />
           )}
-          {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
+          {addon === 6 && <AddCategoryPopup 
+            closeAdd={closeAdd}
+            setcategory={setcategory}
+             />}
           {/* </div> */}
         </div>
       </form>

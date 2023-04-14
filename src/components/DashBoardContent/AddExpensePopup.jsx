@@ -240,8 +240,8 @@ const setcategory=(categor)=>{
   };
 
   //  posting addexpenses
-  //console.log("before post");
-  //console.log(category);
+  console.log("before post");
+  console.log(category);
   const postForm = async () => {
     try {
       var fnarr = [];
@@ -288,12 +288,15 @@ const setcategory=(categor)=>{
         totalSplitBetween = Number(totalSplitBetween) + Number(SplitArr[i].toPay);
       }
 
+      console.log("during adding..................");
       console.log("totalPiadBy");
       console.log(totalPiadBy);
       console.log("totalSplitBetween");
       console.log(totalSplitBetween);
       console.log("amount");
       console.log(amount);
+      console.log("category");
+      console.log(category);
       if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
        // console.log("before post");
         //console.log(category);
@@ -317,8 +320,8 @@ const setcategory=(categor)=>{
           
         });
         await res.json();
-        // console.log("before post");
-        // console.log(category);
+        console.log("before post");
+        console.log(category);
         if (res.status === 200) {
           set();
         }
