@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
 import SplitPopup from "./SplitPopup";
 import PaidByPopup from "./PaidByPopup";
-import AddCurrencyPopup from "./AddCurrencyPopup";
+import AddCategoryPopup from "./AddCategoryPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Dna } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AddExpensePopup = (props) => {
-
-  const groupId = "64283b4cb3dc45d696bc578b";
-  const userId = "642839ceb3dc45d696bc5786";
+  const [user] = useAuthState(auth);
+  var temp = user.displayName.split("---");
+  console.log(temp);
+  const groupId = temp[1];
+  const userId = temp[0];
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);
@@ -30,13 +34,13 @@ const AddExpensePopup = (props) => {
       setErr(false);
     }
   };
-
+  
   const [notes, Fnotes] = useState("");
   const cngNotes = (value) => {
     Fnotes(value);
   };
   const [tglSaveBtn, FtglSaveBtn] = useState(true);
-
+  
   const notify = () => {
     toast.success("Expense added successfully..!!", {
       autoClose: 1200,
@@ -51,7 +55,15 @@ const AddExpensePopup = (props) => {
       transition: Flip,
     });
   };
+  
 
+  const cfailed = () => {
+    toast.error("Total paidby or split between isn't equal to amount", {
+      autoClose: 2000,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
   const set = () => {
     setTimeout(() => {
       FtglSaveBtn(true);
@@ -96,7 +108,11 @@ const AddExpensePopup = (props) => {
     InitailizePaidByArr();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+// expence Category
+const[category,Fcategory]=useState("Others");
+const setcategory=(categor)=>{
+  Fcategory(categor);
+}
   // you or multiple
   const [payer, Fpayer] = useState("You");
   const setPayer = (text) => {
@@ -159,7 +175,7 @@ const AddExpensePopup = (props) => {
     e.preventDefault();
     Caddon(4);
   };
-  const addCurrency = (e) => {
+  const addCategory = (e) => {
     e.preventDefault();
     Caddon(6);
   };
@@ -225,6 +241,8 @@ const AddExpensePopup = (props) => {
   };
 
   //  posting addexpenses
+  console.log("before post");
+  console.log(category);
   const postForm = async () => {
     try {
       var fnarr = [];
@@ -260,39 +278,74 @@ const AddExpensePopup = (props) => {
       }
 
       const { amount, description, groupId } = inputData;
-      const res = await fetch("http://localhost:8000/expense/addExpense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          description,
-          groupId,
-          paidBy: fnarr,
-          split_method,
-          notes,
-          expDate,
-          split_between: SplitArr,
-        }),
-      });
-      await res.json();
 
-      if (res.status === 200) {
-        set();
+      var totalPiadBy = 0;
+      var totalSplitBetween = 0;
+
+      for (var i = 0; i < fnarr.length; i++) {
+        totalPiadBy = Number(totalPiadBy) + Number(fnarr[i].amount);
       }
-      FinputData({
-        amount: "",
-        description: "",
-        groupId: `${groupId}`,
-      });
+      for (var i = 0; i < SplitArr.length; i++) {
+        totalSplitBetween = Number(totalSplitBetween) + Number(SplitArr[i].toPay);
+      }
+
+      console.log("during adding..................");
+      console.log("totalPiadBy");
+      console.log(totalPiadBy);
+      console.log("totalSplitBetween");
+      console.log(totalSplitBetween);
+      console.log("amount");
+      console.log(amount);
+      console.log("category");
+      console.log(category);
+      if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
+       // console.log("before post");
+        //console.log(category);
+        const res = await fetch("http://localhost:8000/expense/addExpense", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        
+          body: JSON.stringify({
+            amount,
+            description,
+            groupId,
+            paidBy: fnarr,
+            split_method,
+            notes,
+            expDate,
+            category:category,
+            split_between: SplitArr,
+          }),
+          
+        });
+        await res.json();
+        console.log("before post");
+        console.log(category);
+        if (res.status === 200) {
+          set();
+        }
+        FinputData({
+          amount: "",
+          description: "",
+          groupId: `${groupId}`,
+        });
+     }
+    
+else{
+  cfailed();
+  FtglSaveBtn(true);
+}
+
     } catch (error) {
       FtglSaveBtn(true);
       failed();
       console.log("Error in Adding Expenses");
     }
   };
-
+ // console.log("Afer post");
+  //console.log(category);
   return (
     <>
       {/* <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '> */}
@@ -324,11 +377,23 @@ const AddExpensePopup = (props) => {
 
               <div>
                 <div className="flex items-center mt-3">
-                  <div className="w-2/6 ">
-                    <div className="w-2/5 m-auto py-3 ">
+                  <div className="w-2/5 ">
+                    <div className="w-2/6 m-auto pt-1 ">
+                    <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
                       <img src="../images/grocery.png" alt="Loading" />
+                      </button>
                     </div>
+                    <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
+                      <span className="text-blue-700 text-sm"> <span className="text-black ">category:</span> {category}</span>
+                      </button>
                   </div>
+                
                   <div className="w-3/5  ">
                     <div className="border-b-[1px] border-dotted border-emerald-500">
                       <input
@@ -355,12 +420,7 @@ const AddExpensePopup = (props) => {
                       ""
                     )}
                     <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
-                      <button
-                        className="font-medium hover:text-slate-500"
-                        onClick={addCurrency}
-                      >
-                        INR
-                      </button>
+                     INR
                       <input
                         type="text"
                         placeholder="Amount"
@@ -465,13 +525,15 @@ const AddExpensePopup = (props) => {
                   </div>
                 ) : (
                   <div className=" justify-end flex mr-10 py-2">
-                    <Dna
-                      visible={true}
-                      height="60"
-                      width="80"
-                      ariaLabel="dna-loading"
+                    <ThreeDots
+                      height="50"
+                      width="50"
+                      radius="9"
+                      color="#6B60F1"
+                      ariaLabel="three-dots-loading"
                       wrapperStyle={{}}
-                      wrapperClass="dna-wrapper"
+                      wrapperClassName=""
+                      visible={true}
                     />
                   </div>
                 )}
@@ -505,7 +567,10 @@ const AddExpensePopup = (props) => {
                 notes={notes}
               />
             )}
-            {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
+            {addon === 6 && <AddCategoryPopup 
+            closeAdd={closeAdd}
+            setcategory={setcategory}
+             />}
             {/* </div> */}
           </div>
         </form>

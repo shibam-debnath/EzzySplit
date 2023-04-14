@@ -4,7 +4,6 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import UserProfile from "./UserProfile";
 import Notification from "./Notification";
 
-
 const TopNav = () => {
   // handles all menu and sets true eg - set UserProfile as true
   const [notification, setNotification] = useState(false);
@@ -15,24 +14,24 @@ const TopNav = () => {
     e.preventDefault();
     setNotification(!notification);
     setProfile(false);
-  }
+  };
 
   const closeNotification = (e) => {
     e.preventDefault();
     setNotification(false);
-  }
+  };
 
   // Profile
   const openProfile = (e) => {
     e.preventDefault();
     setProfile(!profile);
     setNotification(false);
-  }
+  };
 
   const closeProfile = (e) => {
     e.preventDefault();
     setProfile(false);
-  }
+  };
 
   return (
     <div className="flex bg-white border-l-2 justify-between">
@@ -54,9 +53,7 @@ const TopNav = () => {
             onClick={openNotification}
             className="relative text-xl text-blue-600 rounded-full p-3 hover:bg-light-gray"
           >
-            <span
-              className="absolute bg-[#03C9D7] inline-flex rounded-full h-2 w-2 right-2 top-2"
-            />
+            <span className="absolute bg-[#03C9D7] inline-flex rounded-full h-2 w-2 right-2 top-2" />
             <RiNotification3Line />
           </button>
 
@@ -72,10 +69,11 @@ const TopNav = () => {
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
 
-           {/* conditional rendering */}
+          {/* conditional rendering */}
           {profile && <UserProfile closeProfile={closeProfile} />}
-          {notification && <Notification closeNotification={closeNotification} />}
-        
+          {notification && (
+            <Notification closeNotification={closeNotification} />
+          )}
         </div>
       </div>
     </div>

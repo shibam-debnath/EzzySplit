@@ -1,5 +1,7 @@
 import React from "react";
 const Footer = () => {
+  
+  
   return (
     <footer className="bg-footerColor pt-20">
       <div className="w-full">
@@ -10,13 +12,13 @@ const Footer = () => {
             </h3>
             <ul className="text-gray-500 dark:text-gray-400">
               <li className="mb-2">
-                <a href="/" className=" hover:text-gray-300">
-                  About
+                <a href="/team" className=" hover:text-gray-300">
+                 Teams
                 </a>
               </li>
               <li className="mb-2">
                 <a href="/" className="hover:text-gray-300">
-                  Careers
+              About
                 </a>
               </li>
               <li className="mb-2">

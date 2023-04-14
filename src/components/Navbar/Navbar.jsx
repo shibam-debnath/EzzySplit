@@ -2,22 +2,28 @@ import React, { useEffect } from "react";
 import "./Navbar.css";
 import { useState } from "react";
 import { Link, animateScroll as scroll } from "react-scroll";
+// import { useLocation } from "react-router-dom";
+import { bgcolor } from "@mui/system";
 import { useLocation } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
+  const [user] = useAuthState(auth);
+
   const location = useLocation();
   const help = location.state;
 
-
-  const clickButton = ()=>{
-    document.getElementById('contactUs').click();
-  }
-  useEffect(()=>{
-    if(help){
+  const clickButton = () => {
+    document.getElementById("contactUs").click();
+  };
+  useEffect(() => {
+    if (help) {
       clickButton();
     }
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <nav className="w-full bg-transparent fixed !h-16 top-0 glass ">
       <div className="justify-between px-4 mx-auto lg:max-w-8xl md:items-center md:flex md:px-8">
@@ -51,10 +57,12 @@ const Navbar = () => {
           <div
             // className={navbar ? "hidden" : "block"}
             className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${
-              navbar ? "block" : "hidden"
+              navbar ? "block"  : "hidden"
+            
             }`}
-          >
-            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+           >
+            <ul className="items-center justify-center space-y-8
+            md:flex md:space-x-6 md:space-y-0">
               <li className="p-2 space-x-8 text-gray-300 h-10  rounded-md hover:text-primary hover:font-bold cursor-pointer">
                 <Link
                   activeClass="active"
@@ -92,14 +100,16 @@ const Navbar = () => {
                   Contact Us
                 </Link>
               </li>
-              <li>
-                <a
-                  href="/login"
-                  className="inline-block rounded-md  px-6 outline-1 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
-                >
-                  LogIn
-                </a>
-              </li>
+              {!user && (
+                <li>
+                  <a
+                    href="/login"
+                    className="inline-block rounded-md  px-6 outline-1 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
+                  >
+                    LogIn
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>
