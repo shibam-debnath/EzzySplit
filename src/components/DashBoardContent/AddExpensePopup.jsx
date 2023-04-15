@@ -90,8 +90,19 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: `${groupId.current}`,
+    groupId: groupId.current,
   });
+
+  useEffect(() => {
+    FinputData({
+      amount: "",
+      description: "",
+      groupId: groupId.current,
+    });
+  }, [groupId, userId]);
+
+  console.log("inputData.groupId");
+  console.log(inputData.groupId);
 
   const [paidByArr, FpaidByArr] = useState([
     {
@@ -292,7 +303,8 @@ const AddExpensePopup = (props) => {
       }
 
       const { amount, description, groupId } = inputData;
-
+      // console.log("inputData.groupId");
+      // console.log(inputData.groupId);
       var totalPiadBy = 0;
       var totalSplitBetween = 0;
 
@@ -317,8 +329,8 @@ const AddExpensePopup = (props) => {
         totalPiadBy === Number(amount) &&
         totalSplitBetween === Number(amount)
       ) {
-        // console.log("before post");
-        //console.log(category);
+        console.log("etgsagsrhrshrh post");
+        console.log(groupId);
         const res = await fetch("http://localhost:8000/expense/addExpense", {
           method: "POST",
           headers: {
