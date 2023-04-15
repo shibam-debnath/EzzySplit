@@ -17,7 +17,7 @@ const TopNav = () => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [Url, setUrl] = useState("../images/avatar.png");
+  const [Url, setUrl] = useState("./images/avatar.png");
   var response;
 
   useEffect(() => {

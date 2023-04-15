@@ -64,6 +64,8 @@ const EditExpensesPopup = (props) => {
     setTimeout(() => {
       FtglSaveBtn(true);
       notify();
+      props.getData();
+      props.groupData();
       Caddon(0);
     }, 2000);
   };
@@ -334,7 +336,7 @@ const setcategory=(categor)=>{
       console.log("category before ppppop");
       console.log(category);
 
-      if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
+      if ((totalPiadBy ==amount) &&( totalSplitBetween == amount)) {
       const res = await fetch(`http://localhost:8000/expense/${userId}/${groupId}/${expenseId}`, {
         method: "PATCH",
         headers: {
@@ -392,7 +394,7 @@ const setcategory=(categor)=>{
               </h5>
               <button
                 className="hover:text-red-500 text-xl"
-                onClick={()=>{props.closeDisplayExpense();props.groupData()}}
+                onClick={props.closeDisplayExpense}
               >
                 <VscClose />
               </button>
