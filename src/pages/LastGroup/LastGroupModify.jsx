@@ -1,16 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BiRightArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export default function LastGroupModify(props) {
-  const navigate = useNavigate();
+  const userId = useRef("");
+  const groupId = useRef("");
+  const [user] = useAuthState(auth);
   const [toggleDesc, FtoggleDesc] = useState(false);
-  // console.log("props");
-  // console.log(props);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
   const callToggle = (e) => {
     e.preventDefault();
     FtoggleDesc(!toggleDesc);
   };
+
+  const updateDisplayName = (newName) => {
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+        .then(() => {
+          console.log("Display name updated successfully");
+        })
+        .catch((error) => {
+          console.log(`Error updating display name: ${error}`);
+        });
+    }
+  };
+
   return (
     <>
       <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
@@ -29,6 +66,8 @@ export default function LastGroupModify(props) {
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
             onClick={(e) => {
               e.preventDefault();
+              const temp1 = userId.current + "---" + props.groupid;
+              updateDisplayName(temp1);
               navigate("/dashboard/", { state: { groupid: props.groupid } });
             }}
           >

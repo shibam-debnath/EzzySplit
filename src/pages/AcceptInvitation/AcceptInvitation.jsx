@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 
 const AcceptInvitation = () => {
+  const auth1 = getAuth();
   const navigate = useNavigate();
+  console.log("ye dekho")
+  console.log(auth1.currentUser);
   const [emailId, setEmailId] = useState("");
   const [proceed, setProceed] = useState(false);
   const [userData, setUserData] = useState([]);
   const params = useParams();
   console.log(params);
   var groupId = params.id;
-
+  
   const [toggleInvitation, FtoggleInvitation] = useState(true);
+  const check = () =>{
+    if(auth1.currentUser===null){
+      navigate("/login");
+    }
+  };
+  
+  useEffect(()=>{
+    check();
+  },[]);
+
   const notifyInvitation = () => {
     toast.success("Added to group successfully", {
       autoClose: 1200,
@@ -39,7 +54,11 @@ const AcceptInvitation = () => {
   const dlyInvitation = () => {
     setTimeout(() => {
       FtoggleInvitation(true);
-      navigate("/dashboard/", { state: { groupid: groupId } });
+      console.log("Yaha tak to aa gaya bhai");
+      const temp = userData._id + "---" + groupId;
+      updateDisplayName(temp);
+      navigate("/dashboard/");
+      // navigate("/dashboard/", { state: { groupid: groupId } });
     }, 1000);
   };
   const setInvitation = () => {
@@ -73,6 +92,23 @@ const AcceptInvitation = () => {
     console.log(proceed);
     setProceed(false);
   }
+
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+        .then(() => {
+          console.log("Display name updated successfully");
+        })
+        .catch((error) => {
+          console.log(`Error updating display name: ${error}`);
+        });
+    }
+  };
 
   const verify = async () => {
     try {

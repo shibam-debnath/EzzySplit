@@ -8,8 +8,10 @@ import {
   sendPasswordReset,
 } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 
 const Login = () => {
+  const auth1 = getAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const Login = () => {
       return;
     }
     if (user && user.emailVerified === true) {
-      console.log("isme aa gaya");
+      console.log("banda logged in hein and we are searching using his email");
       console.log(user.email);
       getId(user.email);
     } else if (user && user.emailVerified === false) {
@@ -30,6 +32,22 @@ const Login = () => {
     // eslint-disable-next-line
   }, [user, loading]);
 
+  const updateDisplayName = (newName) => {
+    const user = auth1.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+      })
+        .then(() => {
+          console.log("Display name updated successfully");
+        })
+        .catch((error) => {
+          console.log(`Error updating display name: ${error}`);
+        });
+    }
+  };
+
   const getId = async (emailId) => {
     try {
       await axios
@@ -37,28 +55,22 @@ const Login = () => {
           responseType: "json",
         })
         .then(function (response) {
-          console.log(response.data[0]._id);
-          getData(response.data[0]._id);
+          console.log(response.data[0]);
+          const userId = response.data[0]._id;
+          const groupId = response.data[0].groupid[0];
+          const temp = userId + "---" + groupId;
+          console.log(temp);
+          updateDisplayName(temp);
+
+          // if not in any froup redirect to create a new group
+          if (groupId === undefined) navigate("/dashboard/newGroup");
+          else navigate("/dashboard/");
         });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getData = async (userId) => {
-    try {
-      await axios
-        .get(`http://localhost:8000/user/profile/${userId}`, {
-          responseType: "json",
-        })
-        .then(function (response) {
-          console.log(response.data.users);
-          navigate("/dashboard/");
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {

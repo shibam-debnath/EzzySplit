@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import AddExpenses from "./AddExpenses";
 import { BarLoader } from "react-spinners";
 import { useNavigate, useLocation } from "react-router";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import {
   Chart as ChartJS,
@@ -34,18 +36,30 @@ ChartJS.register(
 );
 
 const DashBoardContent = () => {
-  const navigate = useNavigate();
   const location = useLocation();
-  const groupId = process.env.REACT_APP_GROUP_ID;
-  const userId = process.env.REACT_APP_USER_ID;
-  console.log("state");
+  const userId = useRef("");
+  const groupId = useRef("");
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
   console.log(location.state);
-  console.log("userrrrrrr");
-  console.log(groupId);
-  console.log(userId);
-  // console.log(location.state.groupid);
   if (location.state) {
-    groupId = location.state.groupid;
+    groupId.current = location.state.groupid;
   }
 
   const currentColor = "var(--primary-font)";
@@ -90,11 +104,10 @@ const DashBoardContent = () => {
   const getData = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/user/profile/${userId}`, {
+        .get(`http://localhost:8000/user/profile/${userId.current}`, {
           responseType: "json",
         })
         .then(function (response) {
-          console.log(response.data.users);
           setData(response.data.users);
           set();
           settleExpense();
@@ -107,7 +120,7 @@ const DashBoardContent = () => {
   const groupData = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/group/details/${groupId}`, {
+        .get(`http://localhost:8000/group/details/${groupId.current}`, {
           responseType: "json",
         })
         .then(function (resp) {
@@ -170,7 +183,7 @@ const DashBoardContent = () => {
   const settleExpense = async () => {
     try {
       axios
-        .get(`http://localhost:8000/group/settle/${groupId}`, {
+        .get(`http://localhost:8000/group/settle/${groupId.current}`, {
           responseType: "json",
         })
         .then(function (response) {
@@ -210,6 +223,7 @@ const DashBoardContent = () => {
 
     console.log("grData");
     console.log(grData);
+    console.log(settleExpenseData);
     if (settleExpenseData && grData) {
       for (let i = 0; i < grData.userId.length; i++) {
         temp2[grData.userId[i]._id] = grData.userId[i].name;
@@ -222,7 +236,7 @@ const DashBoardContent = () => {
         singleData.paid = settleExpenseData[1][grData.userId[i]._id];
         singleData.expense = settleExpenseData[0][grData.userId[i]._id];
         temp.push(singleData);
-        if (grData.userId[i]._id === userId) {
+        if (grData.userId[i]._id === userId.current) {
           temp4.amount = grData.total;
           temp4.member = grData.userId.length;
           if (
@@ -244,6 +258,7 @@ const DashBoardContent = () => {
     }
 
     setCardData(temp4);
+    console.log("temp4");
     console.log(temp4);
     console.log("Temp:");
     console.log(temp);
@@ -335,7 +350,7 @@ const DashBoardContent = () => {
   function isSettled() {
     try {
       axios
-        .post(`http://localhost:8000/group/isSettled/${groupId}/true`, {
+        .post(`http://localhost:8000/group/isSettled/${groupId.current}/true`, {
           responseType: "json",
         })
         .then(function (response) {
@@ -535,7 +550,9 @@ const DashBoardContent = () => {
     <>
       <div>
         {
-          !grData.isSettled && <AddExpenses groupDetails={grData} />
+          !grData.isSettled && (
+            <AddExpenses groupDetails={grData} groupData={groupData} />
+          )
 
           // : (
           //   <div className="fixed bottom-10 right-10 h-18 w-62 bg-white text-black rounded-md shadow-md p-4">

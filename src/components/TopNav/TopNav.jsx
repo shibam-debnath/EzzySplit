@@ -1,13 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import UserProfile from "./UserProfile";
 import Notification from "./Notification";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const TopNav = () => {
-  // handles all menu and sets true eg - set UserProfile as true
+  const userId = useRef("");
+  const groupId = useRef("");
+  const uid = useRef("");
+  const [user] = useAuthState(auth);
+  const [UserData, FgetUsersData] = useState({});
+  const navigate = useNavigate();
   const [notification, setNotification] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [Url, setUrl] = useState("../images/avatar.png");
+  var response;
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+      uid.current = user.uid;
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
+  const getData = async () => {
+    try {
+      let config = {
+        method: "get",
+        url: `http://localhost:8000/user/profile/${userId.current}`,
+      };
+      response = await axios(config);
+      setUrl(response.data.users.imageUrl);
+      FgetUsersData(response.data.users);
+      console.log(`Data: ${UserData.name}`);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line
+  }, []);
 
   // Notification
   const openNotification = (e) => {
@@ -36,13 +83,9 @@ const TopNav = () => {
   return (
     <div className="flex bg-white border-l-2 justify-between">
       <div className="flex gap-2 items-center p-2 md:ml-2 md:mr-6">
-        <img
-          className="rounded-full w-9 h-9"
-          src="../images/avatar.png"
-          alt="user-profile"
-        />
+        <img className="rounded-full w-9 h-9" src={Url} alt="user-profile" />
         <div className="text-left">
-          <p className="font-semibold text-lg ">Shibam</p>
+          <p className="font-semibold text-lg ">{UserData.name}</p>
           <p className="text-gray-500 text-xs">Joined 8 months ago</p>
         </div>
       </div>
@@ -63,14 +106,20 @@ const TopNav = () => {
           >
             <img
               className="rounded-full w-8 h-8"
-              src="../images/avatar.png"
+              src={Url}
               alt="user-profile"
             />
             <MdKeyboardArrowDown className="text-gray-400 text-14" />
           </div>
 
           {/* conditional rendering */}
-          {profile && <UserProfile closeProfile={closeProfile} />}
+          {profile && (
+            <UserProfile
+              getData={getData}
+              UserData={UserData}
+              closeProfile={closeProfile}
+            />
+          )}
           {notification && (
             <Notification closeNotification={closeNotification} />
           )}

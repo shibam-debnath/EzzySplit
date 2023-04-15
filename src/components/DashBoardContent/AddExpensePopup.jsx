@@ -1,18 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { AppContext } from "../../AppContext";
+import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
 import SplitPopup from "./SplitPopup";
 import PaidByPopup from "./PaidByPopup";
-import AddCurrencyPopup from "./AddCurrencyPopup";
+import AddCategoryPopup from "./AddCategoryPopup";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const AddExpensePopup = (props) => {
-  const groupId = process.env.REACT_APP_GROUP_ID;
-  const userId = process.env.REACT_APP_USER_ID;
+  const userId = useRef("");
+  const groupId = useRef("");
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+    }
+    // eslint-disable-next-line
+  }, [user]);
 
   const tdDate = new Date();
   const [expDate, FexpDate] = useState(tdDate);
@@ -52,6 +71,13 @@ const AddExpensePopup = (props) => {
     });
   };
 
+  const cfailed = () => {
+    toast.error("Total paidby or split between isn't equal to amount", {
+      autoClose: 2000,
+      pauseOnFocusLoss: false,
+      transition: Flip,
+    });
+  };
   const set = () => {
     setTimeout(() => {
       FtglSaveBtn(true);
@@ -64,7 +90,7 @@ const AddExpensePopup = (props) => {
   const [inputData, FinputData] = useState({
     amount: "",
     description: "",
-    groupId: `${groupId}`,
+    groupId: `${groupId.current}`,
   });
 
   const [paidByArr, FpaidByArr] = useState([
@@ -96,7 +122,11 @@ const AddExpensePopup = (props) => {
     InitailizePaidByArr();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  // expence Category
+  const [category, Fcategory] = useState("Others");
+  const setcategory = (categor) => {
+    Fcategory(categor);
+  };
   // you or multiple
   const [payer, Fpayer] = useState("You");
   const setPayer = (text) => {
@@ -130,7 +160,7 @@ const AddExpensePopup = (props) => {
       },
     ];
     // Payer is user who loggined
-    if (name === `${userId}`) {
+    if (name === `${userId.current}`) {
       Fpayer("You");
     }
     FpaidBySingle(() => [...tempArr]);
@@ -159,7 +189,7 @@ const AddExpensePopup = (props) => {
     e.preventDefault();
     Caddon(4);
   };
-  const addCurrency = (e) => {
+  const addCategory = (e) => {
     e.preventDefault();
     Caddon(6);
   };
@@ -225,13 +255,15 @@ const AddExpensePopup = (props) => {
   };
 
   //  posting addexpenses
+  console.log("before post");
+  console.log(category);
   const postForm = async () => {
     try {
       var fnarr = [];
       if (payer === "You") {
         fnarr = [
           {
-            userId: `${userId}`,
+            userId: `${userId.current}`,
             amount: inputData.amount,
             name: "test1",
           },
@@ -260,39 +292,74 @@ const AddExpensePopup = (props) => {
       }
 
       const { amount, description, groupId } = inputData;
-      const res = await fetch("http://localhost:8000/expense/addExpense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          description,
-          groupId,
-          paidBy: fnarr,
-          split_method,
-          notes,
-          expDate,
-          split_between: SplitArr,
-        }),
-      });
-      await res.json();
 
-      if (res.status === 200) {
-        set();
+      var totalPiadBy = 0;
+      var totalSplitBetween = 0;
+
+      for (var i = 0; i < fnarr.length; i++) {
+        totalPiadBy = Number(totalPiadBy) + Number(fnarr[i].amount);
       }
-      FinputData({
-        amount: "",
-        description: "",
-        groupId: `${groupId}`,
-      });
+      for (var i = 0; i < SplitArr.length; i++) {
+        totalSplitBetween =
+          Number(totalSplitBetween) + Number(SplitArr[i].toPay);
+      }
+
+      console.log("during adding..................");
+      console.log("totalPiadBy");
+      console.log(totalPiadBy);
+      console.log("totalSplitBetween");
+      console.log(totalSplitBetween);
+      console.log("amount");
+      console.log(amount);
+      console.log("category");
+      console.log(category);
+      if (
+        totalPiadBy === Number(amount) &&
+        totalSplitBetween === Number(amount)
+      ) {
+        // console.log("before post");
+        //console.log(category);
+        const res = await fetch("http://localhost:8000/expense/addExpense", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            amount,
+            description,
+            groupId,
+            paidBy: fnarr,
+            split_method,
+            notes,
+            expDate,
+            category: category,
+            split_between: SplitArr,
+          }),
+        });
+        await res.json();
+        console.log("before post");
+        console.log(category);
+        if (res.status === 200) {
+          set();
+        }
+        FinputData({
+          amount: "",
+          description: "",
+          groupId: `${groupId.current}`,
+        });
+      } else {
+        cfailed();
+        FtglSaveBtn(true);
+      }
     } catch (error) {
       FtglSaveBtn(true);
       failed();
       console.log("Error in Adding Expenses");
     }
   };
-
+  // console.log("Afer post");
+  //console.log(category);
   return (
     <>
       {/* <div className='bg-neutral-200 opacity-90 fixed inset-0 z-50 flex-col '> */}
@@ -324,11 +391,27 @@ const AddExpensePopup = (props) => {
 
               <div>
                 <div className="flex items-center mt-3">
-                  <div className="w-2/6 ">
-                    <div className="w-2/5 m-auto py-3 ">
-                      <img src="../images/grocery.png" alt="Loading" />
+                  <div className="w-2/5 ">
+                    <div className="w-2/6 m-auto pt-1 ">
+                      <button
+                        className="font-medium hover:text-slate-500"
+                        onClick={addCategory}
+                      >
+                        <img src="../images/grocery.png" alt="Loading" />
+                      </button>
                     </div>
+                    <button
+                      className="font-medium hover:text-slate-500"
+                      onClick={addCategory}
+                    >
+                      <span className="text-blue-700 text-sm">
+                        {" "}
+                        <span className="text-black ">category:</span>{" "}
+                        {category}
+                      </span>
+                    </button>
                   </div>
+
                   <div className="w-3/5  ">
                     <div className="border-b-[1px] border-dotted border-emerald-500">
                       <input
@@ -355,12 +438,7 @@ const AddExpensePopup = (props) => {
                       ""
                     )}
                     <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
-                      <button
-                        className="font-medium hover:text-slate-500"
-                        onClick={addCurrency}
-                      >
-                        INR
-                      </button>
+                      INR
                       <input
                         type="text"
                         placeholder="Amount"
@@ -507,7 +585,9 @@ const AddExpensePopup = (props) => {
                 notes={notes}
               />
             )}
-            {addon === 6 && <AddCurrencyPopup closeAdd={closeAdd} />}
+            {addon === 6 && (
+              <AddCategoryPopup closeAdd={closeAdd} setcategory={setcategory} />
+            )}
             {/* </div> */}
           </div>
         </form>

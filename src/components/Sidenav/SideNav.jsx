@@ -35,17 +35,21 @@ const SideNav = () => {
     }
   }
 
-  const triggerHelp = ()=>{
-    navigate('/',{state:{help:true}});
-  }
-
+  const triggerHelp = () => {
+    navigate("/", { state: { help: true } });
+  };
+  const triggerHero = () => {
+    navigate("/");
+  };
   return (
-    <div className="flex md:w-64 md:ml-5 flex-col ">
-      <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
-        Ezzy<span className="text-primary">Split</span>
-      </h1>
-      <div className="mt-12  py-4 px-3 rounded">
-        <ul className="space-y-2">
+    <div class="flex md:w-64 md:ml-5 flex-col ">
+      <button onClick={triggerHero}>
+        <h1 className="mt-6 px-5 text-2xl md:text-3xl xl:text-4xl font-bold tracking-tight">
+          Ezzy<span className="text-primary">Split</span>
+        </h1>
+      </button>
+      <div class="mt-12  py-4 px-3 rounded">
+        <ul class="space-y-2">
           <li>
             <NavLink
               to={"/dashboard/"}
@@ -109,7 +113,7 @@ const SideNav = () => {
               </span>
             </NavLink>
           </li>
-          
+
           <li>
             <NavLink
               to={"/"}
@@ -131,15 +135,15 @@ const SideNav = () => {
             </NavLink>
           </li>
           <li>
-            <button 
-            onClick={triggerHelp}
+            <button
+              onClick={triggerHelp}
               className="w-full flex items-center p-2 mt-3 text-base text-gray-500  active:bg-primary active:text-white font-normal rounded-lg"
             >
               <div className="text-2xl opacity-0.9 hover:drop-shadow-xl rounded-full">
                 <MdOutlineLiveHelp />
               </div>
               <div className="ml-3 whitespace-nowrap">Help</div>
-            </button >
+            </button>
           </li>
         </ul>
       </div>

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdOutlineCancel } from "react-icons/md";
 import { logout } from "../../firebase/firebase";
 import axios from "axios";
@@ -7,20 +8,33 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { storage } from "../../firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-var response;
-
 const UserProfile = (props) => {
-  const userId = process.env.REACT_APP_USER_ID;
+  const userId = useRef("");
+  const groupId = useRef("");
+  const uid = useRef("");
   const [user] = useAuthState(auth);
-  const [UserData, FgetUsersData] = useState({});
+  const [UserData, FgetUsersData] = useState(props.UserData);
   const [ProfileName, setProfileName] = useState("");
   const [ProfileImage, setProfileImage] = useState("");
-  const [Url, setUrl] = useState("");
+  const [Url, setUrl] = useState(props.UserData.imageUrl);
   const [percentage, setPercentage] = useState(null);
-  const uid = user.uid;
+  const navigate = useNavigate();
 
-  // console.log(ProfileName);
-  // console.log(ProfileImage);
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+      uid.current = user.uid;
+    }
+    // eslint-disable-next-line
+  }, [user]);
 
   async function handleLogout(e) {
     e.preventDefault();
@@ -30,25 +44,6 @@ const UserProfile = (props) => {
       alert("Logout unsuccessful");
     }
   }
-
-  const getData = async () => {
-    try {
-      let config = {
-        method: "get",
-        url: `http://localhost:8000/user/profile/${userId}`,
-      };
-      response = await axios(config);
-      FgetUsersData(response.data.users);
-      console.log(`Data: ${UserData.name}`);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line
-  }, []);
 
   const [editProfile, setEditProfile] = useState(false);
 
@@ -89,6 +84,7 @@ const UserProfile = (props) => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setUrl(downloadURL);
             console.log("File available at");
+            console.log(downloadURL);
             console.log(Url);
           });
         }
@@ -99,13 +95,11 @@ const UserProfile = (props) => {
   }, [ProfileImage]);
 
   function handleSubmit(e) {
-    console.log("button clicked");
-    e.preventDefault();
     try {
       axios
-        .post("http://localhost:8000/user/edituser/6433c5b22e64c9bc0d4931a6", {
+        .post(`http://localhost:8000/user/edituser/${userId.current}`, {
           name: ProfileName,
-          uid: uid,
+          uid: uid.current,
           imageUrl: Url,
         })
         .then((response) => {
@@ -116,6 +110,7 @@ const UserProfile = (props) => {
     } catch (err) {
       console.log(err);
     }
+    props.closeProfile();
   }
 
   return (
@@ -136,7 +131,7 @@ const UserProfile = (props) => {
           <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
             <img
               className="rounded-full h-24 w-24"
-              src={Url || "../images/avatar.png"}
+              src={Url}
               alt="user-profile"
             />
             <div className="flex flex-col">

@@ -1,21 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import axios from "axios";
 import LastGroupModify from "./LastGroupModify";
 
 const LastGroup = () => {
-  const userId = process.env.REACT_APP_USER_ID;
-  console.log("last");
-  console.log(userId);
+  const userId = useRef("");
+  const groupId = useRef("");
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
   const [groupData, setgroupData] = useState({});
 
   const lastGroupData = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/group/${userId}`, {
+        .get(`http://localhost:8000/group/${userId.current}`, {
           responseType: "json",
         })
         .then(function (response) {
+          console.log("response");
+          console.log(response.data);
           setgroupData(response.data);
+          console.log("grdata");
+          console.log(groupData);
         });
     } catch (err) {
       console.log(err);
@@ -24,6 +49,7 @@ const LastGroup = () => {
 
   useEffect(() => {
     lastGroupData();
+    // eslint-disable-next-line
   }, []);
 
   let count = 1;

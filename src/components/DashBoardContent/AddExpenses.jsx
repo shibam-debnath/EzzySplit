@@ -12,6 +12,7 @@ const AddExpenses = (props) => {
 
   const closeAdd = (e) => {
     e.preventDefault();
+    props.groupData();
     Fpopup(false);
   };
 

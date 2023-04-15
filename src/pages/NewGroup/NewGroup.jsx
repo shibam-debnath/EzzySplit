@@ -1,4 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { auth } from "../../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { updateProfile } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -6,14 +9,30 @@ import "react-toastify/dist/ReactToastify.css";
 import { ThreeDots } from "react-loader-spinner";
 
 const NewGroup = () => {
-  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
   const [groupName, setGroupName] = useState("");
+  const [groupImage, setGroupImage] = useState("");
   const [groupMembers, setGroupMembers] = useState("");
-  const [groupImage, setGroupImage] = useState(null);
-  const [groupId, setGroupId] = useState(process.env.REACT_APP_GROUP_ID);
-  const userId = process.env.REACT_APP_USER_ID;
-
   const [toggleGroup, FtoggleGroup] = useState(true);
+  const navigate = useNavigate();
+  const userId = useRef("");
+  const groupId = useRef("");
+
+  useEffect(() => {
+    console.log("checking the user ");
+    if (user == null) {
+      return navigate("/login");
+    } else {
+      console.log("Accessing the user ");
+      console.log(user.displayName);
+      var temp = user.displayName.split("---");
+      userId.current = temp[0];
+      groupId.current = temp[1];
+      console.log(userId.current);
+    }
+    // eslint-disable-next-line
+  }, [user]);
+
   const notify = () => {
     toast.success("Group created successfully", {
       autoClose: 1200,
@@ -59,6 +78,7 @@ const NewGroup = () => {
   function handleGroupImageChange(event) {
     setGroupImage(event.target.files[0]);
   }
+
   const [members, setMembers] = useState([]);
   console.log(members);
 
@@ -83,10 +103,26 @@ const NewGroup = () => {
   console.log("after");
   console.log(members);
 
+  const updateDisplayName = (newName) => {
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+        // photoURL: "https://example.com/newProfilePhoto.jpg"
+      })
+        .then(() => {
+          console.log("Display name updated successfully");
+        })
+        .catch((error) => {
+          console.log(`Error updating display name: ${error}`);
+        });
+    }
+  };
+
   const post = async () => {
     try {
       axios
-        .post(`http://localhost:8000/group/creategroup/${userId}`, {
+        .post(`http://localhost:8000/group/creategroup/${userId.current}`, {
           groupName: groupName,
           // groupIcon:groupImage
         })
@@ -98,13 +134,17 @@ const NewGroup = () => {
             set2();
           }
           if (response.status === 201) {
-            setGroupId(response.data.groupId);
+            groupId.current = response.data.groupId;
+            console.log("Yaha bhi aaya");
+            console.log(response.data.groupId);
+            inviteUsers(response.data.groupId);
+            const temp = userId.current + "---" + response.data.groupId;
+            updateDisplayName(temp);
+            set();
           }
-          console.log(groupId);
-          if (groupId !== "") {
-            inviteUsers();
+          if (groupId.current !== "") {
+            navigate("/dashboard/");
           }
-          set();
         });
     } catch (err) {
       console.log("check5");
@@ -112,7 +152,7 @@ const NewGroup = () => {
     }
   };
 
-  const inviteUsers = async () => {
+  const inviteUsers = async (id) => {
     for (let i = 0; i < members.length; i++) {
       // console.log("memebrs[i]")
       // console.log(members[i]);
@@ -123,7 +163,7 @@ const NewGroup = () => {
         data: {
           groupName: groupName,
           emailId: members[i],
-          groupId: groupId,
+          groupId: id,
         },
       };
 
