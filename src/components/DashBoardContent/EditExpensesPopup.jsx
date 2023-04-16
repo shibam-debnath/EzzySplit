@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BiX } from "react-icons/bi";
 import { VscClose } from "react-icons/vsc";
 import AddDatePopup from "./AddDatePopup";
 import AddNotePopup from "./AddNotePopup";
@@ -130,13 +129,13 @@ const EditExpensesPopup = (props) => {
 
   // you or multiple
   var pyr = "You";
-  if(props.expenseDetails.paidBy.length >1){
+  if (props.expenseDetails.paidBy.length > 1) {
     pyr = "Multiple P.";
   }
-  const[category,Fcategory]=useState(props.expenseDetails.category);
-const setcategory=(categor)=>{
-  Fcategory(categor);
-}
+  const [category, Fcategory] = useState(props.expenseDetails.category);
+  const setcategory = (categor) => {
+    Fcategory(categor);
+  };
   const [payer, Fpayer] = useState(pyr);
   const setPayer = (text) => {
     Fpayer(text);
@@ -209,7 +208,7 @@ const setcategory=(categor)=>{
 
   // Split method
   var spmtd = "equally";
-  spmtd= props.expenseDetails.split_method;
+  spmtd = props.expenseDetails.split_method;
   const [split_method, Fsplit_method] = useState(spmtd);
   const [splitBetween, FsplitBetween] = useState({
     user: "",
@@ -329,57 +328,55 @@ const setcategory=(categor)=>{
         totalPiadBy = Number(totalPiadBy) + Number(fnarr[i].amount);
       }
       for (var i = 0; i < SplitArr.length; i++) {
-        totalSplitBetween = Number(totalSplitBetween) + Number(SplitArr[i].toPay);
+        totalSplitBetween =
+          Number(totalSplitBetween) + Number(SplitArr[i].toPay);
       }
       console.log("category before ppppop");
       console.log(category);
 
-      if ((totalPiadBy == amount) &&( totalSplitBetween == amount)) {
-      const res = await fetch(`http://localhost:8000/expense/${userId}/${groupId}/${expenseId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          description,
-          groupId,
-          paidBy: fnarr,
-          split_method,
-          notes,
-          expDate,
-          category:category,
-          split_between: SplitArr,
-          prevAmount:prevAmount
-        }),
-      });
-      await res.json();
+      if (totalPiadBy === amount && totalSplitBetween === amount) {
+        const res = await fetch(
+          `http://localhost:8000/expense/${userId}/${groupId}/${expenseId}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount,
+              description,
+              groupId,
+              paidBy: fnarr,
+              split_method,
+              notes,
+              expDate,
+              category: category,
+              split_between: SplitArr,
+              prevAmount: prevAmount,
+            }),
+          }
+        );
+        await res.json();
 
-      if (res.status === 200) {
-        set();
-        props.groupData();
+        if (res.status === 200) {
+          set();
+          props.groupData();
+        }
+        FinputData({
+          amount: "",
+          description: "",
+          groupId: `${groupId}`,
+        });
+      } else {
+        cfailed();
+        FtglSaveBtn(true);
       }
-      FinputData({
-        amount: "",
-        description: "",
-        groupId: `${groupId}`,
-      });
-    }
-
-    else{
-      cfailed();
-      FtglSaveBtn(true);
-    }
-
     } catch (error) {
       FtglSaveBtn(true);
       failed();
       console.log("Error in Adding Expenses");
     }
   };
-
-
-
 
   return (
     <div className="fixed inset-0 bg-white bg-opacity-80  backdrop-blur-sm bg-fixed text-black">
@@ -392,7 +389,10 @@ const setcategory=(categor)=>{
               </h5>
               <button
                 className="hover:text-red-500 text-xl"
-                onClick={()=>{props.closeDisplayExpense();props.groupData()}}
+                onClick={() => {
+                  props.closeDisplayExpense();
+                  props.groupData();
+                }}
               >
                 <VscClose />
               </button>
@@ -412,19 +412,22 @@ const setcategory=(categor)=>{
               <div className="flex items-center mt-3">
                 <div className="w-2/6 ">
                   <div className="w-2/5 m-auto py-3 ">
-<button
-                        className="font-medium hover:text-slate-500"
-                        onClick={addCategory}
-                      >
+                    <button
+                      className="font-medium hover:text-slate-500"
+                      onClick={addCategory}
+                    >
                       <img src="../images/grocery.png" alt="Loading" />
-                      </button>
+                    </button>
                   </div>
                   <button
-                        className="font-medium hover:text-slate-500"
-                        onClick={addCategory}
-                      >
-                      <span className="text-blue-700 text-sm"> <span className="text-black ">category:</span> {category}</span>
-                      </button>
+                    className="font-medium hover:text-slate-500"
+                    onClick={addCategory}
+                  >
+                    <span className="text-blue-700 text-sm">
+                      {" "}
+                      <span className="text-black ">category:</span> {category}
+                    </span>
+                  </button>
                 </div>
                 <div className="w-3/5  ">
                   <div className="border-b-[1px] border-dotted border-emerald-500">
@@ -452,7 +455,7 @@ const setcategory=(categor)=>{
                     ""
                   )}
                   <div className="mt-1 flex items-center border-b-[1px] border-dotted border-emerald-500">
-                      INR
+                    INR
                     <input
                       type="text"
                       placeholder="Amount"
@@ -599,16 +602,15 @@ const setcategory=(categor)=>{
               notes={notes}
             />
           )}
-          {addon === 6 && <AddCategoryPopup 
-            closeAdd={closeAdd}
-            setcategory={setcategory}
-             />}
+          {addon === 6 && (
+            <AddCategoryPopup closeAdd={closeAdd} setcategory={setcategory} />
+          )}
           {/* </div> */}
         </div>
       </form>
       <ToastContainer />
     </div>
-  )
-}
+  );
+};
 
-export default EditExpensesPopup
+export default EditExpensesPopup;
