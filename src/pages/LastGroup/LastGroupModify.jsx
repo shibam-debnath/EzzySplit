@@ -41,6 +41,7 @@ export default function LastGroupModify(props) {
       })
         .then(() => {
           console.log("Display name updated successfully");
+          navigate("/dashboard/", { state: { groupid: props.groupid } });
         })
         .catch((error) => {
           console.log(`Error updating display name: ${error}`);
@@ -68,7 +69,7 @@ export default function LastGroupModify(props) {
               e.preventDefault();
               const temp1 = userId.current + "---" + props.groupid;
               updateDisplayName(temp1);
-              navigate("/dashboard/", { state: { groupid: props.groupid } });
+              
             }}
           >
             <BiRightArrow />
