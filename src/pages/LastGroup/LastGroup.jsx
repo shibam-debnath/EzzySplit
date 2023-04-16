@@ -57,9 +57,11 @@ const LastGroup = () => {
   return (
     <>
       <div className="flex space-between ">
-        <div className=" min-h-screen w-full  ">
-          <div className="pt-5 pb-2 font-sans text-3xl">Your last Groups</div>
-          <div>
+        <div className=" min-h-screen w-full  mt-5">
+          <div className="pt-5 pb-2 text-primary font-semibold font-sans text-3xl">
+            Your last Groups
+          </div>
+          <div className="mt-10">
             {groupData.groupid ? (
               groupData.groupid.map((group) => (
                 <LastGroupModify
@@ -68,6 +70,7 @@ const LastGroup = () => {
                   created={group.createdOn}
                   groupid={group._id}
                   user={group.userId}
+                  isSettled={group.isSettled}
                 />
               ))
             ) : (

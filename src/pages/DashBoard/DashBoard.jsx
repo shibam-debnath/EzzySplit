@@ -15,7 +15,7 @@ const DashBoard = () => {
             <TopNav />
           </div>
           <div className="flex flex-row">
-            <div className="bg-gray-200 min-h-screen w-full  ">
+            <div className="bg-dashboardBG min-h-[90vh] w-full  ">
               <Outlet />
             </div>
           </div>

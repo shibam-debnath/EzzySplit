@@ -182,18 +182,20 @@ const NewGroup = () => {
   // console.log(groupImage);
   // console.log(groupName);
   return (
-    <div className="flex flex-col items-center mt-6 justify-center  scrollbar-none bg-gray-200">
-      <h1 className="text-3xl font-bold mb-2">Create a New Group</h1>
+    <div className="flex flex-col items-center mt-6 h-[80vh] justify-center  scrollbar-none ">
+      <h1 className="text-3xl text-primary font-bold mb-2">
+        Create a New Group
+      </h1>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
+        className="w-full max-w-lg bg-white p-6 mt-5 rounded-lg shadow-md"
       >
         <div className="mb-4">
           <label
             htmlFor="group-name"
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-slate-400 font-semibold mb-2"
           >
-            Group Name:
+            Group Name
           </label>
           <input
             type="text"
@@ -210,7 +212,7 @@ const NewGroup = () => {
         <div className="mb-4">
           <label
             htmlFor="members"
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-slate-400 font-semibold mb-2"
           >
             Add Members
           </label>
@@ -227,9 +229,9 @@ const NewGroup = () => {
         <div className="mb-4">
           <label
             htmlFor="group-image"
-            className="block text-gray-700 font-bold mb-2"
+            className="block text-slate-400 font-semibold mb-2"
           >
-            Group Image:
+            Group Image
           </label>
           <input
             type="file"

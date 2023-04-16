@@ -24,6 +24,7 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { GiReceiveMoney, GiPayMoney, GiExpense } from "react-icons/gi";
 import { BiX } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import EditExpensesPopup from "./EditExpensesPopup";
 
 ChartJS.register(
   ArcElement,
@@ -52,6 +53,12 @@ const DashBoardContent = () => {
       var temp = user.displayName.split("---");
       userId.current = temp[0];
       groupId.current = temp[1];
+
+      if (groupId.current === "undefined") {
+        console.log("idhar aaya hai dekhho");
+        navigate("/dashboard/newGroup");
+      }
+
       console.log(userId.current);
     }
     // eslint-disable-next-line
@@ -78,6 +85,7 @@ const DashBoardContent = () => {
 
   const [settleExpenseData, setsettleExpenseData] = useState({});
   const [displayExpenseData, setDisplayExpenseData] = useState(false);
+  const [editExpenseData, seteditExpenseData] = useState(false);
   const [expenseId, setExpenseId] = useState({});
 
   const [groupMembers, setGroupMembers] = useState("");
@@ -110,7 +118,6 @@ const DashBoardContent = () => {
         .then(function (response) {
           setData(response.data.users);
           set();
-          settleExpense();
         });
     } catch (err) {
       console.log(err);
@@ -124,6 +131,7 @@ const DashBoardContent = () => {
           responseType: "json",
         })
         .then(function (resp) {
+          settleExpense();
           setgroupData(resp.data.group);
           console.log(resp.data);
         });
@@ -380,6 +388,8 @@ const DashBoardContent = () => {
           console.log("response.data after deleting call");
           console.log(response);
           setExpenseIdToDelete("");
+          getData();
+          groupData();
           // fexpend();
           // set();
           console.log(response.status);
@@ -404,8 +414,10 @@ const DashBoardContent = () => {
 
   const closeDisplayExpense2 = () => {
     setSettleCall2(false);
-    navigate("/");
-    navigate("/dashboard/");
+    // navigate("/");
+    // navigate("/dashboard/");
+    getData();
+    groupData();
   };
 
   const deleteExpense = (expenses) => {
@@ -551,7 +563,7 @@ const DashBoardContent = () => {
       <div>
         {
           !grData.isSettled && (
-            <AddExpenses groupDetails={grData} groupData={groupData} />
+            <AddExpenses groupDetails={grData} groupData={groupData} getData={getData} />
           )
 
           // : (
@@ -712,6 +724,7 @@ const DashBoardContent = () => {
 
             {!grData.isSettled &&
               grData.expenseId &&
+              grData.userId.length > 1 &&
               grData.expenseId.length > 0 && (
                 <button
                   className="flex justify-end text-white p-2 bg-lgPrimary rounded-md hover:bg-primary"
@@ -738,7 +751,14 @@ const DashBoardContent = () => {
                   <div className="text-white text-xl">Expense Description</div>
                   <div className="flex">
                     {!grData.isSettled && (
-                      <div className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center">
+                      <div
+                        className="mr-4 pl-2 pr-2 rounded-md bg-white cursor-pointer flex justify-center"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          seteditExpenseData(true);
+                          setDisplayExpenseData(false);
+                        }}
+                      >
                         Edit
                       </div>
                     )}
@@ -783,6 +803,10 @@ const DashBoardContent = () => {
                       </div>
                     </div>
                     <div className="flex justify-start p-2">
+                      <div className="text-gray-500">Category:&nbsp;</div>
+                      <div>{expenseId.category}</div>
+                    </div>
+                    <div className="flex justify-start p-2">
                       <div className="text-gray-500">Paid By: &nbsp;</div>
                       <div>
                         {expenseId.paidBy.map((items) => {
@@ -825,6 +849,17 @@ const DashBoardContent = () => {
               </div>
             </div>
           )}
+          {/* edit expenses */}
+          {editExpenseData && (
+            <EditExpensesPopup
+              closeDisplayExpense={closeDisplayExpense}
+              expenseDetails={expenseId}
+              groupDetails={grData}
+              userId={userId.current}
+              groupData={groupData}
+              getData={getData}
+            />
+          )}
           {/* to display the complete details of an expense ends */}
 
           <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
@@ -861,13 +896,21 @@ const DashBoardContent = () => {
                         expenses.paidBy.map((items) => {
                           return (
                             <div className="flex">
-                              {items.userId.name},&nbsp;
+                              {items.userId._id === userId ? (
+                                <div>You,&nbsp;</div>
+                              ) : (
+                                <div>{items.userId.name},&nbsp;</div>
+                              )}
                             </div>
                           );
                         })
                       ) : (
                         <div className="flex">
-                          {expenses.paidBy[0].userId.name}
+                          {expenses.paidBy[0].userId._id === userId.current ? (
+                            <div>You</div>
+                          ) : (
+                            <div>{expenses.paidBy[0].userId.name}</div>
+                          )}
                         </div>
                       )}
                     </div>

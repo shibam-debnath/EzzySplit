@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BiRightArrow } from "react-icons/bi";
+import { BiDownArrow } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
@@ -41,6 +41,7 @@ export default function LastGroupModify(props) {
       })
         .then(() => {
           console.log("Display name updated successfully");
+          navigate("/dashboard/", { state: { groupid: props.groupid } });
         })
         .catch((error) => {
           console.log(`Error updating display name: ${error}`);
@@ -50,28 +51,55 @@ export default function LastGroupModify(props) {
 
   return (
     <>
-      <div className="bg-white h-15 rounded-xl m-3 p-2 hover:bg-primary hover:text-white flex justify-between ">
-        <button className="w-full" onClick={callToggle}>
-          <div className="flex text-lg">
-            <span className="pl-2 pr-2">{props.id}.</span>
-            <p className="pl-2 hover:cursor-pointer">{props.name}</p>
-            <p className="pl-6  text-[13px] font-light hover:cursor-pointer">
+      <div className="bg-white h-15 rounded-xl m-3 p-[1rem] hover:bg-lgPrimary hover:text-white flex justify-between ">
+        <button
+          className="w-full flex flex-row"
+          onClick={(e) => {
+            e.preventDefault();
+            const temp1 = userId.current + "---" + props.groupid;
+            updateDisplayName(temp1);
+          }}
+        >
+          <span className=" w-1 pl-2 pr-2">{props.id}.</span>
+          <div className="grid grid-cols-4 justify-items-start text-lg">
+            <p className="flex w-60 pl-10 font-semibold text-primary hover:cursor-pointer">
+              {props.name}
+            </p>
+            <div className="flex flex-row pl-10">
+              <img
+                className="rounded-full w-8 h-8 "
+                src={props.user[0].imageUrl}
+                alt="user-profile"
+              />
+              <p className="hover:cursor-pointer font-light text-[16px] pl-3">
+                {props.user[0].name}
+              </p>
+            </div>
+            <p className="pl-10  text-[13px] font-light hover:cursor-pointer">
               Created on:{" "}
               {props.created.substring(0, 10).split("-").reverse().join("-")}
             </p>
+            <div className="pl-10 flex flex-row items-center">
+              {props.isSettled ? (
+                <>
+                  <div className="rounded-xl bg-red-400 h-3 w-3"></div>
+                  <p className=" pl-[5px] text-[16px] font-light">Settled</p>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-xl bg-green-400 h-3 w-3"></div>
+                  <p className=" pl-[5px] text-[16px] font-light">Active</p>
+                </>
+              )}
+            </div>
           </div>
         </button>
         <div>
           <button
             className="text-xl rounded-xl p-1 hover:cursor-pointer hover:text-emerald-300"
-            onClick={(e) => {
-              e.preventDefault();
-              const temp1 = userId.current + "---" + props.groupid;
-              updateDisplayName(temp1);
-              navigate("/dashboard/", { state: { groupid: props.groupid } });
-            }}
+            onClick={callToggle}
           >
-            <BiRightArrow />
+            <BiDownArrow />
           </button>
         </div>
       </div>

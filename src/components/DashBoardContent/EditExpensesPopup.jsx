@@ -63,6 +63,8 @@ const EditExpensesPopup = (props) => {
     setTimeout(() => {
       FtglSaveBtn(true);
       notify();
+      props.getData();
+      props.groupData();
       Caddon(0);
     }, 2000);
   };
@@ -389,10 +391,7 @@ const EditExpensesPopup = (props) => {
               </h5>
               <button
                 className="hover:text-red-500 text-xl"
-                onClick={() => {
-                  props.closeDisplayExpense();
-                  props.groupData();
-                }}
+                onClick={props.closeDisplayExpense}
               >
                 <VscClose />
               </button>
