@@ -15,9 +15,6 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 
-console.log("env files :");
-console.log(process.env);
-
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
   authDomain: "ezzysplit.firebaseapp.com",

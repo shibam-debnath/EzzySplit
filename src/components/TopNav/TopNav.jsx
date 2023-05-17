@@ -40,11 +40,13 @@ const TopNav = () => {
     try {
       let config = {
         method: "get",
-        url: `http://localhost:8000/user/profile/${userId.current}`,
+        url: `https://ezzysplit-backend.onrender.com/user/profile/${userId.current}`,
       };
       response = await axios(config);
       setUrl(response.data.users.imageUrl);
       FgetUsersData(response.data.users);
+      // console.log("Url");
+      // console.log(Url);
       console.log(`Data: ${UserData.name}`);
     } catch (err) {
       console.log(err.message);

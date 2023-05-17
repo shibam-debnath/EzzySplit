@@ -122,10 +122,13 @@ const NewGroup = () => {
   const post = async () => {
     try {
       axios
-        .post(`http://localhost:8000/group/creategroup/${userId.current}`, {
-          groupName: groupName,
-          // groupIcon:groupImage
-        })
+        .post(
+          `https://ezzysplit-backend.onrender.com/group/creategroup/${userId.current}`,
+          {
+            groupName: groupName,
+            // groupIcon:groupImage
+          }
+        )
         .then((response) => {
           console.log("In res");
           console.log(response);
@@ -158,7 +161,7 @@ const NewGroup = () => {
       // console.log(members[i]);
       let config = {
         method: "post",
-        url: "http://localhost:8000/group/inviteUser",
+        url: "https://ezzysplit-backend.onrender.com/group/inviteUser",
 
         data: {
           groupName: groupName,

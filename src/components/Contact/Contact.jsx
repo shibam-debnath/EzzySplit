@@ -29,7 +29,7 @@ const Contact = () => {
 
     let config = {
       method: "post",
-      url: "http://localhost:8000/sendmail/contactUs",
+      url: "https://ezzysplit-backend.onrender.com/sendmail/contactUs",
 
       data: {
         name: values.name,
@@ -62,7 +62,7 @@ const Contact = () => {
   }
 
   return (
-    <div  id="Contact" className=" w-full bg-transparent p-6 text-white">
+    <div id="Contact" className=" w-full bg-transparent p-6 text-white">
       <h1 className="font-bold text-center text-2xl sm:text-3xl">
         <span className="text-primary">Contact</span> Us
       </h1>
@@ -171,7 +171,7 @@ const Contact = () => {
                 )}
               </div>
             </div>
-            <div className="flex justify-center"> 
+            <div className="flex justify-center">
               {beforeSubmit === 0 && (
                 <input
                   type="submit"
@@ -192,7 +192,7 @@ const Contact = () => {
               {beforeSubmit === 2 && (
                 <div className="bg-primary rounded-lg p-2 text-center w-fit flex justify-center ">
                   {/* <div className="bg-primary rounded-lg p-2 text-center w-64 " > */}
-                    {value}
+                  {value}
                   {/* </div> */}
                 </div>
               )}
