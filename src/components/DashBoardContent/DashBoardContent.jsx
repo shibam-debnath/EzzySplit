@@ -173,7 +173,7 @@ const DashBoardContent = () => {
       // console.log(members[i]);
       let config = {
         method: "post",
-        url: "https://ezzysplit-backend.onrender.com/group/inviteUser",
+        url: `https://ezzysplit-backend.onrender.com/group/inviteUser`,
         data: {
           groupName: grData._name,
           emailId: members[i],
@@ -183,6 +183,7 @@ const DashBoardContent = () => {
 
       try {
         const response = await axios(config);
+        console.log("i");
         console.log(response);
         if (response.status === 201) {
           alert("Invitation sent");
@@ -244,12 +245,12 @@ const DashBoardContent = () => {
       for (let i = 0; i < grData.userId.length; i++) {
         temp2[grData.userId[i]._id] = grData.userId[i].name;
         const singleData = {
-          url:"",
+          url: "",
           name: "",
           paid: "",
           expense: "",
         };
-        singleData.url=(grData.userId[i].imageUrl);
+        singleData.url = grData.userId[i].imageUrl;
         singleData.name = grData.userId[i].name;
         singleData.paid = settleExpenseData[1][grData.userId[i]._id];
         singleData.expense = settleExpenseData[0][grData.userId[i]._id];
@@ -995,10 +996,14 @@ const DashBoardContent = () => {
                   return (
                     <div className="text-black ml-8 mr-8 pb-2 flex mt-1 ">
                       <div className="px-2 w-1/3 flex">
-                      <img className="rounded-full w-6 h-6 mr-2"src={element.url || "../images/avatar.png"}alt="user-profile"/>
+                        <img
+                          className="rounded-full w-6 h-6 mr-2"
+                          src={element.url || "../images/avatar.png"}
+                          alt="user-profile"
+                        />
                         {/* <div>{element.url}</div> */}
                         <div>{element.name}</div>
-                        </div>
+                      </div>
                       <div className="px-2 w-1/3">₹{element.paid}</div>
                       <div className="px-2 w-1/3">₹{element.expense}</div>
                     </div>

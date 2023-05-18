@@ -51,7 +51,7 @@ const NewGroup = () => {
   const dly = () => {
     setTimeout(() => {
       FtoggleGroup(true);
-      navigate("/dashboard/");
+      // navigate("/dashboard/");
     }, 1000);
   };
   const set = () => {
@@ -82,6 +82,10 @@ const NewGroup = () => {
   const [members, setMembers] = useState([]);
   console.log(members);
 
+  useEffect(() => {
+    if (members.length > 0) post();
+  }, [members]);
+
   function handleSubmit(event) {
     event.preventDefault();
     FtoggleGroup(false);
@@ -91,7 +95,7 @@ const NewGroup = () => {
       console.log("inviteusers called");
       setMembers(temp);
       console.log("check1");
-      post();
+      // post();
       console.log("check2");
     } else {
       console.log("check3");
@@ -140,14 +144,18 @@ const NewGroup = () => {
             groupId.current = response.data.groupId;
             console.log("Yaha bhi aaya");
             console.log(response.data.groupId);
-            inviteUsers(response.data.groupId);
             const temp = userId.current + "---" + response.data.groupId;
             updateDisplayName(temp);
+            console.log("idhar dekhho");
+            console.log("members");
+            console.log(members);
+            inviteUsers(response.data.groupId);
+            console.log("idhar dekhho2");
             set();
           }
-          if (groupId.current !== "") {
-            navigate("/dashboard/");
-          }
+          // if (groupId.current !== "") {
+          //   navigate("/dashboard/");
+          // }
         });
     } catch (err) {
       console.log("check5");
@@ -157,11 +165,11 @@ const NewGroup = () => {
 
   const inviteUsers = async (id) => {
     for (let i = 0; i < members.length; i++) {
-      // console.log("memebrs[i]")
-      // console.log(members[i]);
+      console.log("memebrs[i]");
+      console.log(members[i]);
       let config = {
         method: "post",
-        url: "https://ezzysplit-backend.onrender.com/group/inviteUser",
+        url: `https://ezzysplit-backend.onrender.com/group/inviteUser`,
 
         data: {
           groupName: groupName,
@@ -172,6 +180,7 @@ const NewGroup = () => {
 
       try {
         const response = await axios(config);
+        console.log("invitation ke baad ka response");
         console.log(response);
       } catch (err) {
         set2();

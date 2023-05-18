@@ -29,7 +29,7 @@ const Contact = () => {
 
     let config = {
       method: "post",
-      url: "https://ezzysplit-backend.onrender.com/sendmail/contactUs",
+      url: `https://ezzysplit-backend.onrender.com/sendmail/contactUs`,
 
       data: {
         name: values.name,

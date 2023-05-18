@@ -13,7 +13,7 @@ const SignUp = () => {
   async function post() {
     try {
       axios
-        .post("https://ezzysplit-backend.onrender.com/user/adduser", {
+        .post(`https://ezzysplit-backend.onrender.com/user/adduser`, {
           emailId: emailRef.current.value,
           name: "user",
         })
