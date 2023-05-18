@@ -1,17 +1,15 @@
 import { BsCurrencyDollar } from "react-icons/bs";
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export const userProfileData = {
-  
-  
   // const [getUsersDet, FgetUsersDet] = useState({});
-  
+
   // const getData = async () => {
   //   try {
   //     let config = {
   //       method: "get",
-  //       url: "http://localhost:8000/user/profile/63d3700f59aa96fcdb661477",
+  //       url: "https://ezzysplit-backend.onrender.com/user/profile/63d3700f59aa96fcdb661477",
   //     };
   //     var response;
   //     response = await axios(config);
@@ -22,7 +20,7 @@ export const userProfileData = {
   //     console.log(err);
   //   }
   // };
-  
+
   // useEffect(() => {
   //   getData();
   // }, []);

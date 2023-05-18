@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+// const dotenv = require("dotenv");
 
 import {
   createUserWithEmailAndPassword,
@@ -15,13 +16,13 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAwjk_VQu_5VS5ziUjcsVC89xsl7eLSzxc",
+  apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
   authDomain: "ezzysplit.firebaseapp.com",
   projectId: "ezzysplit",
   storageBucket: "ezzysplit.appspot.com",
-  messagingSenderId: "1095977741541",
-  appId: "1:1095977741541:web:3f756422ba02d9ee0c780c",
-  measurementId: "G-XC55BMQ1FE",
+  messagingSenderId: `${process.env.REACT_APP_FIREBASE_SENDER_ID}`,
+  appId: `${process.env.REACT_APP_FIREBASE_APP_ID}`,
+  measurementId: `${process.env.REACT_APP_FIREBASE_MEASUREMENT_ID}`,
 };
 
 // Initialize Firebase

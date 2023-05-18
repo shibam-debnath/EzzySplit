@@ -97,11 +97,14 @@ const UserProfile = (props) => {
   function handleSubmit(e) {
     try {
       axios
-        .post(`http://localhost:8000/user/edituser/${userId.current}`, {
-          name: ProfileName,
-          uid: uid.current,
-          imageUrl: Url,
-        })
+        .post(
+          `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
+          {
+            name: ProfileName,
+            uid: uid.current,
+            imageUrl: Url,
+          }
+        )
         .then((response) => {
           if (response.status === 201) {
             console.log("Successfully edited the user");

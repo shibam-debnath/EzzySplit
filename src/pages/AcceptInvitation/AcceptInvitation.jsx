@@ -9,7 +9,7 @@ import { getAuth, updateProfile } from "firebase/auth";
 const AcceptInvitation = () => {
   const auth1 = getAuth();
   const navigate = useNavigate();
-  console.log("ye dekho")
+  console.log("ye dekho");
   console.log(auth1.currentUser);
   const [emailId, setEmailId] = useState("");
   const [proceed, setProceed] = useState(false);
@@ -17,17 +17,17 @@ const AcceptInvitation = () => {
   const params = useParams();
   console.log(params);
   var groupId = params.id;
-  
+
   const [toggleInvitation, FtoggleInvitation] = useState(true);
-  const check = () =>{
-    if(auth1.currentUser===null){
+  const check = () => {
+    if (auth1.currentUser === null) {
       navigate("/login");
     }
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     check();
-  },[]);
+  }, []);
 
   const notifyInvitation = () => {
     toast.success("Added to group successfully", {
@@ -113,7 +113,7 @@ const AcceptInvitation = () => {
   const verify = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8000/user/profile/emailId/${emailId}`,
+        `https://ezzysplit-backend.onrender.com/user/profile/emailId/${emailId}`,
         {
           method: "GET",
           headers: {
@@ -140,16 +140,19 @@ const AcceptInvitation = () => {
   const addUser = async () => {
     try {
       FtoggleInvitation(false);
-      const res = await fetch("http://localhost:8000/group/addUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          groupId: params.id,
-          userId: userData._id,
-        }),
-      });
+      const res = await fetch(
+        "https://ezzysplit-backend.onrender.com/group/addUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            groupId: params.id,
+            userId: userData._id,
+          }),
+        }
+      );
       await res.json();
 
       if (res.status === 200) {

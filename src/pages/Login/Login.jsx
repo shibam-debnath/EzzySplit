@@ -51,9 +51,12 @@ const Login = () => {
   const getId = async (emailId) => {
     try {
       await axios
-        .get(`http://localhost:8000/user/profile/emailId/${emailId}`, {
-          responseType: "json",
-        })
+        .get(
+          `https://ezzysplit-backend.onrender.com/user/profile/emailId/${emailId}`,
+          {
+            responseType: "json",
+          }
+        )
         .then(function (response) {
           console.log(response.data[0]);
           const userId = response.data[0]._id;

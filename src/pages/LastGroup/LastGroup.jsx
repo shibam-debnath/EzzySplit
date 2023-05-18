@@ -32,7 +32,7 @@ const LastGroup = () => {
   const lastGroupData = async () => {
     try {
       await axios
-        .get(`http://localhost:8000/group/${userId.current}`, {
+        .get(`https://ezzysplit-backend.onrender.com/group/${userId.current}`, {
           responseType: "json",
         })
         .then(function (response) {

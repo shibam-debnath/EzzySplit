@@ -331,24 +331,27 @@ const AddExpensePopup = (props) => {
       ) {
         console.log("etgsagsrhrshrh post");
         console.log(groupId);
-        const res = await fetch("http://localhost:8000/expense/addExpense", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const res = await fetch(
+          "https://ezzysplit-backend.onrender.com/expense/addExpense",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
 
-          body: JSON.stringify({
-            amount,
-            description,
-            groupId,
-            paidBy: fnarr,
-            split_method,
-            notes,
-            expDate,
-            category: category,
-            split_between: SplitArr,
-          }),
-        });
+            body: JSON.stringify({
+              amount,
+              description,
+              groupId,
+              paidBy: fnarr,
+              split_method,
+              notes,
+              expDate,
+              category: category,
+              split_between: SplitArr,
+            }),
+          }
+        );
         await res.json();
         console.log("before post");
         console.log(category);
