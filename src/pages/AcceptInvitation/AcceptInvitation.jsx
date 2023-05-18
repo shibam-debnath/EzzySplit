@@ -141,7 +141,7 @@ const AcceptInvitation = () => {
     try {
       FtoggleInvitation(false);
       const res = await fetch(
-        "https://ezzysplit-backend.onrender.com/group/addUser",
+        `https://ezzysplit-backend.onrender.com/group/addUser`,
         {
           method: "POST",
           headers: {

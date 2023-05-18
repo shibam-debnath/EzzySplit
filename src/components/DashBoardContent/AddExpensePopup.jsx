@@ -332,7 +332,7 @@ const AddExpensePopup = (props) => {
         console.log("etgsagsrhrshrh post");
         console.log(groupId);
         const res = await fetch(
-          "https://ezzysplit-backend.onrender.com/expense/addExpense",
+          `https://ezzysplit-backend.onrender.com/expense/addExpense`,
           {
             method: "POST",
             headers: {

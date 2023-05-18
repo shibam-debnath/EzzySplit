@@ -94,7 +94,16 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProfileImage]);
 
+  useEffect(() => {
+    handleSubmit();
+  }, [ProfileName, Url]);
+
   async function handleSubmit(e) {
+    console.log("Yaha aaya");
+    console.log(ProfileName);
+    console.log(uid.current);
+    console.log(Url);
+
     let config = {
       method: "post",
       url: `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
@@ -113,30 +122,9 @@ const UserProfile = (props) => {
     } catch (err) {
       console.log(err);
     }
-
-    // try {
-    //   console.log("abhi print");
-    //   console.log(Url);
-
-    //   axios
-    //     .post(
-    //       `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
-    //       {
-    //         name: ProfileName,
-    //         uid: uid.current,
-    //         imageUrl: Url,
-    //       }
-    //     )
-    //     .then((response) => {
-    //       if (response.status === 201) {
-    //         console.log("Successfully edited the user");
-    //       }
-    //     });
-    // } catch (err) {
-    //   console.log("name nehi aa raha");
-    //   console.log(err);
-    // }
-    props.closeProfile();
+    console.log("Yaha aaya 2");
+    // props.closeProfile();
+    console.log("Yaha ayaa 3");
   }
 
   return (

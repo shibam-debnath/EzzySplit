@@ -9,7 +9,7 @@ export const userProfileData = {
   //   try {
   //     let config = {
   //       method: "get",
-  //       url: "https://ezzysplit-backend.onrender.com/user/profile/63d3700f59aa96fcdb661477",
+  //       url: `https://ezzysplit-backend.onrender.com/user/profile/63d3700f59aa96fcdb661477`,
   //     };
   //     var response;
   //     response = await axios(config);
