@@ -1,3 +1,104 @@
 .App {
   text-align: center;
 }
+
+@media only screen and (max-width: 800px) and (min-width: 200px) {
+  .side-nav{
+    display: none;
+  }
+
+  .hamburger{
+    background-color: rgba(6, 0, 39, 0.893);
+  }
+
+  .button{
+    margin: 0px;
+    min-height: 2rem;
+    width: auto;
+  }
+
+  .dashboard-content{
+    margin-left: 0;
+  }
+
+  .coin-png{
+    height: 7rem;
+  }
+
+  .cards-dashboard{
+    gap: 15px;
+  }
+
+  .card-dashboard{
+    padding: 10px 5px;
+    height: 8rem;
+    width: 4.2rem;
+  }
+
+  .card-icon{
+    padding: 2px;
+  }
+
+  .top-card{
+    height:8rem;
+    padding: 2px;
+    padding-left: 1rem;
+  }
+
+
+  .text-small{
+    font-size: 8px;
+    line-height: normal;
+  }
+
+  .text-medium{
+    font-size: 11px;
+  }
+
+  .text-large{
+    font-size: 16px;
+  }
+
+  .exp-section{
+    padding: 10px 0px;
+    width: auto;
+    margin: 2% 5%;
+    height: auto;
+  }
+
+  .his-attributes{
+    margin: 0px;
+  }
+
+  .his-contents{
+    width: 100%;
+    display: flex;
+    margin: 0%;
+    justify-content: center;
+  }
+
+  .card-group{
+    margin: 5% 2% 5% 5%;
+    width: 45%;
+    max-height: 15rem;
+  }
+
+  .card-group-attr{
+    margin: 5px;
+  }
+  .card-invitation{
+    max-height: 15rem;
+    margin: 5% 5% 5% 2%;
+    width: 40%;
+  }
+
+  .bot-cards{
+    min-width: 80%;
+    flex-direction: column;
+  }
+
+  .bot-card{
+    min-width: 80%;
+    flex-direction: column;
+  }
+}

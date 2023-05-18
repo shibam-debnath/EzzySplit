@@ -40,7 +40,6 @@ function App() {
   }, []);
 
   return (
-
     <div className="App">
       {isLoading ? (
         <div className="preloader flex items-center m-auto w-screen h-screen">
@@ -113,11 +112,10 @@ function App() {
           <Route path="*" element={<Error404 />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-          <Route path= "/team" element={<Team/>}/>
+          <Route path="/team" element={<Team />} />
         </Routes>
       )}
     </div>
-
   );
 }
 

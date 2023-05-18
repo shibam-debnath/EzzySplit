@@ -94,25 +94,48 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProfileImage]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
+    let config = {
+      method: "post",
+      url: `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
+
+      data: {
+        name: ProfileName,
+        uid: uid.current,
+        imageUrl: Url,
+      },
+    };
+
     try {
-      axios
-        .post(
-          `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
-          {
-            name: ProfileName,
-            uid: uid.current,
-            imageUrl: Url,
-          }
-        )
-        .then((response) => {
-          if (response.status === 201) {
-            console.log("Successfully edited the user");
-          }
-        });
+      const response = await axios(config);
+      console.log("yehi chahiye");
+      console.log(response);
     } catch (err) {
       console.log(err);
     }
+
+    // try {
+    //   console.log("abhi print");
+    //   console.log(Url);
+
+    //   axios
+    //     .post(
+    //       `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
+    //       {
+    //         name: ProfileName,
+    //         uid: uid.current,
+    //         imageUrl: Url,
+    //       }
+    //     )
+    //     .then((response) => {
+    //       if (response.status === 201) {
+    //         console.log("Successfully edited the user");
+    //       }
+    //     });
+    // } catch (err) {
+    //   console.log("name nehi aa raha");
+    //   console.log(err);
+    // }
     props.closeProfile();
   }
 
@@ -180,7 +203,7 @@ const UserProfile = (props) => {
             </button>
           </div>
           <form
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
           >
             <div className="mb-2">
@@ -222,6 +245,7 @@ const UserProfile = (props) => {
               />
             </div>
             <button
+              onClick={handleSubmit}
               type="submit"
               disabled={percentage != null && percentage < 100}
               className="mt-6 w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-primary transition-colors duration-300"
@@ -236,11 +260,3 @@ const UserProfile = (props) => {
 };
 
 export default UserProfile;
-
-// import React from "react";
-
-// const UserProfile = () => {
-//   return <>HELLOOOOo</>;
-// };
-
-// export default UserProfile;

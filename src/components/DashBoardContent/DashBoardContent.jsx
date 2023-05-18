@@ -590,7 +590,7 @@ const DashBoardContent = () => {
       </div>
       <div className="mt-6">
         <div className="flex w-full flex-wrap justify-left ">
-          <div className="bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-6 my-5 bg-no-repeat bg-cover bg-center">
+          <div className="top-card bg-lgPrimary dark:text-gray-200 h-44 rounded-xl w-full pr-8 pl-8 mx-6 my-5 bg-no-repeat bg-cover bg-center">
             <div className="flex justify-between items-center">
               <div>
                 {beforeFetch === 1 && (
@@ -603,10 +603,10 @@ const DashBoardContent = () => {
                     </div>
                     <div className="flex justify-start">
                       <div className="text-white flex  items-center">
-                        <div className="pb-0 pl-0 text-sm pt-0 p-2">
+                        <div className="text-small pb-0 pl-0 text-sm pt-0 p-2">
                           Welcome back to the group
                         </div>
-                        <div className="font-bold pl-0 pt-0 pb-0 p-2">
+                        <div className="text-medium font-bold pl-0 pt-0 pb-0 p-2">
                           {grData.groupName}
                         </div>
                       </div>
@@ -620,7 +620,11 @@ const DashBoardContent = () => {
                 )}
               </div>
               <div className="">
-                <img className="h-48" src="../images/coin_banner.png" alt="" />
+                <img
+                  className="coin-png h-48"
+                  src="../images/coin_banner.png"
+                  alt=""
+                />
               </div>
             </div>
             <div className="mt-0">
@@ -632,11 +636,11 @@ const DashBoardContent = () => {
               />
             </div>
           </div>
-          <div className="width-full flex mx-6 my-6 justify-left gap-8 items-center">
+          <div className="cards-dashboard width-full flex mx-6 my-6 justify-left gap-8 items-center">
             {earningData.map((item) => (
               <div
                 key={item.title}
-                className="bg-white h-44 md:w-52 p-4 pt-9 rounded-2xl "
+                className="card-dashboard bg-white h-44 md:w-52 p-4 pt-9 rounded-2xl "
               >
                 <button
                   type="button"
@@ -644,7 +648,7 @@ const DashBoardContent = () => {
                     color: item.iconColor,
                     backgroundColor: item.iconBg,
                   }}
-                  className="text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
+                  className="card-icon text-2xl opacity-0.9 rounded-full  p-4 hover:drop-shadow-xl"
                 >
                   {item.icon}
                 </button>
@@ -656,7 +660,9 @@ const DashBoardContent = () => {
                     0
                   </span>
                 </p>
-                <p className="text-sm text-gray-400  mt-1">{item.title}</p>
+                <p className="text-small text-sm text-gray-400  mt-1">
+                  {item.title}
+                </p>
               </div>
             ))}
           </div>
@@ -730,10 +736,10 @@ const DashBoardContent = () => {
       )}
 
       {/* expenses history content starting...*/}
-      <div className="mt-6 flex flex-wrap">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
+      <div className="sm:mt-0 md:mt-6 flex flex-wrap">
+        <div className="exp-section bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
           <div className=" flex justify-between pb-2 pl-6 pr-8 border-b-2 border-spacing-y-12  border-gray-200">
-            <div className="text-gray-700 text-2xl font-bold ">
+            <div className="text-large text-gray-700 text-2xl font-bold ">
               Expenses History
             </div>
 
@@ -749,12 +755,12 @@ const DashBoardContent = () => {
                 </button>
               )}
           </div>
-          <div className="text-gray-400 ml-8 mr-8 mt-2 flex border-b-2  ">
-            <div className="p-2 w-[4rem]">S.No.</div>
-            <div className="p-2 w-1/4">Name</div>
-            <div className="p-2 w-1/4">Amount</div>
-            <div className="p-2 w-1/4">Paid by</div>
-            <div className="p-2 w-1/4">Expense Added on</div>
+          <div className="his-attributes text-gray-400 ml-8 mr-8 mt-2 flex border-b-2  ">
+            <div className="text-small p-2 w-[4rem]">S.No.</div>
+            <div className="text-small p-2 w-1/4">Name</div>
+            <div className="text-small p-2 w-1/4">Amount</div>
+            <div className="text-small p-2 w-1/4">Paid by</div>
+            <div className="text-small p-2 w-1/4">Expense Added on</div>
           </div>
 
           {/* to display the complete details of an expense starting... */}
@@ -877,70 +883,73 @@ const DashBoardContent = () => {
           )}
           {/* to display the complete details of an expense ends */}
 
-          <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
+          <div className="">
             {grData.expenseId && grData.expenseId.length > 0 ? (
               grData.expenseId.map((expenses) => (
-                <div className="">
-                  <div
-                    key={expenses._id}
-                    className="text-black ml-8 mr-8  flex border-b-2 cursor-pointer hover:bg-gray-100"
-                    onClick={() => displayExpense(expenses)}
-                  >
+                <div>
+                  <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
                     <div
-                      className="px-2 py-2 w-[4rem]"
-                      onMouseEnter={() => setIsHovered(true)}
-                      onMouseLeave={() => setIsHovered(false)}
+                      key={expenses._id}
+                      className="text-black ml-8 mr-8  flex border-b-2 cursor-pointer hover:bg-gray-100"
+                      onClick={() => displayExpense(expenses)}
                     >
-                      {isHovered && !grData.isSettled ? (
-                        <div className="flex justify-center">
-                          <RiDeleteBin5Line
-                            className="text-red-500 cursor:pointer"
-                            onClick={() => deleteExpense(expenses)}
-                          />
-                        </div>
-                      ) : (
-                        <div>{count++}</div>
-                      )}
-                    </div>
-                    <div className="px-2 py-2 w-1/4">
-                      {expenses.description}
-                    </div>
-                    <div className="px-2 py-2 w-1/4">₹{expenses.amount}</div>
-                    <div className="px-2 py-2 w-1/4 flex justify-center h-8 overflow-x-auto overflow-y-auto scrollbar-none">
-                      {expenses.paidBy.length > 1 ? (
-                        expenses.paidBy.map((items) => {
-                          return (
-                            <div className="flex">
-                              {items.userId._id === userId ? (
-                                <div>You,&nbsp;</div>
-                              ) : (
-                                <div>{items.userId.name},&nbsp;</div>
-                              )}
-                            </div>
-                          );
-                        })
-                      ) : (
-                        <div className="flex">
-                          {expenses.paidBy[0].userId._id === userId.current ? (
-                            <div>You</div>
-                          ) : (
-                            <div>{expenses.paidBy[0].userId.name}</div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    <div className="px-2 py-2 w-1/4">
-                      {expenses.date
-                        .substring(0, 10)
-                        .split("-")
-                        .reverse()
-                        .join("-")}
+                      <div
+                        className="px-2 py-2 w-[4rem]"
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                      >
+                        {isHovered && !grData.isSettled ? (
+                          <div className="flex justify-center">
+                            <RiDeleteBin5Line
+                              className="text-red-500 cursor:pointer"
+                              onClick={() => deleteExpense(expenses)}
+                            />
+                          </div>
+                        ) : (
+                          <div>{count++}</div>
+                        )}
+                      </div>
+                      <div className="px-2 py-2 w-1/4">
+                        {expenses.description}
+                      </div>
+                      <div className="px-2 py-2 w-1/4">₹{expenses.amount}</div>
+                      <div className="px-2 py-2 w-1/4 flex justify-center h-8 overflow-x-auto overflow-y-auto scrollbar-none">
+                        {expenses.paidBy.length > 1 ? (
+                          expenses.paidBy.map((items) => {
+                            return (
+                              <div className="flex">
+                                {items.userId._id === userId ? (
+                                  <div>You,&nbsp;</div>
+                                ) : (
+                                  <div>{items.userId.name},&nbsp;</div>
+                                )}
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div className="flex">
+                            {expenses.paidBy[0].userId._id ===
+                            userId.current ? (
+                              <div>You</div>
+                            ) : (
+                              <div>{expenses.paidBy[0].userId.name}</div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="px-2 py-2 w-1/4">
+                        {expenses.date
+                          .substring(0, 10)
+                          .split("-")
+                          .reverse()
+                          .join("-")}
+                      </div>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="h-2/3 w-full text-2xl text-gray-400 flex justify-center mt-16 p-10 m-2">
+              <div className="his-contents text-large w-full text-2xl text-gray-400 flex justify-center mt-16 p-10 m-2">
                 Add expenses and rest leave up to Us 😎
               </div>
             )}
@@ -977,33 +986,35 @@ const DashBoardContent = () => {
 
       <div className="flex flex-col ">
         <div className="flex flex-row md:w-full">
-          <div className="bg-white h-72 rounded-xl m-6 w-7/12">
-            <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left text-black ">
+          <div className="card-group bg-white h-72 rounded-xl m-6 w-7/12">
+            <div className="text-medium border-b-2 mt-2 mb-2 text-center ztext-left text-black ">
               Group Members
             </div>
-            <div className="text-gray-400 ml-8 mr-8 pb-2 flex border-b-2 scrollbar-none">
-              <div className="px-2 w-1/3">Name </div>
-              <div className="px-2 w-1/3">Paid</div>
-              <div className="px-2 w-1/3">Expense</div>
+            <div className="card-group-attr text-gray-400 ml-8 mr-8 pb-2 flex border-b-2 scrollbar-none">
+              <div className="text-medium px-2 w-1/3">Name </div>
+              <div className="text-medium px-2 w-1/3">Paid</div>
+              <div className="text-medium px-2 w-1/3">Expense</div>
             </div>
 
-            <div className=" m-auto h-48 overflow-y-auto scrollbar-none">
-              {expend.length > 0 ? (
-                expend.map((element) => {
-                  return (
+            {expend.length > 0 ? (
+              expend.map((element) => {
+                return (
+                  <div className=" m-auto h-48 overflow-y-auto scrollbar-none">
                     <div className="text-black ml-8 mr-8 pb-2 flex ">
                       <div className="px-2 w-1/3">{element.name}</div>
                       <div className="px-2 w-1/3">₹{element.paid}</div>
                       <div className="px-2 w-1/3">₹{element.expense}</div>
                     </div>
-                  );
-                })
-              ) : (
-                <div className="text-gray-400 h-2/3 w-full mt-14 ">
+                  </div>
+                );
+              })
+            ) : (
+              <div className="flex items-center min-h-[50%] justify-center">
+                <div className="text-medium text-gray-400  w-full ">
                   Nothing to show here 😐
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {grData.expenseId && grData.expenseId.length > 0 ? (
@@ -1040,34 +1051,33 @@ const DashBoardContent = () => {
               </div>
             )
           ) : (
-            <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
+            <div className="card-invitation bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
               {/* <img style={style} src="../images/boy.jpg" alt="Loading..." /> */}
-              <div className="mb-2 h-full">
-                <label
-                  htmlFor="members"
-                  className="block text-gray-700 border-b-2 font-bold mb-2"
-                >
+              <div className=" mb-2 h-full">
+                <div className="text-medium block text-gray-700 border-b-2 mb-2">
                   Invite Members
-                </label>
-                <div className="text-gray-400 mt-8 m-2 text-sm">
-                  Send invitation before adding expenses (Enter the email
-                  addresses separated with comma)
                 </div>
-                <input
-                  type="text"
-                  id="members"
-                  name="members"
-                  className="shadow appearance-none border-gray-400 rounded w-full py-2  text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Enter email addresses separated by comma"
-                  onChange={handleGroupMembers}
-                  required
-                />
-                <div className="flex justify-center">
-                  <div
-                    className="m-6  bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer"
-                    onClick={handleSubmit}
-                  >
-                    Invite
+                <div className="mt-5">
+                  <div className="text-small text-gray-400 m-2 text-sm">
+                    Send invitation before adding expenses (Enter the email
+                    addresses separated with comma)
+                  </div>
+                  <input
+                    type="text"
+                    id="members"
+                    name="members"
+                    className="text-medium shadow appearance-none border-gray-400 rounded w-full py-2  text-gray-500 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Enter email addresses separated by comma"
+                    onChange={handleGroupMembers}
+                    required
+                  />
+                  <div className="flex justify-center mt-2 ">
+                    <div
+                      className="text-medium pl-3 pr-3 button bg-primary hover:bg-opacity-90 p-2 text-white rounded-md w-1/3 cursor-pointer"
+                      onClick={handleSubmit}
+                    >
+                      Invite
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1075,8 +1085,8 @@ const DashBoardContent = () => {
           )}
         </div>
 
-        <div className="flex flex-row md:w-full">
-          <div className="bg-white rounded-xl m-6 w-7/12">
+        <div className="bot-cards items-center flex md:flex-row md:w-full">
+          <div className="bot-card bg-white rounded-xl m-6 w-7/12">
             <div className="border-b-2 mt-2 mb-2 text-left  pb-2 pl-4">
               Expenses of last 30 days
             </div>
@@ -1085,7 +1095,7 @@ const DashBoardContent = () => {
             </div>
           </div>
 
-          <div className="bg-white h-80 rounded-xl m-6 w-5/12">
+          <div className="bot-card bg-white h-80 rounded-xl m-6 w-5/12">
             <div className="border-b-2 mt-2 mb-2 pb-2 pl-4 text-left">
               Category wise Expenditure
             </div>
