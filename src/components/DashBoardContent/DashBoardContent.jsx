@@ -236,10 +236,12 @@ const DashBoardContent = () => {
       for (let i = 0; i < grData.userId.length; i++) {
         temp2[grData.userId[i]._id] = grData.userId[i].name;
         const singleData = {
+          url:"",
           name: "",
           paid: "",
           expense: "",
         };
+        singleData.url=(grData.userId[i].imageUrl);
         singleData.name = grData.userId[i].name;
         singleData.paid = settleExpenseData[1][grData.userId[i]._id];
         singleData.expense = settleExpenseData[0][grData.userId[i]._id];
@@ -976,8 +978,12 @@ const DashBoardContent = () => {
               {expend.length > 0 ? (
                 expend.map((element) => {
                   return (
-                    <div className="text-black ml-8 mr-8 pb-2 flex ">
-                      <div className="px-2 w-1/3">{element.name}</div>
+                    <div className="text-black ml-8 mr-8 pb-2 flex mt-1 ">
+                      <div className="px-2 w-1/3 flex">
+                      <img className="rounded-full w-6 h-6 mr-2"src={element.url || "../images/avatar.png"}alt="user-profile"/>
+                        {/* <div>{element.url}</div> */}
+                        <div>{element.name}</div>
+                        </div>
                       <div className="px-2 w-1/3">₹{element.paid}</div>
                       <div className="px-2 w-1/3">₹{element.expense}</div>
                     </div>

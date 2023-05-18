@@ -68,7 +68,7 @@ export default function LastGroupModify(props) {
             <div className="flex flex-row pl-10">
               <img
                 className="rounded-full w-8 h-8 "
-                src={props.user[0].imageUrl}
+                src={props.user[0].imageUrl || "../images/avatar.png"}
                 alt="user-profile"
               />
               <p className="hover:cursor-pointer font-light text-[16px] pl-3">
