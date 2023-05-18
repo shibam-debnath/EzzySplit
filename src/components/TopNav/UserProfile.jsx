@@ -94,7 +94,15 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProfileImage]);
 
-  function handleSubmit(e) {
+  useEffect(()=>{
+    handleSubmit();
+  },[ProfileName,Url]);
+  
+  async function handleSubmit(e) {
+    console.log("Yaha aaya");
+    console.log(ProfileName);
+    console.log(uid.current);
+    console.log(Url);
     try {
       axios
         .post(
@@ -113,7 +121,9 @@ const UserProfile = (props) => {
     } catch (err) {
       console.log(err);
     }
-    props.closeProfile();
+    console.log("Yaha aaya 2");
+    // props.closeProfile();
+    console.log("Yaha ayaa 3");
   }
 
   return (
