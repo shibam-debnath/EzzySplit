@@ -57,7 +57,7 @@ const AcceptInvitation = () => {
       console.log("Yaha tak to aa gaya bhai");
       const temp = userData._id + "---" + groupId;
       updateDisplayName(temp);
-      navigate("/dashboard/");
+      // navigate("/dashboard/");
       // navigate("/dashboard/", { state: { groupid: groupId } });
     }, 1000);
   };
@@ -103,6 +103,7 @@ const AcceptInvitation = () => {
       })
         .then(() => {
           console.log("Display name updated successfully");
+          navigate("/dashboard/");
         })
         .catch((error) => {
           console.log(`Error updating display name: ${error}`);
@@ -113,7 +114,7 @@ const AcceptInvitation = () => {
   const verify = async () => {
     try {
       const res = await fetch(
-        `https://ezzysplit-backend.onrender.com/user/profile/emailId/${emailId}`,
+        `${process.env.REACT_APP_BASE_URL}/user/profile/emailId/${emailId}`,
         {
           method: "GET",
           headers: {
@@ -141,7 +142,7 @@ const AcceptInvitation = () => {
     try {
       FtoggleInvitation(false);
       const res = await fetch(
-        `https://ezzysplit-backend.onrender.com/group/addUser`,
+        `${process.env.REACT_APP_BASE_URL}/group/addUser`,
         {
           method: "POST",
           headers: {

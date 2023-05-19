@@ -106,7 +106,7 @@ const UserProfile = (props) => {
 
     let config = {
       method: "post",
-      url: `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
+      url: `${process.env.REACT_APP_BASE_URL}/user/edituser/${userId.current}`,
 
       data: {
         name: ProfileName,
