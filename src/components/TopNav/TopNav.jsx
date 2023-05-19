@@ -40,7 +40,7 @@ const TopNav = () => {
     try {
       let config = {
         method: "get",
-        url: `https://ezzysplit-backend.onrender.com/user/profile/${userId.current}`,
+        url: `${process.env.REACT_APP_BASE_URL}/user/profile/${userId.current}`,
       };
       response = await axios(config);
       setUrl(response.data.users.imageUrl);

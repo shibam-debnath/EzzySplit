@@ -113,7 +113,7 @@ const DashBoardContent = () => {
     try {
       await axios
         .get(
-          `https://ezzysplit-backend.onrender.com/user/profile/${userId.current}`,
+          `${process.env.REACT_APP_BASE_URL}/user/profile/${userId.current}`,
           {
             responseType: "json",
           }
@@ -131,7 +131,7 @@ const DashBoardContent = () => {
     try {
       await axios
         .get(
-          `https://ezzysplit-backend.onrender.com/group/details/${groupId.current}`,
+          `${process.env.REACT_APP_BASE_URL}/group/details/${groupId.current}`,
           {
             responseType: "json",
           }
@@ -161,19 +161,24 @@ const DashBoardContent = () => {
       console.log(members);
     }
 
-    if (members) {
-      inviteUsers();
-    }
+    // if (members) {
+    //   inviteUsers();
+    // }
     // handle form submission here
   }
 
+  useEffect(()=>{
+    if(members.length>0)inviteUsers();
+  },[members]);
+
   const inviteUsers = async () => {
+    var flag=0;
     for (let i = 0; i < members.length; i++) {
       // console.log("memebrs[i]")
       // console.log(members[i]);
       let config = {
         method: "post",
-        url: `https://ezzysplit-backend.onrender.com/group/inviteUser`,
+        url: `${process.env.REACT_APP_BASE_URL}/group/inviteUser`,
         data: {
           groupName: grData._name,
           emailId: members[i],
@@ -186,7 +191,10 @@ const DashBoardContent = () => {
         console.log("i");
         console.log(response);
         if (response.status === 201) {
-          alert("Invitation sent");
+          if(flag===0){
+            alert("Invitation sent");
+            flag=1;
+          }
         }
       } catch (err) {
         console.log(err);
@@ -198,7 +206,7 @@ const DashBoardContent = () => {
     try {
       axios
         .get(
-          `https://ezzysplit-backend.onrender.com/group/settle/${groupId.current}`,
+          `${process.env.REACT_APP_BASE_URL}/group/settle/${groupId.current}`,
           {
             responseType: "json",
           }
@@ -370,7 +378,7 @@ const DashBoardContent = () => {
     try {
       axios
         .post(
-          `https://ezzysplit-backend.onrender.com/group/isSettled/${groupId.current}/true`,
+          `${process.env.REACT_APP_BASE_URL}/group/isSettled/${groupId.current}/true`,
           {
             responseType: "json",
           }
@@ -393,7 +401,7 @@ const DashBoardContent = () => {
     try {
       axios
         .delete(
-          `https://ezzysplit-backend.onrender.com/expense/delete/${expenseIdToDelete._id}`,
+          `${process.env.REACT_APP_BASE_URL}/expense/delete/${expenseIdToDelete._id}`,
           {
             responseType: "json",
           }

@@ -338,7 +338,7 @@ const EditExpensesPopup = (props) => {
 
       if (totalPiadBy === amount && totalSplitBetween === amount) {
         const res = await fetch(
-          `https://ezzysplit-backend.onrender.com/expense/${userId}/${groupId}/${expenseId}`,
+          `${process.env.REACT_APP_BASE_URL}/expense/${userId}/${groupId}/${expenseId}`,
           {
             method: "PATCH",
             headers: {
