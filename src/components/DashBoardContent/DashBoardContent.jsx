@@ -1009,7 +1009,6 @@ const DashBoardContent = () => {
                           src={element.url || "../images/avatar.png"}
                           alt="user-profile"
                         />
-                        {/* <div>{element.url}</div> */}
                         <div>{element.name}</div>
                       </div>
                       <div className="px-2 w-1/3">₹{element.paid}</div>
