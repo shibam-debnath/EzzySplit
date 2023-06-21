@@ -127,7 +127,7 @@ const NewGroup = () => {
     try {
       axios
         .post(
-          `https://ezzysplit-backend.onrender.com/group/creategroup/${userId.current}`,
+          `${process.env.REACT_APP_BASE_URL}/group/creategroup/${userId.current}`,
           {
             groupName: groupName,
             // groupIcon:groupImage
@@ -169,7 +169,7 @@ const NewGroup = () => {
       console.log(members[i]);
       let config = {
         method: "post",
-        url: `https://ezzysplit-backend.onrender.com/group/inviteUser`,
+        url: `${process.env.REACT_APP_BASE_URL}/group/inviteUser`,
 
         data: {
           groupName: groupName,

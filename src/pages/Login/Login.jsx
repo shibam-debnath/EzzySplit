@@ -41,6 +41,9 @@ const Login = () => {
       })
         .then(() => {
           console.log("Display name updated successfully");
+          var temp = newName.split("---");
+          if (temp[1] === undefined) navigate("/dashboard/newGroup");
+          else navigate("/dashboard/");
         })
         .catch((error) => {
           console.log(`Error updating display name: ${error}`);
@@ -52,7 +55,7 @@ const Login = () => {
     try {
       await axios
         .get(
-          `https://ezzysplit-backend.onrender.com/user/profile/emailId/${emailId}`,
+          `${process.env.REACT_APP_BASE_URL}/user/profile/emailId/${emailId}`,
           {
             responseType: "json",
           }
@@ -66,8 +69,8 @@ const Login = () => {
           updateDisplayName(temp);
 
           // if not in any froup redirect to create a new group
-          if (groupId === undefined) navigate("/dashboard/newGroup");
-          else navigate("/dashboard/");
+          // if (groupId === undefined) navigate("/dashboard/newGroup");
+          // else navigate("/dashboard/");
         });
     } catch (err) {
       console.log(err);

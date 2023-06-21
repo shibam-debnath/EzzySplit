@@ -100,6 +100,9 @@ const Navbar = () => {
                   Contact Us
                 </Link>
               </li>
+              <li className="p-2 space-x-8 text-gray-300  h-10 hover:text-primary hover:font-bold cursor-pointer">
+                <a href="/team">Our Team</a>
+              </li>
               {!user && (
                 <li>
                   <a
