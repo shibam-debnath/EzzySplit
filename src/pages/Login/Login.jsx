@@ -2,7 +2,6 @@ import { React, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  auth,
   login,
   signInWithGoogle,
   sendPasswordReset,
@@ -11,46 +10,41 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, updateProfile } from "firebase/auth";
 
 const Login = () => {
-  const auth1 = getAuth();
+
+  // user details
+  const auth = getAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
-
   const [user, loading, error] = useAuthState(auth);
+  console.log("Pehla userrrrrrrr")
+  console.log(user);
 
   useEffect(() => {
-    if (loading) {
-      return;
-    }
-    if (user && user.emailVerified === true) {
-      console.log("banda logged in hein and we are searching using his email");
-      console.log(user.email);
-      getId(user.email);
-    } else if (user && user.emailVerified === false) {
-      alert("Verify email first");
+
+    if(user){
+      // if we have already set the displayName in firebase  
+      if(user.displayName){
+        navigate("/dashboard/");
+        return;
+      }
+
+      if(user.emailVerified === false) {
+        alert("Verify email first");
+        return;
+      }
+
+      if (user.displayName===null && user.emailVerified === true) {
+        console.log("we are searching users id and group id using his email to insert in displayName");
+        // access email from the firebase email section 
+        getId(user.email);
+      }  
+
     }
     // eslint-disable-next-line
-  }, [user, loading]);
+  }, [user]);
 
-  const updateDisplayName = (newName) => {
-    const user = auth1.currentUser;
-    console.log(user);
-    if (user) {
-      updateProfile(user, {
-        displayName: newName,
-      })
-        .then(() => {
-          console.log("Display name updated successfully");
-          var temp = newName.split("---");
-          if (temp[1] === undefined) navigate("/dashboard/newGroup");
-          else navigate("/dashboard/");
-        })
-        .catch((error) => {
-          console.log(`Error updating display name: ${error}`);
-        });
-    }
-  };
-
+  // function to get the id of user 
   const getId = async (emailId) => {
     try {
       await axios
@@ -64,23 +58,46 @@ const Login = () => {
           console.log(response.data[0]);
           const userId = response.data[0]._id;
           const groupId = response.data[0].groupid[0];
-          const temp = userId + "---" + groupId;
-          console.log(temp);
-          updateDisplayName(temp);
 
-          // if not in any froup redirect to create a new group
-          // if (groupId === undefined) navigate("/dashboard/newGroup");
-          // else navigate("/dashboard/");
+          // if groupId is not present means no group is there so navigate to create a group
+          if (groupId === undefined) navigate("/dashboard/newGroup");
+
+          const temp = userId + "---" + groupId;
+          console.log("userId and groupId");
+          console.log(temp);
+
+          // update the name in firebase with userid+groupid
+          updateDisplayName(temp);
         });
     } catch (err) {
       console.log(err);
     }
   };
 
+  const updateDisplayName = (newName) => {
+    const user = auth.currentUser;
+    console.log(user);
+    if (user) {
+      updateProfile(user, {
+        displayName: newName,
+      })
+      .then(() => {
+        console.log("Display name updated successfully");
+        navigate("/dashboard/");
+      })
+      .catch((error) => {
+        console.log(`Error updating display name: ${error}`);
+      });
+    }
+  };
+
+  // login using firebase 
   async function handleLoginSubmit(e) {
     e.preventDefault();
     try {
       await login(emailRef.current.value, passwordRef.current.value);
+      console.log("We have logged in this user")
+      const user = auth.currentUser;
       console.log(user);
     } catch (e) {
       alert("Login unsuccessful");
