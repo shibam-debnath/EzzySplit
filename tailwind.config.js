@@ -12,6 +12,7 @@ module.exports = {
       },
       backgroundImage: {
         dashboardBG: "url('../public/images/BG.svg')",
+        BG2: "url('../public/images/BG2.svg')",
       },
     },
   },

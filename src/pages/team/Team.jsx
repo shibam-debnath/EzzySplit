@@ -1,7 +1,6 @@
 import React from "react";
 import "./Team.css";
 import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 
 const Team = () => {
   const teamMembers = [
@@ -13,7 +12,7 @@ const Team = () => {
     },
     {
       name: "Shibam Debnath",
-      image: "/images/Shibam1.jpg",
+      image: "/images/shibam.jpeg",
       github: "https://github.com/shibam-debnath",
       linkedIn: "https://www.linkedin.com/in/shibam-debnath-25b235206/",
     },
@@ -31,75 +30,63 @@ const Team = () => {
     },
     {
       name: "Rituraj Chanda",
-      image: "/images/Suraj.jpg",
+      image: "/images/rituraj.jpeg",
       github: "https://github.com/Suraj1520",
       linkedIn: "https://www.linkedin.com/in/riturajchanda2001/",
     },
   ];
   return (
-    <>
-      <div class="back1">
-        <Navbar />
-        <section class="md:h-full flex items-center text-white">
-          <div class="container px-5 pt-16 pb-2 mx-auto">
-            <div class="text-center mb-12">
-              <h5 class="text-base md:text-lg text-indigo-700  mt-6 mb-1">
-                See Our Team Members
-              </h5>
-              <h3 class="text-4xl md:text-6xl text-white font-semibold">
-                Team members
-              </h3>
-            </div>
-            <div class="flex flex-wrap -m-2">
-              {teamMembers.map((items) => (
-                <div class="p-4 sm:w-1/2 lg:w-1/4">
-                  <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
-                    <img
-                      class="lg:h-72 md:h-48 w-full object-cover object-center"
-                      src={items.image}
-                      alt="blog"
-                    ></img>
-                    <div class="p-6 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in">
-                      <h1 class="text-2xl font-semibold mb-3">{items.name}</h1>
-                      <p class="leading-relaxed mb-3">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Aperiam modi, expedita quos doloremque autem ipsum
-                        itaque incidunt ipsam reprehenderit fuga! Dolores
-                        quisquam eius cum accusamus?
-                      </p>
-                      <div className="flex justify-center flex-wrap mt-4">
-                        <ul className="flex justify-center space-x-5">
-                          <li className="hover:scale-[1.5]">
-                            <a href={items.github}>
-                              <img
-                                src="./images/github.svg"
-                                alt=" "
-                                className="h-8"
-                              ></img>
-                            </a>
-                          </li>
-                          <li className="hover:scale-[1.5]">
-                            <a href={items.linkedIn}>
-                              <img
-                                src="./images/linkedin.svg"
-                                alt=" "
-                                className="h-8 "
-                              ></img>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+    <div className="bg-BG2">
+        <div >
+          <Navbar/>
+        </div>
+          
+        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/6.5.95/css/materialdesignicons.min.css"/>
+        <div class="flex items-center justify-center min-h-screen py-10">
+            <div class="flex flex-col">
+                <div class="flex flex-col mt-6">
+                    <div class="container max-w-7xl px-4">
+                        <div class="flex flex-wrap justify-center text-center mb-14">
+                            <div class="w-full lg:w-6/12 px-4">
+                                <h1 class="text-slate-300 text-4xl font-semibold">
+                                    Meet the Team
+                                </h1>
+                            </div>
+                        </div>
+                         {/* members  */}
+                        <div class="flex justify-center flex-wrap gap-2 lg:px-20">
+                            {teamMembers.map((item)=>(
+                                <div class="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4 lg:mx-5">
+                                    <div class="flex flex-col items-center">
+                                          <img alt="img" class="h-36 w-36 rounded-2xl drop-shadow-md hover:drop-shadow-xl transition-all duration-200 delay-100"
+                                                src={item.image}/>
 
+                                        {/* <!-- Details --> */}
+                                        <div class="text-center mt-6">
+
+                                            <h1 class="text-slate-400 text-xl font-sans font-semibold  mb-1">
+                                                {item.name}
+                                            </h1>
+                                            <div class="flex items-center justify-center opacity-50 hover:opacity-100
+                                            transition-opacity duration-300">
+                                                <a href={item.linkedIn} class="flex rounded-full hover:bg-indigo-50 h-10 w-10">
+                                                    <i class="mdi mdi-linkedin text-indigo-500 mx-auto mt-2"></i>
+                                                </a>
+                                                <a href={item.github} class="flex rounded-full hover:bg-blue-50 h-10 w-10">
+                                                    <i class="mdi mdi-twitter text-blue-300 mx-auto mt-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </section>
-      </div>
-    </>
-  );
-};
+        </div>
+        </div>
+      );
+}
 
 export default Team;
