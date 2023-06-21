@@ -78,10 +78,11 @@
   }
 
   .card-group{
-    margin: 5% 2% 5% 5%;
-    width: 45%;
-    max-height: 15rem;
+    height: 20rem;
+    justify-content: center;
   }
+
+  .cadr-
 
   .card-group-attr{
     margin: 5px;
@@ -101,4 +102,7 @@
     min-width: 80%;
     flex-direction: column;
   }
+
+
+
 }

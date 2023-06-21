@@ -94,9 +94,9 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProfileImage]);
 
-  useEffect(() => {
-    handleSubmit();
-  }, [ProfileName, Url]);
+  // useEffect(() => {
+  //   handleSubmit();
+  // }, [ProfileName, Url]);
 
   async function handleSubmit(e) {
     console.log("Yaha aaya");
@@ -107,7 +107,6 @@ const UserProfile = (props) => {
     let config = {
       method: "post",
       url: `https://ezzysplit-backend.onrender.com/user/edituser/${userId.current}`,
-
       data: {
         name: ProfileName,
         uid: uid.current,
