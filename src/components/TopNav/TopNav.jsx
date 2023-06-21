@@ -88,7 +88,18 @@ const TopNav = () => {
         <img className="rounded-full w-9 h-9" src={Url} alt="user-profile" />
         <div className="text-left">
           <p className="font-semibold text-lg ">{UserData.name}</p>
-          <p className="text-gray-500 text-xs">Joined 8 months ago</p>
+          {UserData.joinedOn && (
+            <p className="text-gray-500 text-xs">
+              {UserData.joinedOn
+                .substring(0, 10)
+                .split("-")
+                .reverse()
+                .join("-")}
+            </p>
+          )}
+          {!UserData.joinedOn && (
+            <p className="text-gray-500 text-xs">Joined few months ago</p>
+          )}
         </div>
       </div>
       <div className="flex flex-row-reverse p-2 md:ml-6 md:mr-6 relative">
