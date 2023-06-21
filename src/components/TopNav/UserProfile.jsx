@@ -12,10 +12,12 @@ const UserProfile = (props) => {
   const userId = useRef("");
   const groupId = useRef("");
   const uid = useRef("");
+  
   const [user] = useAuthState(auth);
   const [UserData, FgetUsersData] = useState(props.UserData);
   const [ProfileName, setProfileName] = useState("");
   const [ProfileImage, setProfileImage] = useState("");
+
   const [Url, setUrl] = useState(props.UserData.imageUrl);
   const [percentage, setPercentage] = useState(null);
   const navigate = useNavigate();
@@ -94,11 +96,10 @@ const UserProfile = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProfileImage]);
 
-  useEffect(() => {
-    handleSubmit();
-  }, [ProfileName, Url]);
 
   async function handleSubmit(e) {
+    e.preventDefault();
+
     console.log("Yaha aaya");
     console.log(ProfileName);
     console.log(uid.current);
@@ -119,12 +120,17 @@ const UserProfile = (props) => {
       const response = await axios(config);
       console.log("yehi chahiye");
       console.log(response);
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
+    console.log(ProfileName);
     console.log("Yaha aaya 2");
     // props.closeProfile();
     console.log("Yaha ayaa 3");
+    // console.log(isChanged);
+    // setIsChanged(1);
+    // console.log(isChanged);
   }
 
   return (
@@ -191,7 +197,7 @@ const UserProfile = (props) => {
             </button>
           </div>
           <form
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
           >
             <div className="mb-2">
