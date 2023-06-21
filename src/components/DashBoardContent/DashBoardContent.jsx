@@ -167,12 +167,12 @@ const DashBoardContent = () => {
     // handle form submission here
   }
 
-  useEffect(()=>{
-    if(members.length>0)inviteUsers();
-  },[members]);
+  useEffect(() => {
+    if (members.length > 0) inviteUsers();
+  }, [members]);
 
   const inviteUsers = async () => {
-    var flag=0;
+    var flag = 0;
     for (let i = 0; i < members.length; i++) {
       // console.log("memebrs[i]")
       // console.log(members[i]);
@@ -190,9 +190,9 @@ const DashBoardContent = () => {
         const response = await axios(config);
         console.log(response);
         if (response.status === 201) {
-          if(flag===0){
+          if (flag === 0) {
             alert("Invitation sent");
-            flag=1;
+            flag = 1;
           }
         }
       } catch (err) {
