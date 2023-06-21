@@ -108,7 +108,6 @@ const UserProfile = (props) => {
     let config = {
       method: "post",
       url: `${process.env.REACT_APP_BASE_URL}/user/edituser/${userId.current}`,
-
       data: {
         name: ProfileName,
         uid: uid.current,
