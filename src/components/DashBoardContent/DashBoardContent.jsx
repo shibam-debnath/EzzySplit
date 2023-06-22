@@ -45,7 +45,7 @@ const DashBoardContent = () => {
 
   useEffect(() => {
     console.log("checking the user ");
-    if (user == null) {
+    if (user === null) {
       return navigate("/login");
     } else {
       console.log("Accessing the user ");
@@ -745,7 +745,7 @@ const DashBoardContent = () => {
 
       {/* expenses history content starting...*/}
       <div className="sm:mt-0 md:mt-6 flex flex-wrap">
-        <div className="exp-section bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full pt-6 m-6 bg-no-repeat bg-cover bg-center ">
+        <div className="exp-section bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-[32rem] rounded-xl w-full p-6 m-6 bg-no-repeat bg-cover bg-center ">
           <div className=" flex justify-between pb-2 pl-6 pr-8 border-b-2 border-spacing-y-12  border-gray-200">
             <div className="text-large text-gray-700 text-2xl font-bold ">
               Expenses History
@@ -764,11 +764,11 @@ const DashBoardContent = () => {
               )}
           </div>
           <div className="his-attributes text-gray-400 ml-8 mr-8 mt-2 flex border-b-2  ">
-            <div className="text-small p-2 w-[4rem]">S.No.</div>
-            <div className="text-small p-2 w-1/4">Name</div>
-            <div className="text-small p-2 w-1/4">Amount</div>
-            <div className="text-small p-2 w-1/4">Paid by</div>
-            <div className="text-small p-2 w-1/4">Expense Added on</div>
+            <div className="text-medium p-2 w-[4rem]">S.No.</div>
+            <div className="text-medium p-2 w-1/4">Name</div>
+            <div className="text-medium p-2 w-1/4">Amount</div>
+            <div className="text-medium p-2 w-1/4">Paid by</div>
+            <div className="text-medium p-2 w-1/4">Expense Added on</div>
           </div>
 
           {/* to display the complete details of an expense starting... */}
@@ -895,14 +895,14 @@ const DashBoardContent = () => {
             {grData.expenseId && grData.expenseId.length > 0 ? (
               grData.expenseId.map((expenses) => (
                 <div>
-                  <div className="h-[22rem] overflow-y-auto scrollbar-none scroll-smooth">
+                  <div className="overflow-y-auto scrollbar-none scroll-smooth">
                     <div
                       key={expenses._id}
                       className="text-black ml-8 mr-8  flex border-b-2 cursor-pointer hover:bg-gray-100"
                       onClick={() => displayExpense(expenses)}
                     >
                       <div
-                        className="px-2 py-2 w-[4rem]"
+                        className="text-small px-2 py-2 w-[4rem]"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                       >
@@ -917,11 +917,11 @@ const DashBoardContent = () => {
                           <div>{count++}</div>
                         )}
                       </div>
-                      <div className="px-2 py-2 w-1/4">
+                      <div className="text-small px-2 py-2 w-1/4">
                         {expenses.description}
                       </div>
-                      <div className="px-2 py-2 w-1/4">₹{expenses.amount}</div>
-                      <div className="px-2 py-2 w-1/4 flex justify-center h-8 overflow-x-auto overflow-y-auto scrollbar-none">
+                      <div className="text-small px-2 py-2 w-1/4">₹{expenses.amount}</div>
+                      <div className="text-small px-2 py-2 w-1/4 flex justify-center h-8 overflow-x-auto overflow-y-auto scrollbar-none">
                         {expenses.paidBy.length > 1 ? (
                           expenses.paidBy.map((items) => {
                             return (
@@ -945,7 +945,7 @@ const DashBoardContent = () => {
                           </div>
                         )}
                       </div>
-                      <div className="px-2 py-2 w-1/4">
+                      <div className="text-small px-2 py-2 w-1/4">
                         {expenses.date
                           .substring(0, 10)
                           .split("-")
@@ -992,9 +992,9 @@ const DashBoardContent = () => {
 
       {/*  strating of the different charts section... */}
 
-      <div className="flex flex-col ">
-        <div className="flex flex-row md:w-full">
-          <div className="card-group bg-white h-72 rounded-xl m-6 w-7/12">
+      <div className="flex flex-col">
+        <div className="flex card-group">
+          <div className=" bg-white h-72 rounded-xl m-6 w-[60%]">
             <div className="text-medium border-b-2 mt-2 mb-2 text-center ztext-left text-black ">
               Group Members
             </div>
@@ -1007,11 +1007,11 @@ const DashBoardContent = () => {
             {expend.length > 0 ? (
               expend.map((element) => {
                 return (
-                  <div className=" m-auto h-48 overflow-y-auto scrollbar-none">
-                    <div className="text-black ml-8 mr-8 pb-2 flex ">
-                      <div className="px-2 w-1/3">{element.name}</div>
-                      <div className="px-2 w-1/3">₹{element.paid}</div>
-                      <div className="px-2 w-1/3">₹{element.expense}</div>
+                  <div className=" m-auto overflow-y-auto scrollbar-none">
+                    <div className="card-group-attr text-black ml-8 mr-8 pb-2 flex ">
+                      <div className="text-small px-2 w-1/3">{element.name}</div>
+                      <div className="text-small px-2 w-1/3">₹{element.paid}</div>
+                      <div className="text-small px-2 w-1/3">₹{element.expense}</div>
                     </div>
                   </div>
                 );
@@ -1026,7 +1026,7 @@ const DashBoardContent = () => {
           </div>
 
           {grData.expenseId && grData.expenseId.length > 0 ? (
-            grData.isSettled ? (
+            grData.isSettled && (
               <div className=" h-80 m-2 p-4 w-5/12">
                 <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg  rounded-xl  bg-no-repeat bg-cover bg-center ">
                   <div className=" flex justify-between pl-4 p-2 border-b-2 border-spacing-y-12  border-gray-200">
@@ -1053,14 +1053,9 @@ const DashBoardContent = () => {
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
-                <img style={style} src="../images/boy.jpg" alt="Loading..." />
-              </div>
             )
           ) : (
             <div className="card-invitation bg-white rounded-xl h-72 m-6 p-4 w-5/12 flex justify-center">
-              {/* <img style={style} src="../images/boy.jpg" alt="Loading..." /> */}
               <div className=" mb-2 h-full">
                 <div className="text-medium block text-gray-700 border-b-2 mb-2">
                   Invite Members
