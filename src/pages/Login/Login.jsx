@@ -67,7 +67,7 @@ const Login = () => {
           const temp = userId + "---" + groupId;
           console.log(temp);
           updateDisplayName(temp);
-
+          
           // if not in any froup redirect to create a new group
           // if (groupId === undefined) navigate("/dashboard/newGroup");
           // else navigate("/dashboard/");

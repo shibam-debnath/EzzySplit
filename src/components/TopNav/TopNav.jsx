@@ -89,7 +89,7 @@ const TopNav = () => {
         <div className="text-left">
           <p className="font-semibold text-lg ">{UserData.name}</p>
           {UserData.joinedOn && (
-            <p className="text-gray-500 text-xs">Joined on 
+            <p className="text-gray-500 text-xs">Joined on &nbsp;
               {UserData.joinedOn
                 .substring(0, 10)
                 .split("-")
