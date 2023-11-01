@@ -17,6 +17,8 @@
 
 ![Screenshot 2023-11-01 141918](https://github.com/shibam-debnath/EzzySplit/assets/88841157/444de043-e25a-41df-8b63-44d6c3d2b219)
 
+![Screenshot 2023-11-01 144649](https://github.com/shibam-debnath/EzzySplit/assets/88841157/35f4ffb6-3ba4-42e5-b1d8-932f05b5f518)
+
 ![Screenshot 2023-11-01 141416](https://github.com/shibam-debnath/EzzySplit/assets/88841157/cebf05ec-edb3-4bc9-9e6a-d73322f3f274)
 
 ![Screenshot 2023-11-01 141525](https://github.com/shibam-debnath/EzzySplit/assets/88841157/fe371abe-0a23-4c5c-94bd-7d6ae915aa2d)
