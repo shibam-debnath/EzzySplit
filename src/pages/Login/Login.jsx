@@ -18,9 +18,21 @@ const Login = () => {
   const [user, loading, error] = useAuthState(auth);
   console.log("Pehla userrrrrrrr");
   console.log(user);
-
+  
   useEffect(() => {
     if (user) {
+      
+      if (
+        (user.displayName === null || !user.displayName.includes("---")) &&
+        user.emailVerified === true
+      ) {
+        console.log(
+          "we are searching users id and group id using his email to insert in displayName"
+        );
+        // access email from the firebase email section
+        getId(user.email);
+      }
+
       // if we have already set the displayName in firebase
       if (user.displayName.includes("---")) {
         var temp = user.displayName.split("---");
@@ -36,16 +48,6 @@ const Login = () => {
         return;
       }
 
-      if (
-        (user.displayName === null || !user.displayName.includes("---")) &&
-        user.emailVerified === true
-      ) {
-        console.log(
-          "we are searching users id and group id using his email to insert in displayName"
-        );
-        // access email from the firebase email section
-        getId(user.email);
-      }
     }
     // eslint-disable-next-line
   }, [user]);
